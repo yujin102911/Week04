@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545dbc503613af47b4d04dea4bcfc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
+  prefabToSpawn: {fileID: 6359844142929196595, guid: 0058e781f2d0fa24485c769be299ef6d, type: 3}
   grid: {fileID: 1824430341}
 --- !u!1 &263101620
 GameObject:
@@ -510,10 +510,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 146987586}
   - {fileID: 1461879628}
   - {fileID: 1546705154}
   - {fileID: 271324389}
-  - {fileID: 146987586}
   - {fileID: 1155131397}
   m_Father: {fileID: 358501432}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
