@@ -12,6 +12,8 @@ public class WorldSpaceSlider : MonoBehaviour
     [Range(0, 1)]
     [SerializeField] private float value = 0.5f; // 0.0 ~ 1.0 사이의 값
 
+    public bool IsInstalled { get; set; } = false;
+
     void OnValidate()
     {
         // 인스펙터에서 value 값을 조절할 때 실시간으로 핸들 위치를 업데이트합니다.
@@ -21,24 +23,26 @@ public class WorldSpaceSlider : MonoBehaviour
     // 핸들의 위치를 기반으로 value 값을 업데이트하는 함수 (SliderHandle이 호출)
     public void UpdateValueFromHandlePosition(Vector3 handleWorldPos)
     {
-        // 벡터 프로젝션(Vector Projection)을 사용하여 마우스 위치가
-        // 슬라이더 트랙 위의 어느 지점에 해당하는지 계산합니다.
         Vector3 trackDirection = endPoint.position - startPoint.position;
+
+        // ▼▼▼ 이 예외 처리 코드를 추가하세요! ▼▼▼
+        // 슬라이더의 길이가 0에 가까우면 오류를 방지하기 위해 계산을 중단합니다.
+        if (trackDirection.magnitude < 0.01f)
+        {
+            SetValue(0); // 길이를 0으로 설정하거나 그냥 return 해도 됩니다.
+            return;
+        }
+        // ▲▲▲ 여기까지 추가 ▲▲▲
+
         Vector3 handleDirection = handleWorldPos - startPoint.position;
-
-        // 투영된 벡터 계산
         Vector3 projectedVector = Vector3.Project(handleDirection, trackDirection);
-
-        // value 값 계산 (투영된 벡터의 길이 / 전체 트랙의 길이)
         float newValue = projectedVector.magnitude / trackDirection.magnitude;
 
-        // 투영된 벡터의 방향이 트랙 방향과 반대이면 value는 0이 되어야 합니다.
         if (Vector3.Dot(projectedVector, trackDirection) < 0)
         {
             newValue = 0;
         }
 
-        // 계산된 값으로 value를 설정합니다.
         SetValue(newValue);
     }
 
@@ -66,19 +70,22 @@ public class WorldSpaceSlider : MonoBehaviour
         Vector3 direction = endPos - startPos;
         float distance = direction.magnitude;
 
-        // 전체 슬라이더의 위치와 방향 설정
         transform.position = startPos;
-        transform.right = direction.normalized;
 
-        // Body(막대)의 길이를 조절
+        // ▼▼▼ 이 부분을 수정하세요! ▼▼▼
+        // 거리가 0에 가까우면(미리보기 상태) 방향을 기본값으로 설정하여 오류 방지
+        if (distance < 0.01f)
+        {
+            transform.right = Vector3.right; // 기본적으로 오른쪽을 보도록 설정
+        }
+        else
+        {
+            transform.right = direction.normalized;
+        }
+        // ▲▲▲ 여기까지 수정 ▲▲▲
+
         body.localScale = new Vector3(distance, body.localScale.y, body.localScale.z);
-
-        // EndPoint의 로컬 위치를 막대의 끝으로 이동
         endPoint.localPosition = new Vector3(distance, 0, 0);
-
-        // 초기 값에 따라 핸들 위치 업데이트
-        //UpdateHandlePosition();
-
-        SetValue(0f);
+        SetValue(1.0f);
     }
 }
