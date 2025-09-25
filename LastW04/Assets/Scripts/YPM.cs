@@ -1,41 +1,70 @@
 using UnityEngine;
 
-// 이 스크립트는 Rigidbody 2D 컴포넌트가 반드시 필요합니다.
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    // [SerializeField]를 사용하면 private 변수여도 인스펙터 창에서 값을 수정할 수 있습니다.
-    [SerializeField]
-    private float moveSpeed = 5f; // 플레이어의 이동 속도
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private LayerMask interactableLayers; // 상호작용할 레이어들 (박스, 벽 등)
 
-    private Rigidbody2D rb; // Rigidbody 2D 컴포넌트를 담을 변수
-    private Vector2 moveInput; // 사용자의 입력(WASD) 값을 저장할 변수
+    private Rigidbody2D rb;
+    private Vector2 moveInput;
+    private Vector2 lastDirection = Vector2.down; // 마지막으로 바라본 방향 (초기값은 아래)
 
-    // 게임이 시작될 때 한 번 호출됩니다.
     void Start()
     {
-        // 이 스크립트가 붙어있는 게임 오브젝트의 Rigidbody 2D 컴포넌트를 가져와서 rb 변수에 할당합니다.
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // 매 프레임마다 호출됩니다. 입력 값을 받기에 적합합니다.
     void Update()
     {
-        // 수평(A, D, ←, →) 및 수직(W, S, ↑, ↓) 입력 값을 받습니다.
-        // 입력 값은 -1.0f에서 1.0f 사이의 값을 가집니다.
-        float moveX = Input.GetAxisRaw("Horizontal"); // Horizontal 축
-        float moveY = Input.GetAxisRaw("Vertical"); // Vertical 축
-
-        // 입력 값을 Vector2 형태로 저장하고, 정규화(Normalize)하여 대각선 이동 시 속도가 빨라지는 것을 방지합니다.
+        // 이동 입력
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
         moveInput = new Vector2(moveX, moveY).normalized;
+
+        // 움직임이 있을 때만 마지막 방향을 저장
+        if (moveInput != Vector2.zero)
+        {
+            lastDirection = moveInput;
+        }
+
+        // 'E' 키를 눌렀을 때 상호작용 시도
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
     }
 
-    // 고정된 시간 간격으로 호출됩니다. 물리 계산을 하기에 적합합니다.
     void FixedUpdate()
     {
-        // Rigidbody의 속도(velocity)를 변경하여 플레이어를 움직입니다.
-        // moveInput 값에 이동 속도(moveSpeed)와 물리 시간(Time.fixedDeltaTime)을 곱해줍니다.
-        // Time.fixedDeltaTime을 곱해주면 프레임 속도에 관계없이 일정한 속도로 움직입니다.
         rb.linearVelocity = moveInput * moveSpeed;
+    }
+
+    /// <summary>
+    /// 바라보는 방향으로 상호작용을 시도하는 함수
+    /// </summary>
+    private void Interact()
+    {
+        // 1. 바로 앞에 박스가 있는지 확인
+        Vector2 rayOrigin = (Vector2)transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, lastDirection, 1f, interactableLayers);
+
+        // 무언가에 부딪혔고, 그것이 'Box' 태그를 가졌다면
+        if (hit.collider != null && hit.collider.CompareTag("Box"))
+        {
+            Transform box = hit.transform;
+
+            // 2. 박스가 움직일 곳이 비어있는지 확인
+            Vector2 targetPosition = (Vector2)box.position + lastDirection;
+            Collider2D targetOverlap = Physics2D.OverlapCircle(targetPosition, 0.2f, interactableLayers);
+
+            // 타겟 위치에 아무것도 없다면 박스를 이동시킴
+            if (targetOverlap == null)
+            {
+                // 그리드에 맞춰 위치를 깔끔하게 보정
+                Vector3 finalPosition = new Vector3(Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y), 0);
+                box.position = finalPosition;
+            }
+        }
     }
 }

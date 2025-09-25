@@ -1,25 +1,43 @@
+// SliderHandle.cs
 using UnityEngine;
 
 public class SliderHandle : MonoBehaviour
 {
     private WorldSpaceSlider parentSlider;
     private Camera mainCamera;
+    // private bool isDragging = false; // 이 줄을 아래 public 프로퍼티로 변경
+    public bool IsDragging { get; private set; } = false;
+    private Vector3 offset;
 
     void Start()
     {
-        // 자신의 부모에게서 WorldSpaceSlider 스크립트를 찾아옵니다.
         parentSlider = GetComponentInParent<WorldSpaceSlider>();
         mainCamera = Camera.main;
     }
 
-    // 이 오브젝트의 콜라이더 위에서 마우스를 드래그하는 동안 계속 호출됩니다.
-    private void OnMouseDrag()
+    private void OnMouseDown()
     {
-        if (parentSlider != null)
+        IsDragging = true;
+        offset = transform.position - GetMouseWorldPos();
+    }
+
+    private void OnMouseUp()
+    {
+        IsDragging = false;
+    }
+
+    void Update()
+    {
+        if (IsDragging)
         {
-            Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            // 마우스 위치를 부모 슬라이더에게 전달하여 값을 업데이트하도록 요청합니다.
-            parentSlider.UpdateValueFromHandlePosition(mousePos);
+            parentSlider.UpdateValueFromHandlePosition(GetMouseWorldPos() + offset);
         }
+    }
+
+    private Vector3 GetMouseWorldPos()
+    {
+        Vector3 mousePoint = Input.mousePosition;
+        mousePoint.z = mainCamera.WorldToScreenPoint(transform.position).z;
+        return mainCamera.ScreenToWorldPoint(mousePoint);
     }
 }
