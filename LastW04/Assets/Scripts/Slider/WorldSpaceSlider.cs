@@ -1,38 +1,42 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class WorldSpaceSlider : MonoBehaviour
 {
-    [Header("¿ÀºêÁ§Æ® ¿¬°á")]
+    [Header("ì˜¤ë¸Œì íŠ¸ ì—°ê²°")]
     [SerializeField] private Transform handle;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
     [SerializeField] private Transform body;
 
-    [Header("½½¶óÀÌ´õ °ª")]
+    [Header("ìŠ¬ë¼ì´ë” ê°’")]
     [Range(0, 1)]
-    [SerializeField] private float value = 0.5f; // 0.0 ~ 1.0 »çÀÌÀÇ °ª
+    [SerializeField] private float value = 0.5f; // 0.0 ~ 1.0 ì‚¬ì´ì˜ ê°’
 
     public bool IsInstalled { get; set; } = false;
+    public bool placed = false;
 
     void OnValidate()
     {
-        // ÀÎ½ºÆåÅÍ¿¡¼­ value °ªÀ» Á¶ÀıÇÒ ¶§ ½Ç½Ã°£À¸·Î ÇÚµé À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
-        UpdateHandlePosition();
+        // ì¸ìŠ¤í™í„°ì—ì„œ value ê°’ì„ ì¡°ì ˆí•  ë•Œ ì‹¤ì‹œê°„ìœ¼ë¡œ í•¸ë“¤ ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
+        //if (placed = true)
+        {
+            UpdateHandlePosition();
+        }
     }
 
-    // ÇÚµéÀÇ À§Ä¡¸¦ ±â¹İÀ¸·Î value °ªÀ» ¾÷µ¥ÀÌÆ®ÇÏ´Â ÇÔ¼ö (SliderHandleÀÌ È£Ãâ)
+    // í•¸ë“¤ì˜ ìœ„ì¹˜ë¥¼ ê¸°ë°˜ìœ¼ë¡œ value ê°’ì„ ì—…ë°ì´íŠ¸í•˜ëŠ” í•¨ìˆ˜ (SliderHandleì´ í˜¸ì¶œ)
     public void UpdateValueFromHandlePosition(Vector3 handleWorldPos)
     {
         Vector3 trackDirection = endPoint.position - startPoint.position;
 
-        // ¡å¡å¡å ÀÌ ¿¹¿Ü Ã³¸® ÄÚµå¸¦ Ãß°¡ÇÏ¼¼¿ä! ¡å¡å¡å
-        // ½½¶óÀÌ´õÀÇ ±æÀÌ°¡ 0¿¡ °¡±î¿ì¸é ¿À·ù¸¦ ¹æÁöÇÏ±â À§ÇØ °è»êÀ» Áß´ÜÇÕ´Ï´Ù.
+        // â–¼â–¼â–¼ ì´ ì˜ˆì™¸ ì²˜ë¦¬ ì½”ë“œë¥¼ ì¶”ê°€í•˜ì„¸ìš”! â–¼â–¼â–¼
+        // ìŠ¬ë¼ì´ë”ì˜ ê¸¸ì´ê°€ 0ì— ê°€ê¹Œìš°ë©´ ì˜¤ë¥˜ë¥¼ ë°©ì§€í•˜ê¸° ìœ„í•´ ê³„ì‚°ì„ ì¤‘ë‹¨í•©ë‹ˆë‹¤.
         if (trackDirection.magnitude < 0.01f)
         {
-            SetValue(0); // ±æÀÌ¸¦ 0À¸·Î ¼³Á¤ÇÏ°Å³ª ±×³É return ÇØµµ µË´Ï´Ù.
+            SetValue(0); // ê¸¸ì´ë¥¼ 0ìœ¼ë¡œ ì„¤ì •í•˜ê±°ë‚˜ ê·¸ëƒ¥ return í•´ë„ ë©ë‹ˆë‹¤.
             return;
         }
-        // ¡ã¡ã¡ã ¿©±â±îÁö Ãß°¡ ¡ã¡ã¡ã
+        // â–²â–²â–² ì—¬ê¸°ê¹Œì§€ ì¶”ê°€ â–²â–²â–²
 
         Vector3 handleDirection = handleWorldPos - startPoint.position;
         Vector3 projectedVector = Vector3.Project(handleDirection, trackDirection);
@@ -46,25 +50,25 @@ public class WorldSpaceSlider : MonoBehaviour
         SetValue(newValue);
     }
 
-    // ¿ÜºÎ¿¡¼­ value °ªÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+    // ì™¸ë¶€ì—ì„œ value ê°’ì„ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜
     public void SetValue(float newValue)
     {
-        // °ªÀ» 0°ú 1 »çÀÌ·Î Á¦ÇÑÇÕ´Ï´Ù.
+        // ê°’ì„ 0ê³¼ 1 ì‚¬ì´ë¡œ ì œí•œí•©ë‹ˆë‹¤.
         value = Mathf.Clamp01(newValue);
         UpdateHandlePosition();
     }
 
-    // ÇöÀç value °ª¿¡ ¸ÂÃç ÇÚµéÀÇ À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
+    // í˜„ì¬ value ê°’ì— ë§ì¶° í•¸ë“¤ì˜ ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
     private void UpdateHandlePosition()
     {
         if (handle != null && startPoint != null && endPoint != null)
         {
-            // Lerp ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ½ÃÀÛÁ¡°ú ³¡Á¡ »çÀÌÀÇ Á¤È®ÇÑ À§Ä¡¸¦ °è»êÇÕ´Ï´Ù.
+            // Lerp í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ì‹œì‘ì ê³¼ ëì  ì‚¬ì´ì˜ ì •í™•í•œ ìœ„ì¹˜ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
             handle.position = Vector3.Lerp(startPoint.position, endPoint.position, value);
         }
     }
 
-    // ObjectPlacer°¡ È£ÃâÇÒ ¼³Ä¡ ÇÔ¼ö (±âÁ¸ PowerConduit.csÀÇ Setup ¿ªÇÒ)
+    // ObjectPlacerê°€ í˜¸ì¶œí•  ì„¤ì¹˜ í•¨ìˆ˜ (ê¸°ì¡´ PowerConduit.csì˜ Setup ì—­í• )
     public void Setup(Vector3 startPos, Vector3 endPos)
     {
         Vector3 direction = endPos - startPos;
@@ -72,17 +76,17 @@ public class WorldSpaceSlider : MonoBehaviour
 
         transform.position = startPos;
 
-        // ¡å¡å¡å ÀÌ ºÎºĞÀ» ¼öÁ¤ÇÏ¼¼¿ä! ¡å¡å¡å
-        // °Å¸®°¡ 0¿¡ °¡±î¿ì¸é(¹Ì¸®º¸±â »óÅÂ) ¹æÇâÀ» ±âº»°ªÀ¸·Î ¼³Á¤ÇÏ¿© ¿À·ù ¹æÁö
+        // â–¼â–¼â–¼ ì´ ë¶€ë¶„ì„ ìˆ˜ì •í•˜ì„¸ìš”! â–¼â–¼â–¼
+        // ê±°ë¦¬ê°€ 0ì— ê°€ê¹Œìš°ë©´(ë¯¸ë¦¬ë³´ê¸° ìƒíƒœ) ë°©í–¥ì„ ê¸°ë³¸ê°’ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ì˜¤ë¥˜ ë°©ì§€
         if (distance < 0.01f)
         {
-            transform.right = Vector3.right; // ±âº»ÀûÀ¸·Î ¿À¸¥ÂÊÀ» º¸µµ·Ï ¼³Á¤
+            transform.right = Vector3.right; // ê¸°ë³¸ì ìœ¼ë¡œ ì˜¤ë¥¸ìª½ì„ ë³´ë„ë¡ ì„¤ì •
         }
         else
         {
             transform.right = direction.normalized;
         }
-        // ¡ã¡ã¡ã ¿©±â±îÁö ¼öÁ¤ ¡ã¡ã¡ã
+        // â–²â–²â–² ì—¬ê¸°ê¹Œì§€ ìˆ˜ì • â–²â–²â–²
 
         body.localScale = new Vector3(distance, body.localScale.y, body.localScale.z);
         endPoint.localPosition = new Vector3(distance, 0, 0);
