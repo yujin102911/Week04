@@ -7,13 +7,94 @@ public class WorldSpaceSlider : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
     [SerializeField] private Transform body;
-
+    //플레이서에서 복제 코드~
+    [SerializeField] private GameObject objectPrefab;
+    [SerializeField] private Color previewColor = new Color(0, 1, 0, 0.5f);
+    [SerializeField] private Color finalColor = Color.gray;
+    private Color ChildrenColor;
+    private Vector3 startPosition;
+    //~플레이서에서 복제코드
     [Header("슬라이더 값")]
     [Range(0, 1)]
     [SerializeField] private float value = 0.5f; // 0.0 ~ 1.0 사이의 값
 
     public bool IsInstalled { get; set; } = false;
     public bool placed = false;
+    //플레이서에서 복제 및 수정 코드~
+    void Start()
+    {
+        startPosition=transform.position;
+        ChildrenColor = GetComponentInChildren<SpriteRenderer>().color;
+        ChildrenColor = previewColor;    
+    }
+    void Update()
+    {
+        if (!placed)
+        {
+            HandlePlacement();
+        }
+        
+    }
+    private void HandlePlacement()
+    {
+        Vector3 mouseWorldPos = GetSnappedPosition(GetMouseWorldPosition());//마우스 위치에 그리드 계산 결과를 저장
+
+        Setup(startPosition, GetConstrainedMousePosition(startPosition, mouseWorldPos));//각도에 따라 90도 회전
+
+        if (Input.GetMouseButtonDown(0)) FinalizePlacement();//한번 더 누르면 위치 고정
+        else if (Input.GetMouseButtonDown(1)) Destroy(gameObject);//취소시 나 제거
+    }
+
+    private void FinalizePlacement()
+    {
+        Debug.Log("ddd");
+        ChildrenColor = finalColor;
+        IsInstalled = true;   // 마지막으로 설치 상태를 초기화합니다.
+        placed = true;
+    }
+
+    // --- Helper Functions ---
+    private Vector3 GetMouseWorldPosition()//마우스 좌표 받기
+    {
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = Camera.main.nearClipPlane + 10;
+        return Camera.main.ScreenToWorldPoint(mousePos);
+    }
+
+    private Vector3 GetSnappedPosition(Vector3 originalPosition)//스냅 시키기
+    {
+        float snappedX = Mathf.Round(originalPosition.x);
+        float snappedY = Mathf.Round(originalPosition.y);
+        return new Vector3(snappedX, snappedY, 0);
+    }
+
+    private Vector3 GetConstrainedMousePosition(Vector3 startPos, Vector3 currentPos)//마우스 각도따라 90도 전환
+    {
+        Vector3 direction = currentPos - startPos;
+        if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+        {
+            return new Vector3(currentPos.x, startPos.y, startPos.z);
+        }
+        else
+        {
+            return new Vector3(startPos.x, currentPos.y, startPos.z);
+        }
+    }
+
+    //~플레이서에서 복제 및 수정 코드
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     void OnValidate()
     {

@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
                 mode = Mode.None; 
             }
         }
-        if (mode == Mode.Editing)//에디팅 모드 시 
+        if (mode == Mode.Editing)//에디팅 모드 시 편집 기능
         {
             editingUI.SetActive(true);
             if (Input.GetMouseButtonDown(0))
@@ -51,6 +51,28 @@ public class GameManager : MonoBehaviour
                 if (hit.collider != null)
                 {
                     draggingInstance = hit.collider.transform;
+                }
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                // 마우스 아래 오브젝트 감지
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+                if (hit.collider != null)
+                {
+                    if (hit.collider.tag == "EditorbleUI")
+                    {
+                        if (hit.transform.parent != null)
+                        {
+                            Destroy(hit.transform.parent.gameObject);
+                        }
+                        else
+                        {
+                            Destroy(hit.collider.gameObject);
+                        }
+                            
+                    }
                 }
             }
 

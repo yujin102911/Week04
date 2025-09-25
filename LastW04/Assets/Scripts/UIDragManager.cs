@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler
 {
     public GameObject prefabToSpawn; // 씬에 배치할 프리팹
     public Grid grid;                // 씬의 Grid
@@ -13,25 +13,35 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     {
         if (draggingInstance != null)
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(draggingInstance.transform.position);
-            if (screenPos.z > 0 && screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
+            Vector2 screenPos = Input.mousePosition;
+            //Vector3 screenPos = Camera.main.WorldToScreenPoint(draggingInstance.transform.position);
+            //if (screenPos.z > 0 && screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
+            if (screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
             {
                 // 화면 안에 있을 때만 GUI 처리
             }
-        }
+            
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+            worldPos.z = -1f; // 2D용 Z값
 
+            // 그리드에 스냅
+            Vector3Int cell = grid.WorldToCell(worldPos);
+            Vector3 aligned = grid.CellToWorld(cell);
+
+            draggingInstance.transform.position = aligned + Vector3.back;
+        }
     }
     // UI에서 클릭 시작
     public void OnPointerDown(PointerEventData eventData)
     {
         // 드래그 시작할 때 프리팹 인스턴스 생성
-        if (!PlacedInstance)
+        //if (!PlacedInstance)
         {
             draggingInstance = Instantiate(previewInstance);
         }
     }
-
-    // 드래그 중
+    /*
+    // 드래그 중=업데이트에서 처리
     public void OnDrag(PointerEventData eventData)
     {
         if (draggingInstance == null) return;
@@ -46,14 +56,14 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
         Vector3 aligned = grid.CellToWorld(cell);
 
         draggingInstance.transform.position = aligned+Vector3.back;
-    }
+    }*/
 
     // 드래그 끝
     public void OnPointerUp(PointerEventData eventData)
     {
         if (draggingInstance == null) return;                
-        PlacedInstance = Instantiate(prefabToSpawn);
-        PlacedInstance.transform.position = draggingInstance.transform.position;
+        PlacedInstance = Instantiate(prefabToSpawn);//재대로 된거소환
+        PlacedInstance.transform.position = draggingInstance.transform.position;//미리보기 위치로
         Destroy(draggingInstance);
 
     }
