@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
-{
+{//게임메니저 코드..
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private Color previewColor = new Color(0, 1, 0, 0.5f);
     [SerializeField] private Color finalColor = Color.white;
@@ -44,7 +44,7 @@ public class ObjectPlacer : MonoBehaviour
         isPlacing = false;
         if (previewInstance != null)
         {
-            Destroy(previewInstance.gameObject);
+            Destroy(gameObject);
             previewInstance = null;
         }
     }
@@ -53,16 +53,16 @@ public class ObjectPlacer : MonoBehaviour
     {
         Vector3 mouseWorldPos = GetSnappedPosition(GetMouseWorldPosition());
 
-        if (isPlacing)//설치중이냐? 첨엔 아니지..
+        if (isPlacing)//설치중이냐?
         {
             previewInstance.Setup(startPosition, GetConstrainedMousePosition(startPosition, mouseWorldPos));
 
-            if (Input.GetMouseButtonDown(0)) FinalizePlacement();
+            if (Input.GetMouseButtonDown(0)) FinalizePlacement();//이때가 한번 더 누르면 나 생겨욧 하는거
             else if (Input.GetMouseButtonDown(1)) CancelPlacement();
         }
         else
         {
-            previewInstance.Setup(mouseWorldPos, mouseWorldPos);
+            previewInstance.Setup(mouseWorldPos, mouseWorldPos);//이때가 누르면 핸들 생기는거
             if (Input.GetMouseButtonDown(0)) StartPlacement(mouseWorldPos);
         }
     }

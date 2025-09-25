@@ -5,6 +5,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
 {
     public GameObject prefabToSpawn; // 씬에 배치할 프리팹
     public Grid grid;                // 씬의 Grid
+    public GameObject previewInstance;//미리보기할 프리팹
     private GameObject draggingInstance;//드래그중인 것
     private GameObject PlacedInstance;//드래그끝 배치한 것
     public GameObject gameManager;
