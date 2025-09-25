@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - EditorbleUI
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -12,12 +13,12 @@ TagManager:
   - 
   - Water
   - UI
+  - AttachPoint
+  - Gadget
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Interactable
+  - Clickable
+  - Box
   - 
   - 
   - 
