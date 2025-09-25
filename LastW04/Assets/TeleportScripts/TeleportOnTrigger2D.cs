@@ -17,6 +17,9 @@ public sealed class TeleportOnTrigger2D : MonoBehaviour
     [SerializeField] private bool preserveVelocity = true;
     [SerializeField, Min(0f)] private float perObjectCooldown = 0.15f;
 
+    [Header("Camera Handoff (optional)")]
+    [SerializeField] private string destinationCameraRegionId;
+
     private int _includeMask;
     private readonly Dictionary<int, float> _cooldownUntil = new();
 
@@ -90,5 +93,9 @@ public sealed class TeleportOnTrigger2D : MonoBehaviour
 
         if (rb) rb.WakeUp();
         Physics2D.SyncTransforms();
+
+        // 카메라 지역 전환
+        if (!string.IsNullOrEmpty(destinationCameraRegionId) && CameraDirector.Instance)
+            CameraDirector.Instance.WarpToRegion(destinationCameraRegionId, instant: true);
     }
 }
