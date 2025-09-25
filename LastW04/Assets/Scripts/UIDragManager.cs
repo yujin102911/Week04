@@ -6,6 +6,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     public GameObject prefabToSpawn; // 씬에 배치할 프리팹
     public Grid grid;                // 씬의 Grid
     private GameObject draggingInstance;
+    private GameObject PlacedInstance;
     public void Update()
     {
         if (draggingInstance != null)
@@ -23,7 +24,10 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     public void OnPointerDown(PointerEventData eventData)
     {
         // 드래그 시작할 때 프리팹 인스턴스 생성
-        draggingInstance = Instantiate(prefabToSpawn);
+        if (!PlacedInstance)
+        {
+            draggingInstance = Instantiate(prefabToSpawn);
+        }
     }
 
     // 드래그 중
@@ -47,8 +51,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     public void OnPointerUp(PointerEventData eventData)
     {
         if (draggingInstance == null) return;
-
-        // 필요 시 여기서 추가 로직: 겹침 체크, 컬러 확인 등
+        PlacedInstance = draggingInstance;
         draggingInstance = null; // 드래그 완료 후 매니저에서 제어 끝
     }
 }
