@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - EditorbleUI
   layers:
   - Default
   - TransparentFX
@@ -11,11 +12,11 @@ TagManager:
   - 
   - Water
   - UI
+  - AttachPoint
+  - Gadget
   - 
   - 
-  - Player
-  - Interactable
-  - Clickable
+  - 
   - 
   - 
   - 
