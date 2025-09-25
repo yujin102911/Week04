@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ObjectPlacer : MonoBehaviour
 {
@@ -6,7 +6,7 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField] private Color previewColor = new Color(0, 1, 0, 0.5f);
     [SerializeField] private Color finalColor = Color.white;
 
-    private bool isInstallMode = false;
+    public bool isInstallMode = false;
     private bool isPlacing = false;
 
     private Vector3 startPosition;
@@ -14,13 +14,8 @@ public class ObjectPlacer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            isInstallMode = !isInstallMode;
-
-            if (isInstallMode) StartInstallMode();
-            else StopInstallMode();
-        }
+        if (isInstallMode) StartInstallMode();//ì„¤ì¹˜ëª¨ë“œë©´
+        else StopInstallMode();
 
         if (!isInstallMode || previewInstance == null) return;
 
@@ -29,22 +24,22 @@ public class ObjectPlacer : MonoBehaviour
 
     private void StartInstallMode()
     {
-        if (objectPrefab == null)
+        if (objectPrefab == null)//í”„ë¦¬íŒ¹ í• ë‹¹ ì•ˆí•œ ê²½ìš°
         {
-            Debug.LogError("ObjectPlacerÀÇ Object Prefab ½½·Ô¿¡ ¼³Ä¡ÇÒ ÇÁ¸®ÆÕÀ» ÇÒ´çÇØ¾ß ÇÕ´Ï´Ù!");
+            Debug.LogError("ObjectPlacerì˜ Object Prefab ìŠ¬ë¡¯ì— ì„¤ì¹˜í•  í”„ë¦¬íŒ¹ì„ í• ë‹¹í•´ì•¼ í•©ë‹ˆë‹¤!");
             isInstallMode = false;
             return;
         }
 
-        if (previewInstance == null)
+        if (previewInstance == null)//ë¯¸ë¦¬ ë³´ì—¬ì¤„ ë‚´ ìì‹ 
         {
-            GameObject newObject = Instantiate(objectPrefab);
+            GameObject newObject = Instantiate(objectPrefab);//ìƒì„±í•¨
             previewInstance = newObject.GetComponent<WorldSpaceSlider>();
             previewInstance.GetComponentInChildren<SpriteRenderer>().color = previewColor;
         }
     }
 
-    private void StopInstallMode()
+    private void StopInstallMode()//ì„±ì¹˜ëª¨ë“œ ê°•ì¢…ì‹œ?
     {
         isPlacing = false;
         if (previewInstance != null)
@@ -58,7 +53,7 @@ public class ObjectPlacer : MonoBehaviour
     {
         Vector3 mouseWorldPos = GetSnappedPosition(GetMouseWorldPosition());
 
-        if (isPlacing)
+        if (isPlacing)//ì„¤ì¹˜ì¤‘ì´ëƒ? ì²¨ì—” ì•„ë‹ˆì§€..
         {
             previewInstance.Setup(startPosition, GetConstrainedMousePosition(startPosition, mouseWorldPos));
 
@@ -83,9 +78,9 @@ public class ObjectPlacer : MonoBehaviour
         previewInstance.IsInstalled = true;
         previewInstance.GetComponentInChildren<SpriteRenderer>().color = finalColor;
 
-        previewInstance = null; // ÇöÀç ¹Ì¸®º¸±â ÂüÁ¶¸¦ ¸ÕÀú ºñ¿öÁİ´Ï´Ù.
-        StartInstallMode();     // ±× ´ÙÀ½¿¡ ´ÙÀ½ ¼³Ä¡¸¦ À§ÇÑ »õ ¹Ì¸®º¸±â¸¦ »ı¼ºÇÕ´Ï´Ù.
-        isPlacing = false;      // ¸¶Áö¸·À¸·Î ¼³Ä¡ »óÅÂ¸¦ ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        previewInstance = null; // í˜„ì¬ ë¯¸ë¦¬ë³´ê¸° ì°¸ì¡°ë¥¼ ë¨¼ì € ë¹„ì›Œì¤ë‹ˆë‹¤.
+        StartInstallMode();     // ê·¸ ë‹¤ìŒì— ë‹¤ìŒ ì„¤ì¹˜ë¥¼ ìœ„í•œ ìƒˆ ë¯¸ë¦¬ë³´ê¸°ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+        isPlacing = false;      // ë§ˆì§€ë§‰ìœ¼ë¡œ ì„¤ì¹˜ ìƒíƒœë¥¼ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
     }
 
     private void CancelPlacement()
@@ -94,21 +89,21 @@ public class ObjectPlacer : MonoBehaviour
     }
 
     // --- Helper Functions ---
-    private Vector3 GetMouseWorldPosition()
+    private Vector3 GetMouseWorldPosition()//ë§ˆìš°ìŠ¤ ì¢Œí‘œ ë°›ê¸°
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = Camera.main.nearClipPlane + 10;
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
 
-    private Vector3 GetSnappedPosition(Vector3 originalPosition)
+    private Vector3 GetSnappedPosition(Vector3 originalPosition)//ìŠ¤ëƒ… ì‹œí‚¤ê¸°
     {
         float snappedX = Mathf.Round(originalPosition.x);
         float snappedY = Mathf.Round(originalPosition.y);
         return new Vector3(snappedX, snappedY, 0);
     }
 
-    private Vector3 GetConstrainedMousePosition(Vector3 startPos, Vector3 currentPos)
+    private Vector3 GetConstrainedMousePosition(Vector3 startPos, Vector3 currentPos)//ë§ˆìš°ìŠ¤ ê°ë„ë”°ë¼ 90ë„ ì „í™˜
     {
         Vector3 direction = currentPos - startPos;
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))

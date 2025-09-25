@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 2004963710388601288, guid: 6cd0056419759354a84122a99376e1b1, type: 3}
   grid: {fileID: 1824430341}
+  gameManager: {fileID: 2011988220}
 --- !u!1001 &240397810
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,6 +444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 1824430341}
+  gameManager: {fileID: 2011988220}
 --- !u!1 &358501428
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,6 +3096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 1824430341}
+  gameManager: {fileID: 2011988220}
 --- !u!1 &1292132398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,6 +3262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 1824430341}
+  gameManager: {fileID: 2011988220}
 --- !u!1 &1546705153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,6 +3353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 1824430341}
+  gameManager: {fileID: 2011988220}
 --- !u!1 &1824430340
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,7 +3461,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 2004963710388601288, guid: 6cd0056419759354a84122a99376e1b1, type: 3}
   previewColor: {r: 0, g: 1, b: 0, a: 0.5}
-  finalColor: {r: 1, g: 1, b: 1, a: 1}
+  finalColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+  isInstallMode: 0
 --- !u!1001 &8735525625733592834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3471,11 +3477,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8132078764729782195, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.8
+      value: -8.83
       objectReference: {fileID: 0}
     - target: {fileID: 8132078764729782195, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.1
       objectReference: {fileID: 0}
     - target: {fileID: 8132078764729782195, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
       propertyPath: m_LocalPosition.z
