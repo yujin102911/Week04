@@ -27,7 +27,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
         // 드래그 시작할 때 프리팹 인스턴스 생성
         if (!PlacedInstance)
         {
-            draggingInstance = Instantiate(prefabToSpawn);
+            draggingInstance = Instantiate(previewInstance);
         }
     }
 
@@ -51,16 +51,10 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     // 드래그 끝
     public void OnPointerUp(PointerEventData eventData)
     {
-        if (draggingInstance == null) return;
-        ObjectPlacer placerMode = gameManager.GetComponent<ObjectPlacer>();
-        if (placerMode!=null)
-        {
-            placerMode.isInstallMode = true;
-            Debug.Log("dem");
-        }  
-            
-        PlacedInstance = draggingInstance;
-        draggingInstance = null; // 드래그 완료 후 매니저에서 제어 끝
+        if (draggingInstance == null) return;                
+        PlacedInstance = Instantiate(prefabToSpawn);
+        PlacedInstance.transform.position = draggingInstance.transform.position;
+        Destroy(draggingInstance);
 
     }
 }
