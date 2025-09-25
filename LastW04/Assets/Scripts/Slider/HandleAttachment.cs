@@ -20,7 +20,21 @@ public class HandleAttachment : MonoBehaviour
 
     void Update()
     {
-        if (!isObjectInside || sliderHandle == null) return;
+        // 영역 안에 오브젝트가 없으면 아무것도 하지 않습니다.
+        if (!isObjectInside) return;
+
+        // ▼▼▼ 이 안전장치 코드를 추가하세요! ▼▼▼
+        // 만약 붙어있던 박스가 다른 스크립트에 의해 부모 관계가 해제되었다면,
+        // 여기서도 상태를 초기화해줍니다.
+        if (attachedObjectTransform != null && attachedObjectTransform.parent != this.transform)
+        {
+            OnTriggerExit2D(attachedObjectTransform.GetComponent<Collider2D>());
+            return; // 즉시 종료
+        }
+        // ▲▲▲ 안전장치 코드 끝 ▲▲▲
+
+        // --- 아래는 기존 드래그 감지 코드 ---
+        if (sliderHandle == null) return;
 
         bool isHandleDraggingThisFrame = sliderHandle.IsDragging;
 
@@ -43,7 +57,7 @@ public class HandleAttachment : MonoBehaviour
             return;
         }
 
-        if (other.CompareTag("Box"))
+        if (other.CompareTag("Box") || other.CompareTag("Lotus"))
         {
             isObjectInside = true;
             attachedObjectTransform = other.transform;
@@ -54,7 +68,7 @@ public class HandleAttachment : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Box"))
+        if (other.CompareTag("Box")|| other.CompareTag("Lotus"))
         {
             // ▼▼▼ 이 부분이 오류 해결의 핵심입니다! ▼▼▼
             // sliderHandle이 존재하는지 먼저 확인하여 Null 오류를 방지합니다.

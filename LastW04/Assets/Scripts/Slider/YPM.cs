@@ -43,27 +43,53 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>
     /// 바라보는 방향으로 상호작용을 시도하는 함수
     /// </summary>
+    // PlayerMovement.cs
+
     private void Interact()
     {
-        // 1. 바로 앞에 박스가 있는지 확인
         Vector2 rayOrigin = (Vector2)transform.position;
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, lastDirection, 1f, interactableLayers);
 
-        // 무언가에 부딪혔고, 그것이 'Box' 태그를 가졌다면
         if (hit.collider != null && hit.collider.CompareTag("Box"))
         {
             Transform box = hit.transform;
 
-            // 2. 박스가 움직일 곳이 비어있는지 확인
-            Vector2 targetPosition = (Vector2)box.position + lastDirection;
-            Collider2D targetOverlap = Physics2D.OverlapCircle(targetPosition, 0.2f, interactableLayers);
-
-            // 타겟 위치에 아무것도 없다면 박스를 이동시킴
-            if (targetOverlap == null)
+            // ▼▼▼ 이 if 블록을 삭제하거나 주석 처리합니다! ▼▼▼
+            /*
+            // 핸들에 붙어있는 박스는 밀지 않음 (기존과 동일)
+            if (box.parent != null)
             {
-                // 그리드에 맞춰 위치를 깔끔하게 보정
+                return;
+            }
+            */
+            // ▲▲▲ 여기까지 삭제 ▲▲▲
+
+            BoxCollider2D boxCollider = box.GetComponent<BoxCollider2D>();
+            if (boxCollider == null) return;
+
+            int originalLayer = box.gameObject.layer;
+            box.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            RaycastHit2D castHit = Physics2D.BoxCast(
+                (Vector2)box.position,
+                boxCollider.size * 0.9f,
+                0f,
+                lastDirection,
+                1f,
+                interactableLayers
+            );
+
+            box.gameObject.layer = originalLayer;
+
+            if (castHit.collider == null)
+            {
+                Vector2 targetPosition = (Vector2)box.position + lastDirection;
                 Vector3 finalPosition = new Vector3(Mathf.Round(targetPosition.x), Mathf.Round(targetPosition.y), 0);
-                box.position = finalPosition;
+                box.GetComponent<Rigidbody2D>().MovePosition(finalPosition);
+
+                // ▼▼▼ 이 줄을 추가하세요! ▼▼▼
+                // 박스를 민 후에, 핸들과의 부모-자식 관계를 강제로 끊어줍니다.
+                box.SetParent(null);
             }
         }
     }
