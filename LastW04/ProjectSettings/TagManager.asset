@@ -6,6 +6,8 @@ TagManager:
   tags:
   - EditorbleUI
   - Box
+  - Lotus
+  - Water
   layers:
   - Default
   - TransparentFX
@@ -21,8 +23,8 @@ TagManager:
   - Box
   - 
   - 
-  - 
-  - 
+  - Player
+  - Lotus
   - 
   - 
   - 
@@ -42,6 +44,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2763951031
+    locked: 0
+  - name: Objects
+    uniqueID: 222077459
+    locked: 0
+  - name: Player
+    uniqueID: 2776734647
     locked: 0
   m_RenderingLayers:
   - Default
