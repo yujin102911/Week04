@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545dbc503613af47b4d04dea4bcfc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 6359844142929196595, guid: 0058e781f2d0fa24485c769be299ef6d, type: 3}
+  prefabToSpawn: {fileID: 2004963710388601288, guid: 6cd0056419759354a84122a99376e1b1, type: 3}
   grid: {fileID: 1824430341}
 --- !u!1001 &240397810
 PrefabInstance:
@@ -2928,7 +2928,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3404,6 +3404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2011988221}
   - component: {fileID: 2011988222}
+  - component: {fileID: 2011988223}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3441,6 +3442,21 @@ MonoBehaviour:
   grid: {fileID: 1824430341}
   mode: 1
   editingUI: {fileID: 389140970}
+--- !u!114 &2011988223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011988220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0130c8d8aaa54c241b2cebb1e1fefe71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPrefab: {fileID: 2004963710388601288, guid: 6cd0056419759354a84122a99376e1b1, type: 3}
+  previewColor: {r: 0, g: 1, b: 0, a: 0.5}
+  finalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &8735525625733592834
 PrefabInstance:
   m_ObjectHideFlags: 0

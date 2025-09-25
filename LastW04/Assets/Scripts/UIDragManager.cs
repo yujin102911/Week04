@@ -11,7 +11,6 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     {
         if (draggingInstance != null)
         {
-
             Vector3 screenPos = Camera.main.WorldToScreenPoint(draggingInstance.transform.position);
             if (screenPos.z > 0 && screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
             {
