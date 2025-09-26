@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿// SlidingStone2D.cs
+using System.Collections;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -9,17 +10,16 @@ public class SlidingStone2D : MonoBehaviour
 
     [Header("Grid & Move")]
     [SerializeField] float cellSize = 1f;
-    [SerializeField] Vector2 gridOrigin = Vector2.zero; // ✅ (0,0) 셀의 "중심" 월드좌표
+    [SerializeField] Vector2 gridOrigin = Vector2.zero;   // (0,0) 셀의 "중심" 월드좌표
     [SerializeField, Min(0.1f)] float slideSpeed = 8f;
-    [SerializeField] Vector2 overlapBoxSize = new Vector2(0.8f, 0.8f);
 
     [Header("Blocking")]
-    [SerializeField] LayerMask blockingMask;   // 벽/다른 돌 등 '막아야 하는' 레이어
-    [SerializeField, Min(1)] int maxSlideCells = 64; // 안전장치: 최대 이동 칸수
+    [SerializeField] LayerMask blockingMask;               // 벽/다른 돌 등 막히는 대상 레이어
+    [SerializeField, Min(1)] int maxSlideCells = 64;       // 안전장치: 최대 이동 칸수
 
     public bool IsSliding { get; private set; }
 
-    // ===== 좌표 변환 유틸(간단/일관 스냅) =====
+    // 셀<->월드(중심) 변환
     Vector2Int WorldToCell(Vector2 world)
     {
         Vector2 local = world - gridOrigin;
@@ -28,12 +28,12 @@ public class SlidingStone2D : MonoBehaviour
             Mathf.RoundToInt(local.y / cellSize)
         );
     }
-
     Vector2 CellToWorldCenter(Vector2Int cell)
     {
         return gridOrigin + new Vector2(cell.x * cellSize, cell.y * cellSize);
     }
 
+    /// <summary>지정 방향으로 "막히는 칸 직전"까지 미끄러집니다.</summary>
     public void Push(Vector2 dir)
     {
         if (IsSliding) return;
@@ -44,30 +44,30 @@ public class SlidingStone2D : MonoBehaviour
         else d = new Vector2Int(0, (int)Mathf.Sign(dir.y));
         if (d == Vector2Int.zero) return;
 
-        // 시작 위치를 셀 중심으로 스냅(원점이 이미 중심이면 영향 없음)
-        Vector2 start = new Vector2(
-            Mathf.Round(transform.position.x / cellSize) * cellSize,
-            Mathf.Round(transform.position.y / cellSize) * cellSize
-        );
+        // 시작 셀 중심으로 정렬
+        Vector2Int startCell = WorldToCell(transform.position);
+        Vector2 startCenter = CellToWorldCenter(startCell);
+        if (((Vector2)transform.position - startCenter).sqrMagnitude > 0.0001f)
+            transform.position = startCenter;
 
-        Vector2 lastFree = start;
+        // 한 칸씩 전진: "다음 칸의 중심 한 점"이 막혔는지 검사 → 정확히 앞칸까지 이동
+        Vector2Int lastFreeCell = startCell;
         for (int i = 1; i <= maxSlideCells; i++)
         {
-            Vector2 nextCenter = start + (Vector2)d * (i * cellSize);
+            Vector2Int nextCell = startCell + d * i;
+            Vector2 nextCenter = CellToWorldCenter(nextCell);
 
-            // 다음 칸이 막히면 현재(lastFree)에서 정지
-            var hit = Physics2D.OverlapBox(nextCenter, overlapBoxSize, 0f, blockingMask);
-            if (hit != null)
-                break;
+            // 칸 중심 한 점만 검사(모서리 간섭 방지)
+            Collider2D hit = Physics2D.OverlapPoint(nextCenter, blockingMask);
+            if (hit != null) break;
 
-            lastFree = nextCenter;
+            lastFreeCell = nextCell;
         }
 
-        // 이동할 칸이 없으면 리턴
-        if ((lastFree - start).sqrMagnitude < 1e-6f) return;
+        if (lastFreeCell == startCell) return;
 
-        // 바로 이동 시작
-        StartCoroutine(SlideRoutine(lastFree));
+        Vector2 targetCenter = CellToWorldCenter(lastFreeCell);
+        StartCoroutine(SlideRoutine(targetCenter));
     }
 
     IEnumerator SlideRoutine(Vector2 targetCenter)
@@ -80,23 +80,20 @@ public class SlidingStone2D : MonoBehaviour
             yield return null;
         }
 
-        // 최종 스냅: 반드시 "셀 중심"으로
+        // 최종 스냅: 셀 중심 고정
         Vector2Int finalCell = WorldToCell(targetCenter);
         transform.position = CellToWorldCenter(finalCell);
 
         IsSliding = false;
 
-        // 필요 시 클리어 판정 갱신
+        // 석상 판정 갱신이 필요하면 주석 해제
         // Statue.ReevaluateAll();
     }
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, (Vector3)overlapBoxSize);
-
-        // 그리드 원점 시각화(0,0 셀 중심)
+        // 그리드 원점(0,0 셀 중심) 시각화
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(gridOrigin, 0.06f);
     }
