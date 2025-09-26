@@ -98,7 +98,7 @@ public class PlayerMove : MonoBehaviour
             Vector2 target = (Vector2)box.position + lastCardinal;
 
             Collider2D blocked = Physics2D.OverlapCircle(target, 0.2f, interactableLayers);
-            if (blocked == null)
+            if (blocked == null || blocked.CompareTag("Lotus"))
             {
                 Vector3 finalPosition = new Vector3(Mathf.Round(target.x), Mathf.Round(target.y), 0);
                 box.position = finalPosition;
