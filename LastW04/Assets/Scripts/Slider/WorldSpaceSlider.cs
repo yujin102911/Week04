@@ -47,7 +47,6 @@ public class WorldSpaceSlider : MonoBehaviour
 
     private void FinalizePlacement()
     {
-        Debug.Log("ddd");
         ChildrenColor = finalColor;
         IsInstalled = true;   // 마지막으로 설치 상태를 초기화합니다.
         placed = true;

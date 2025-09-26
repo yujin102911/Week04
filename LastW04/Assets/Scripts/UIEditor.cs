@@ -16,7 +16,7 @@ public class UIEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.E)) //에딧모드 전환
+        if (Input.GetKeyUp(KeyCode.Tab)) //에딧모드 전환
         {
             if (mode != Mode.Editing)
             {
@@ -36,7 +36,7 @@ public class UIEditor : MonoBehaviour
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-                if (hit.collider != null)
+                if (hit.collider.tag == "EditorbleUI")
                 {
                     draggingInstance = hit.collider.transform;
                 }
@@ -64,7 +64,7 @@ public class UIEditor : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButton(0) && draggingInstance != null)
+            if (Input.GetMouseButton(0) && draggingInstance != null)//드래그중일때
             {
                 if (draggingInstance == null) return;
 

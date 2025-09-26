@@ -1,18 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class ToggleGadget : MonoBehaviour
 {
     [Header("Refs")]
-    public Camera cam; // ÀÎ½ºÆåÅÍ¿¡ Main Camera µå·¡±×
+    public Camera cam; // ì¸ìŠ¤í™í„°ì— Main Camera ë“œë˜ê·¸
 
-    // ³»ºÎ »óÅÂ
-    private bool isHeld = false;       // ¼Õ¿¡ µé°í ÀÖ³ª
-    private AttachPoint attachedAP;    // ºÙÀº ºÎÂøÁ¡
-    private ToggleTarget targetDoor;     // Åä±Û ´ë»ó
-
+    // ë‚´ë¶€ ìƒíƒœ
+    private bool isHeld = false;       // ì†ì— ë“¤ê³  ìˆë‚˜
+    private AttachPoint attachedAP;    // ë¶™ì€ ë¶€ì°©ì 
+    private ToggleTarget targetDoor;     // í† ê¸€ ëŒ€ìƒ
+    private void Start()
+    {
+        cam = Camera.main;
+    }
     void Update()
     {
-        // µé°í ÀÖÀ» ¶§´Â Ä¿¼­ µû¶ó´Ù´Ô
+        // ë“¤ê³  ìˆì„ ë•ŒëŠ” ì»¤ì„œ ë”°ë¼ë‹¤ë‹˜
         if (isHeld && cam != null)
         {
             Vector3 p = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -23,7 +26,7 @@ public class ToggleGadget : MonoBehaviour
 
     void OnMouseDown()
     {
-        // 1) ¾ÆÁ÷ µé°í ÀÖÁö ¾Ê°í, ¾ÆÁ÷ ¾îµğ¿¡µµ ºÙÁö ¾Ê¾Ò´Ù ¡æ Áı±â
+        // 1) ì•„ì§ ë“¤ê³  ìˆì§€ ì•Šê³ , ì•„ì§ ì–´ë””ì—ë„ ë¶™ì§€ ì•Šì•˜ë‹¤ â†’ ì§‘ê¸°
         if (!isHeld && attachedAP == null)
         {
             isHeld = true;
@@ -31,35 +34,32 @@ public class ToggleGadget : MonoBehaviour
             return;
         }
 
-        // 2) ¼Õ¿¡ µé°í ÀÖ´Ù ¡æ ÇöÀç ¸¶¿ì½º À§Ä¡ÀÇ AttachPoint¿¡ ºÎÂø ½Ãµµ
+        // 2) ì†ì— ë“¤ê³  ìˆë‹¤ â†’ í˜„ì¬ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì˜ AttachPointì— ë¶€ì°© ì‹œë„
         if (isHeld)
         {
-            TryAttachAtMouse();
+            TryAttach();
             return;
         }
 
-        // 3) ÀÌ¹Ì ºÎÂøµÇ¾î ÀÖ´Ù ¡æ ÀÌ °¡Á¬À» Å¬¸¯ÇÏ¸é ´ë»ó Åä±Û ÀÛµ¿
+        // 3) ì´ë¯¸ ë¶€ì°©ë˜ì–´ ìˆë‹¤ â†’ ì´ ê°€ì ¯ì„ í´ë¦­í•˜ë©´ ëŒ€ìƒ í† ê¸€ ì‘ë™
         if (attachedAP != null && targetDoor != null)
         {
             Activate();
         }
     }
 
-    private void TryAttachAtMouse()
+    private void TryAttach()
     {
         if (cam == null) return;
 
-        Vector3 p = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 point = new Vector2(p.x, p.y);
-
-        // ¸¶¿ì½º ÁöÁ¡°ú °ãÄ¡´Â Äİ¶óÀÌ´õ ¸ğµÎ È®ÀÎ
-        var hits = Physics2D.OverlapPointAll(point);
+        // ë§ˆìš°ìŠ¤ ì§€ì ê³¼ ê²¹ì¹˜ëŠ” ì½œë¼ì´ë” ëª¨ë‘ í™•ì¸
+        var hits = Physics2D.OverlapBox(transform.position,new Vector2(1,1),0);
         AttachPoint apFound = null;
         ToggleTarget doorFound = null;
 
         foreach (var h in hits)
         {
-            // °°Àº ¿ÀºêÁ§Æ®¿¡ µÎ ÄÄÆ÷³ÍÆ®°¡ µû·Î ÀÖÀ» ¼ö ÀÖ¾î GetComponentInParent »ç¿ë
+            // ê°™ì€ ì˜¤ë¸Œì íŠ¸ì— ë‘ ì»´í¬ë„ŒíŠ¸ê°€ ë”°ë¡œ ìˆì„ ìˆ˜ ìˆì–´ GetComponentInParent ì‚¬ìš©
             var ap = h.GetComponentInParent<AttachPoint>();
             var door = h.GetComponentInParent<ToggleTarget>();
 
@@ -73,7 +73,7 @@ public class ToggleGadget : MonoBehaviour
 
         if (apFound == null || doorFound == null) return;
 
-        // ½º³À ºÎÂø
+        // ìŠ¤ëƒ… ë¶€ì°©
         attachedAP = apFound;
         targetDoor = doorFound;
 
@@ -82,12 +82,12 @@ public class ToggleGadget : MonoBehaviour
         transform.localRotation = Quaternion.identity;
 
         attachedAP.occupied = true;
-        isHeld = false; // ¼Õ¿¡¼­ ³»·Á³õÀ½
+        isHeld = false; // ì†ì—ì„œ ë‚´ë ¤ë†“ìŒ
     }
 
     private void Activate()
     {
         targetDoor.Toggle();
-        // ÇÊ¿äÇÏ¸é ÀÌÆåÆ®/»ç¿îµå Ãß°¡
+        // í•„ìš”í•˜ë©´ ì´í™íŠ¸/ì‚¬ìš´ë“œ ì¶”ê°€
     }
 }
