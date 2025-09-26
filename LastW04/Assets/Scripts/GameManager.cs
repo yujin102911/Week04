@@ -7,10 +7,14 @@ public enum Mode//모드설정
 }
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    Mode defalutMode;
+    public static Mode mode;
     public static GameManager instance;    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()//싱글톤
     {
+        mode = defalutMode;
         if (instance == null)
         {
             instance = this;
