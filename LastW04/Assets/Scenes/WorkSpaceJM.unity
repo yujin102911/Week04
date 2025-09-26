@@ -375,21 +375,24 @@ PrefabInstance:
     - target: {fileID: 5263912241894255395, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: solid
       value: 
-      objectReference: {fileID: 457485247}
+      objectReference: {fileID: 0}
     - target: {fileID: 5263912241894255395, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: disableSolidOnOpen
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216727911829183811, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.8823528
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216727911829183811, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.831933
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
---- !u!61 &457485247 stripped
-BoxCollider2D:
-  m_CorrespondingSourceObject: {fileID: 8098223250257846499, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
-  m_PrefabInstance: {fileID: 332075326}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &930052079
 GameObject:
   m_ObjectHideFlags: 0
