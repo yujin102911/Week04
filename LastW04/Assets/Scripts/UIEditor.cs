@@ -68,7 +68,7 @@ public class UIEditor : MonoBehaviour
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
                 // 그리드에 스냅
                 Vector3Int cell = grid.WorldToCell(worldPos);
-                Vector3 aligned = grid.CellToWorld(cell);
+                Vector3 aligned = grid.GetCellCenterWorld(cell);
                 draggingInstance.transform.position = aligned + Vector3.back;
             }
             if(Input.GetMouseButtonUp(0) && draggingInstance != null)
