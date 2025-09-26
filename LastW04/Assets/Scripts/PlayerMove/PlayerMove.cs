@@ -93,8 +93,8 @@ public class PlayerMove : MonoBehaviour
             Collider2D blocked = Physics2D.OverlapCircle(target, 0.2f, interactableLayers);
             if (blocked == null)
             {
-                Vector3 finalPos = new Vector3(target.x, target.y, box.position.z);
-                box.position = finalPos;
+                 Vector3 finalPosition = new Vector3(Mathf.Round(target.x), Mathf.Round(target.y), 0);
+                box.position = finalPosition;
                 // anim.SetTrigger("push");
             }
         }
