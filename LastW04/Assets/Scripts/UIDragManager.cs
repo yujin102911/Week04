@@ -40,25 +40,6 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
             draggingInstance = Instantiate(previewInstance);
         }
     }
-    /*
-    // 드래그 중=업데이트에서 처리
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (draggingInstance == null) return;
-
-        // 화면 좌표 → 월드 좌표
-        Vector3 screenPos = eventData.position;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        worldPos.z = -1f; // 2D용 Z값
-
-        // 그리드에 스냅
-        Vector3Int cell = grid.WorldToCell(worldPos);
-        Vector3 aligned = grid.CellToWorld(cell);
-
-        draggingInstance.transform.position = aligned+Vector3.back;
-    }*/
-
-    // 드래그 끝
     public void OnPointerUp(PointerEventData eventData)
     {
         if (draggingInstance == null) return;                
