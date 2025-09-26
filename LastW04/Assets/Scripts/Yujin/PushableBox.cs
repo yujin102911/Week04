@@ -10,12 +10,19 @@ public class PushableBox : MonoBehaviour
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
+    public bool IsOnLotus { get; private set; } = false;
+
 
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    public void SetOnLotus(bool status)
+    {
+        IsOnLotus = status;
     }
 
     public void Push(Vector2 direction)
@@ -61,10 +68,15 @@ public class PushableBox : MonoBehaviour
         Collider2D waterHit = Physics2D.OverlapCircle(targetPos, 0.2f, waterLayer);
         if (waterHit != null)
         {
-            // 물 위라면, 연꽃잎이 있는지 추가로 확인해야 함
+            // ▼▼▼ [수정됨] 연꽃 위에 있다면 물 위도 이동 가능하도록 변경 ▼▼▼
+            if (IsOnLotus)
+            {
+                boxCollider.enabled = true;
+                return true;
+            }
+
             Collider2D lotusHit = Physics2D.OverlapCircle(targetPos, 0.2f, lotusPadLayer);
-            boxCollider.enabled = true; // 반드시 다시 활성화!
-            // lotusHit가 null이 아니면(연꽃잎이 있으면) true, 없으면 false 반환
+            boxCollider.enabled = true;
             return lotusHit != null;
         }
 
