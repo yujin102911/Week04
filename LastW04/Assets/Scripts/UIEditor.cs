@@ -36,7 +36,7 @@ public class UIEditor : MonoBehaviour
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
-                if (hit.collider.tag == "EditorbleUI")
+                if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
                     draggingInstance = hit.collider.transform;
                 }
@@ -49,7 +49,7 @@ public class UIEditor : MonoBehaviour
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag == "EditorbleUI")
+                    if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                     {
                         if (hit.transform.parent != null)
                         {
