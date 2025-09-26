@@ -219,6 +219,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a46b408f6da4cbd4794a3599b53b0c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
+=======
+  handleTransform: {fileID: 8490897913589430163}
+--- !u!114 &1864024592107989859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1965500958425640182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0216e01b4329947ad158410f2f2143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+>>>>>>> Stashed changes
 --- !u!1 &2004963710388601288
 GameObject:
   m_ObjectHideFlags: 0
