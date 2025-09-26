@@ -12,6 +12,10 @@ public class HandleAttachment : MonoBehaviour
     private bool isObjectInside = false;
     private bool wasHandleDraggingLastFrame = false;
 
+    [Header("논리 설정")]
+    [SerializeField] private LayerMask waterLayer; // Inspector에서 "Water" 레이어를 할당해주세요.
+    private Vector3 lastValidPosition; // 물에 들어가기 직전의 위치를 저장
+
     void Start()
     {
         parentSlider = GetComponentInParent<WorldSpaceSlider>();
@@ -49,10 +53,50 @@ public class HandleAttachment : MonoBehaviour
 
         wasHandleDraggingLastFrame = isHandleDraggingThisFrame;
     }
+    void FixedUpdate()
+    {
+        if (attachedObjectTransform != null)
+        {
+            // 박스를 잡고 있을 때만 위치를 기록합니다.
+            lastValidPosition = attachedObjectTransform.position;
+        }
+    }
+    private void LateUpdate()
+    {
+        // 박스를 잡고 있을 때만 검사
+        if (attachedObjectTransform != null && attachedObjectTransform.CompareTag("Box"))
+        {
+            // 박스의 현재 위치에 물이 있는지 확인
+            if (Physics2D.OverlapCircle(attachedObjectTransform.position, 0.2f, waterLayer))
+            {
+                PushableBox box = attachedObjectTransform.GetComponent<PushableBox>();
+                // 박스가 있고, 연꽃 위에 있지 않다면
+                if (box != null && !box.IsOnLotus)
+                {
+                    Debug.Log("박스는 물에 들어갈 수 없습니다. 핸들에서 분리합니다.");
 
+                    // 핸들과의 연결을 끊고
+                    attachedObjectTransform.SetParent(null);
+                    // 물에 들어가기 직전의 안전한 위치로 박스를 이동
+                    attachedObjectTransform.position = lastValidPosition;
+
+                    // 핸들의 상태를 초기화하여 다른 객체를 잡을 수 있게 함
+                    isObjectInside = false;
+                    attachedObjectTransform = null;
+                    attachedObjectRigidbody = null;
+                }
+            }
+        }
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (parentSlider == null || !parentSlider.IsInstalled)
+        {
+            return;
+        }
+
+        // ▼▼▼ [수정됨] 이미 무언가를 잡고 있다면 새로 잡지 않음 ▼▼▼
+        if (attachedObjectTransform != null)
         {
             return;
         }
@@ -68,15 +112,13 @@ public class HandleAttachment : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Box")|| other.CompareTag("Lotus"))
+        // ▼▼▼ [수정됨] 나간 객체가 현재 잡고 있는 객체와 다를 수 있으므로, 정확히 일치하는지 확인 ▼▼▼
+        if (other.transform == attachedObjectTransform)
         {
-            // ▼▼▼ 이 부분이 오류 해결의 핵심입니다! ▼▼▼
-            // sliderHandle이 존재하는지 먼저 확인하여 Null 오류를 방지합니다.
             if (sliderHandle != null && sliderHandle.IsDragging)
             {
                 LockAttachedObject(false);
             }
-            // ▲▲▲ 핵심 수정 부분 ▲▲▲
 
             isObjectInside = false;
             if (attachedObjectTransform != null)
