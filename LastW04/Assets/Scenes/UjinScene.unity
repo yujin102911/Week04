@@ -1333,7 +1333,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -2750,6 +2750,14 @@ PrefabInstance:
     - target: {fileID: 4866436848945498114, guid: f3bcbb1d6d8408d4f8cea19961852058, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696793160139183689, guid: f3bcbb1d6d8408d4f8cea19961852058, type: 3}
+      propertyPath: lotusLayer.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696793160139183689, guid: f3bcbb1d6d8408d4f8cea19961852058, type: 3}
+      propertyPath: waterLayer.m_Bits
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5790377530474011345, guid: f3bcbb1d6d8408d4f8cea19961852058, type: 3}
       propertyPath: m_Name

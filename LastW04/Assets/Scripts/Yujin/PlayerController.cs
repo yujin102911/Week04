@@ -4,29 +4,33 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;      // 플레이어 이동 속도
-    [SerializeField] private float interactionDistance = 1f; // 상호작용 거리
-    [SerializeField] private LayerMask boxLayer;        // 박스 레이어를 특정하기 위함
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float interactionDistance = 1f;
+    [SerializeField] private LayerMask boxLayer;
+    [SerializeField] private LayerMask waterLayer;
+    [SerializeField] private LayerMask lotusLayer;
 
     private Rigidbody2D rb;
     private PlayerControls playerControls;
     private Vector2 moveInput;
-    private Vector2 lastDirection = Vector2.down; // 마지막으로 바라본 방향 (기본값: 아래)
+    private Vector2 lastDirection = Vector2.down;
+
+    // ▼▼▼ [추가됨] 마지막 안전 위치를 저장할 변수 ▼▼▼
+    private Vector2 lastSafePosition;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerControls = new PlayerControls();
+        // ▼▼▼ [추가됨] 게임 시작 시 초기 위치를 안전 위치로 저장 ▼▼▼
+        lastSafePosition = transform.position;
     }
 
     private void OnEnable()
     {
-        // Move 액션에 대한 이벤트 구독
         playerControls.Player.Move.performed += OnMove;
         playerControls.Player.Move.canceled += OnMoveCanceled;
-        // Interact 액션에 대한 이벤트 구독
         playerControls.Player.Interact.performed += OnInteract;
-
         playerControls.Player.Enable();
     }
 
@@ -35,25 +39,47 @@ public class PlayerController : MonoBehaviour
         playerControls.Player.Move.performed -= OnMove;
         playerControls.Player.Move.canceled -= OnMoveCanceled;
         playerControls.Player.Interact.performed -= OnInteract;
-
         playerControls.Player.Disable();
     }
 
-    // FixedUpdate는 물리 기반 이동에 더 적합합니다.
-    private void FixedUpdate()
+    // ▼▼▼ [추가됨] 플레이어가 물에 끼었는지 확인하고 복구하는 로직 ▼▼▼
+    private void Update()
     {
-        rb.linearVelocity = moveInput * moveSpeed;
+        // 현재 위치에 물이 있는지, 연꽃이 있는지 확인
+        bool isInWater = Physics2D.OverlapCircle(rb.position, 0.4f, waterLayer) != null;
+        bool isOnLotus = Physics2D.OverlapCircle(rb.position, 0.4f, lotusLayer) != null;
+
+        // 만약 연꽃 위도 아닌데 물 속에 있다면 (끼인 상태)
+        if (isInWater && !isOnLotus)
+        {
+            // 마지막으로 저장된 안전한 위치로 즉시 이동!
+            transform.position = lastSafePosition;
+            Debug.Log("플레이어가 물에 끼어 안전한 위치로 복귀합니다.");
+        }
     }
 
-    // Move 입력이 들어왔을 때 호출될 함수
+
+    private void FixedUpdate()
+    {
+        Vector2 newPosition = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
+
+        Collider2D waterCollider = Physics2D.OverlapCircle(newPosition, 0.4f, waterLayer);
+        Collider2D lotusCollider = Physics2D.OverlapCircle(newPosition, 0.4f, lotusLayer);
+
+        if (waterCollider == null || lotusCollider != null)
+        {
+            rb.MovePosition(newPosition);
+            // ▼▼▼ [추가됨] 성공적으로 이동했을 때만 안전 위치를 갱신 ▼▼▼
+            lastSafePosition = rb.position;
+        }
+    }
+
     private void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
 
-        // 움직임이 있을 때만 마지막 방향을 갱신 (대각선 입력 방지)
         if (moveInput.x != 0 || moveInput.y != 0)
         {
-            // 수평, 수직 중 더 큰 값으로 방향을 결정
             if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
             {
                 lastDirection = new Vector2(Mathf.Sign(moveInput.x), 0);
@@ -65,25 +91,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Move 입력이 끝났을 때 호출될 함수
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
         moveInput = Vector2.zero;
     }
 
-    // Interact(E키) 입력이 들어왔을 때 호출될 함수
     private void OnInteract(InputAction.CallbackContext context)
     {
-        // 플레이어가 바라보는 방향으로 Raycast 발사
         RaycastHit2D hit = Physics2D.Raycast(rb.position, lastDirection, interactionDistance, boxLayer);
 
-        // Raycast에 무언가 감지되었다면
         if (hit.collider != null)
         {
-            // 감지된 오브젝트가 PushableBox 컴포넌트를 가지고 있는지 확인
             if (hit.collider.TryGetComponent(out PushableBox box))
             {
-                // 박스의 Push 함수 호출
                 box.Push(lastDirection);
             }
         }
