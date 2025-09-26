@@ -26,7 +26,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
 
             // 그리드에 스냅
             Vector3Int cell = grid.WorldToCell(worldPos);
-            Vector3 aligned = grid.CellToWorld(cell);
+            Vector3 aligned = grid.GetCellCenterWorld(cell);
 
             draggingInstance.transform.position = aligned + Vector3.back;
         }
