@@ -29,7 +29,7 @@ public class WorldSpaceSlider : MonoBehaviour
     }
     void Update()
     {
-        if (!placed)
+        if (!IsInstalled)
         {
             HandlePlacement();
         }
