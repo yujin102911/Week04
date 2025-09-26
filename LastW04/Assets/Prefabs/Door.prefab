@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3209358860510287081}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.37, y: -0.55, z: 0}
+  m_LocalPosition: {x: -0.021, y: -0.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62,7 +62,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.23, y: 1.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7761602749887960383}
   m_Father: {fileID: 0}
@@ -111,7 +111,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,7 +119,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &6920351807120761030
@@ -156,7 +156,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.023453474, y: 0.015635677}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -166,7 +166,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.45275187, y: 0.5205066}
   m_EdgeRadius: 0
 --- !u!114 &5550549264371162850
 MonoBehaviour:
@@ -180,11 +180,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe2fc42c11cf5c8489c7dd83413998b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 4619494788888716882}
   solid: {fileID: 6920351807120761030}
   sr: {fileID: 2611869977471157060}
-  openSprite: {fileID: 21300000, guid: e89d485252ed3064b9b6348d00b2cb0f, type: 3}
-  closedSprite: {fileID: 21300000, guid: 9cd579fd8be01b543babb82f38732217, type: 3}
+  openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
+  closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
   isOn: 0
+  toggleGameObject: 0
+  disableSolidOnOpen: 0
 --- !u!114 &7720958272278707030
 MonoBehaviour:
   m_ObjectHideFlags: 0

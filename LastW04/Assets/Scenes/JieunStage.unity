@@ -9080,7 +9080,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 387487121}
   hint: {fileID: 912511357}
-  radius: 1.5
+  radius: 1.3
+  fadeDuration: 0.05
 --- !u!1 &1539762811
 GameObject:
   m_ObjectHideFlags: 0

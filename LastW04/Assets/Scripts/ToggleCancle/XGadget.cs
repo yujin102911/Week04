@@ -102,8 +102,8 @@ public class XGadget : MonoBehaviour
             return;
         }
 
-        // 기본 설계: 대상과 함께 가젯도 파괴(가젯이 Snap의 자식이므로 부모 파괴 시 같이 사라짐)
-        target.DeleteSelf();
+        // =대상과 함께 가젯도 파괴(가젯이 Snap의 자식이므로 부모 파괴 시 같이 사라짐)
+        //target.DeleteSelf();
 
         // 만약 재사용형으로 만들고 싶다면, 대상 삭제 전에 분리:
         // transform.SetParent(null);
