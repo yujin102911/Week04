@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 public class UIEditor : MonoBehaviour
 {
     public Grid grid;
-    public Mode mode;
     public GameObject editingUI;//하단OnOFF용
     Transform draggingInstance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -18,18 +17,18 @@ public class UIEditor : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Tab)) //에딧모드 전환
         {
-            if (mode != Mode.Editing)
+            if ( GameManager.mode != Mode.Editing)
             {
-                mode = Mode.Editing;
+                GameManager.mode = Mode.Editing;
                 editingUI.SetActive(false);
             }
             else
             {
-                mode = Mode.None;
+                GameManager.mode = Mode.None;
                 editingUI.SetActive(true);
             }
         }
-        if (mode == Mode.Editing)//에디팅 모드 시 편집 기능
+        if (GameManager.mode == Mode.Editing)//에디팅 모드 시 편집 기능
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -67,7 +66,15 @@ public class UIEditor : MonoBehaviour
             if (Input.GetMouseButton(0) && draggingInstance != null)//드래그중일때
             {
                 if (draggingInstance == null) return;
-
+                //놓은 곳에 아무것도 없으면
+                var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
+                foreach (var h in hits)
+                {
+                    if (h.CompareTag("EditorbleUI"))//다른 UI있으면
+                    {
+                        return;//밑에 코드 실행 ㄴㄴ
+                    }
+                }
                 // 화면 좌표 → 월드 좌표
                 Vector3 screenPos = Mouse.current.position.ReadValue();
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
@@ -76,15 +83,7 @@ public class UIEditor : MonoBehaviour
                 // 그리드에 스냅
                 Vector3Int cell = grid.WorldToCell(worldPos);
                 Vector3 aligned = grid.CellToWorld(cell);
-
                 draggingInstance.transform.position = aligned + Vector3.back;
-            }
-
-            if (Input.GetMouseButtonUp(0) && draggingInstance != null)
-            {
-                // 스냅 처리/*
-                /*Vector2Int cell = Vector2.grid.WorldToCell(draggingObject.position);
-                draggingObject.position = grid.CellToWorld(cell);*/
                 draggingInstance = null;
             }
         }
