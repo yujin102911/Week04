@@ -15,18 +15,13 @@ public class UIEditor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Tab)) //에딧모드 전환
+        if (GameManager.mode != Mode.Editing)//에딧 아니면
         {
-            if ( GameManager.mode != Mode.Editing)
-            {
-                GameManager.mode = Mode.Editing;
-                editingUI.SetActive(false);
-            }
-            else
-            {
-                GameManager.mode = Mode.None;
-                editingUI.SetActive(true);
-            }
+            editingUI.SetActive(true);//에딧UI 가림막 거짓으로
+        }
+        else
+        {
+            editingUI.SetActive(false);//에딧UI 가림막 참으로
         }
         if (GameManager.mode == Mode.Editing)//에디팅 모드 시 편집 기능
         {
