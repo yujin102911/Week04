@@ -26,7 +26,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
 
             // 그리드에 스냅
             Vector3Int cell = grid.WorldToCell(worldPos);
-            Vector3 aligned = grid.CellToWorld(cell);
+            Vector3 aligned = grid.GetCellCenterWorld(cell);
 
             draggingInstance.transform.position = aligned + Vector3.back;
         }
@@ -40,9 +40,9 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
             draggingInstance = Instantiate(previewInstance);
         }
     }
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)//클릭 때면
     {
-        if (draggingInstance == null) return;                
+        if (draggingInstance == null) return;           //든거 없음 종료     
         PlacedInstance = Instantiate(prefabToSpawn);//재대로 된거소환
         PlacedInstance.transform.position = draggingInstance.transform.position;//미리보기 위치로
         Destroy(draggingInstance);

@@ -18,13 +18,13 @@ TagManager:
   - AttachPoint
   - Gadget
   - 
-  - Interactable
-  - Clickable
-  - Box
+  - Pushable
   - 
   - 
+  - 
+  - Obstacle
   - Player
-  - Lotus
+  - LotusPad
   - 
   - 
   - 

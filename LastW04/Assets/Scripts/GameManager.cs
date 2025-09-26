@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public enum Mode//모드설정
@@ -7,10 +8,14 @@ public enum Mode//모드설정
 }
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    Mode defalutMode;
+    public static Mode mode;
     public static GameManager instance;    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()//싱글톤
     {
+        mode = defalutMode;
         if (instance == null)
         {
             instance = this;
@@ -25,5 +30,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Tab)) //에딧모드 전환
+        {
+            if (GameManager.mode != Mode.Editing)
+            {
+                GameManager.mode = Mode.Editing;
+            }
+            else
+            {
+                GameManager.mode = Mode.None;
+            }
+        }
     }
 }

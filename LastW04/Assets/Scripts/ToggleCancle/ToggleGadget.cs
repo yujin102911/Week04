@@ -19,6 +19,7 @@ public class ToggleGadget : MonoBehaviour
 
     void OnMouseDown()
     {
+        if(GameManager.mode==Mode.None)//일반 상태라면
         // 3) 이미 부착되어 있다 → 이 가젯을 클릭하면 대상 토글 작동
         if (attachedAP != null && attachedTT != null)
         {
