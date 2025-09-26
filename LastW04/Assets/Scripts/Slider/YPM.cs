@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
             if (castHit.collider == null)
             {
                 Vector2 targetPosition = (Vector2)box.position + lastDirection;
-                Vector3 finalPosition = new Vector3(Mathf.Round(targetPosition.x)+0.5f, Mathf.Round(targetPosition.y)+0.5f, 0);
+                Vector3 finalPosition = new Vector3(Mathf.Floor(targetPosition.x), Mathf.Floor(targetPosition.y), 0);
                 box.GetComponent<Rigidbody2D>().MovePosition(finalPosition);
 
                 // ▼▼▼ 이 줄을 추가하세요! ▼▼▼
