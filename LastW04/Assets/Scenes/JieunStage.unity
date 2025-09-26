@@ -3307,6 +3307,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 3843340412238198765, guid: fd3ed4ff2dc808344a3f0892e78db76f, type: 3}
+      propertyPath: blockCastDist
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843340412238198765, guid: fd3ed4ff2dc808344a3f0892e78db76f, type: 3}
+      propertyPath: interactableLayers.m_Bits
+      value: 34816
+      objectReference: {fileID: 0}
     - target: {fileID: 8506200132105120011, guid: fd3ed4ff2dc808344a3f0892e78db76f, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
