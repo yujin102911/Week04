@@ -107,7 +107,7 @@ public class SlidingStone2D : MonoBehaviour
 
         IsSliding = false;
 
-        // 필요 시: Statue.ReevaluateAll();
+        Statue.ReevaluateAll();
     }
 
 #if UNITY_EDITOR
