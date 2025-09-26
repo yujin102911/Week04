@@ -1,11 +1,11 @@
-// SliderHandle.cs
+ï»¿// SliderHandle.cs
 using UnityEngine;
 
 public class SliderHandle : MonoBehaviour
 {
     private WorldSpaceSlider parentSlider;
     private Camera mainCamera;
-    // private bool isDragging = false; // ÀÌ ÁÙÀ» ¾Æ·¡ public ÇÁ·ÎÆÛÆ¼·Î º¯°æ
+    // private bool isDragging = false; // ì´ ì¤„ì„ ì•„ë˜ public í”„ë¡œí¼í‹°ë¡œ ë³€ê²½
     public bool IsDragging { get; private set; } = false;
     private Vector3 offset;
 
@@ -30,6 +30,7 @@ public class SliderHandle : MonoBehaviour
     {
         if (IsDragging)
         {
+            if(GameManager.mode==Mode.None)//ê¸°ë³¸ ëª¨ë“œì¼ë•Œë§Œ ì´ë™
             parentSlider.UpdateValueFromHandlePosition(GetMouseWorldPos() + offset);
         }
     }
