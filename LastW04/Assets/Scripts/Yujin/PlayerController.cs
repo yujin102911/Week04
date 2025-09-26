@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         // 최소 변경: linearVelocity 대신 velocity 사용
-        rb.velocity = moveInput * moveSpeed;
+        rb.linearVelocity = moveInput * moveSpeed;
     }
 
     private void OnMove(InputAction.CallbackContext context)
@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(rb.position, dir, interactionDistance, boxLayer);
         if (!hit) return;
 
-        // 돌: 끝까지 미끄럼
         if (hit.collider.TryGetComponent(out SlidingStone2D stone))
         {
             if (!stone.IsSliding) stone.Push(dir);

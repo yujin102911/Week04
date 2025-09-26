@@ -1,3 +1,4 @@
+// Statue.cs
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,6 @@ public class Statue : MonoBehaviour
 
     public bool IsSatisfied { get; private set; }
 
-    // === 정적 관리 ===
     static readonly List<Statue> s_all = new();
     public static System.Action OnAnyStatueStateChanged;
 
@@ -35,7 +35,6 @@ public class Statue : MonoBehaviour
         if (anyChanged) OnAnyStatueStateChanged?.Invoke();
     }
 
-    // 현재 상태 재판정
     bool Reevaluate()
     {
         Vector2 frontCenter = GetFrontCellCenter();
@@ -50,7 +49,6 @@ public class Statue : MonoBehaviour
         if (newSatisfied != IsSatisfied)
         {
             IsSatisfied = newSatisfied;
-            // 필요 시 색상/VFX/사운드 토글
             return true;
         }
         return false;
@@ -79,7 +77,6 @@ public class Statue : MonoBehaviour
         Gizmos.color = IsSatisfied ? Color.green : Color.yellow;
         Gizmos.DrawWireCube(GetFrontCellCenter(), (Vector3)goalBoxSize);
 
-        // 바라보는 방향 표시
         var p = transform.position;
         var d = (Vector3)GetFrontDir() * cellSize;
         Gizmos.DrawLine(p, p + d);
