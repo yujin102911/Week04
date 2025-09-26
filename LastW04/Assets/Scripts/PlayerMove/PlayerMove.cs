@@ -11,8 +11,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField, Range(0f, 0.5f)] float snapHysteresis = 0.12f;
 
     [Header("Interact / Block")]
-    [SerializeField] private LayerMask interactableLayers;             // 상호작용 대상
-    [SerializeField] private LayerMask blockLayers;                    // 전진 차단 대상(벽/박스 등)
+    [SerializeField] private LayerMask interactableLayers;         // 상호작용 대상
+    [SerializeField] private LayerMask blockLayers;              // 전진 차단 대상(벽/박스 등)
     [SerializeField, Min(0.05f)] private float blockCastDist = 0.6f;   // 정면 차단 거리
     [SerializeField, Min(0.05f)] private float blockCircleRadius = 0.25f; // 서클캐스트 반지름
     [SerializeField, Min(0f)] private float interactCooldown = 0.1f;
@@ -20,6 +20,10 @@ public class PlayerMove : MonoBehaviour
     Vector2 input;
     Vector2 lastCardinal = Vector2.down;
     float lastInteractTime = -999f;
+
+    // 플랫폼 위에 있는지 여부를 나타내는 public 변수
+    // AttachPlayerToPlatform 스크립트가 이 값을 변경합니다.
+    public bool IsOnPlatform { get; set; } = false;
 
     public void OnMove(InputValue value)
     {
@@ -29,24 +33,27 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        // --- 1) 서클캐스트로 정면 차단 ---
-        Vector2 forward = (lastCardinal == Vector2.zero) ? Vector2.down : lastCardinal;
-        RaycastHit2D blockHit = Physics2D.CircleCast(
-            origin: (Vector2)transform.position,
-            radius: blockCircleRadius,
-            direction: forward,
-            distance: blockCastDist,
-            layerMask: blockLayers
-        );
-
-        if (blockHit.collider != null)
+        // 플랫폼 위에 있지 않을 때만 정면 차단 로직을 실행합니다.
+        if (!IsOnPlatform)
         {
-            // 입력 벡터에서 정면 성분만 제거(스트레이프는 유지)
-            float f = Vector2.Dot(input, forward);
-            if (f > 0f) input -= forward * f;
+            Vector2 forward = (lastCardinal == Vector2.zero) ? Vector2.down : lastCardinal;
+            RaycastHit2D blockHit = Physics2D.CircleCast(
+                origin: (Vector2)transform.position,
+                radius: blockCircleRadius,
+                direction: forward,
+                distance: blockCastDist,
+                layerMask: blockLayers
+            );
+
+            if (blockHit.collider != null)
+            {
+                // 입력 벡터에서 정면 성분만 제거(스트레이프는 유지)
+                float f = Vector2.Dot(input, forward);
+                if (f > 0f) input -= forward * f;
+            }
         }
 
-        // --- 2) 이동/스냅 ---
+        // --- 2) 이동/스냅 (이하 동일) ---
         bool isMoving = input.magnitude > deadZone;
 
         Vector2 cardinal = lastCardinal;
@@ -93,7 +100,7 @@ public class PlayerMove : MonoBehaviour
             Collider2D blocked = Physics2D.OverlapCircle(target, 0.2f, interactableLayers);
             if (blocked == null)
             {
-                 Vector3 finalPosition = new Vector3(Mathf.Round(target.x), Mathf.Round(target.y), 0);
+                Vector3 finalPosition = new Vector3(Mathf.Round(target.x), Mathf.Round(target.y), 0);
                 box.position = finalPosition;
                 // anim.SetTrigger("push");
             }
