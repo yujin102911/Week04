@@ -8,7 +8,7 @@ public class ToggleGadget : MonoBehaviour
     // 내부 상태
     private bool isHeld = false;       // 손에 들고 있나
     private AttachPoint attachedAP;    // 붙은 부착점
-    private DoorToggle targetDoor;     // 토글 대상
+    private ToggleTarget targetDoor;     // 토글 대상
 
     void Update()
     {
@@ -55,13 +55,13 @@ public class ToggleGadget : MonoBehaviour
         // 마우스 지점과 겹치는 콜라이더 모두 확인
         var hits = Physics2D.OverlapPointAll(point);
         AttachPoint apFound = null;
-        DoorToggle doorFound = null;
+        ToggleTarget doorFound = null;
 
         foreach (var h in hits)
         {
             // 같은 오브젝트에 두 컴포넌트가 따로 있을 수 있어 GetComponentInParent 사용
             var ap = h.GetComponentInParent<AttachPoint>();
-            var door = h.GetComponentInParent<DoorToggle>();
+            var door = h.GetComponentInParent<ToggleTarget>();
 
             if (ap != null && !ap.occupied && door != null)
             {
