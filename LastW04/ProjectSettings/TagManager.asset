@@ -8,6 +8,7 @@ TagManager:
   - Box
   - Lotus
   - Water
+  - Stone
   layers:
   - Default
   - TransparentFX
