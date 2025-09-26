@@ -5,7 +5,8 @@ public class PushableBox : MonoBehaviour
 {
     [SerializeField] private LayerMask obstacleLayer; // 장애물 레이어 (벽 등)
     [SerializeField] private LayerMask lotusPadLayer; // 이동 가능한 연꽃잎 레이어
-    [SerializeField] private LayerMask waterLayer;    // ▼▼▼ "물" 레이어를 감지하기 위해 이 줄을 추가하세요! ▼▼▼
+    [SerializeField] private LayerMask waterLayer;    // 물 레이어
+    [SerializeField] private LayerMask boxLayer;      // ▼▼▼ 다른 상자를 감지하기 위해 이 줄을 추가했어요! ▼▼▼
 
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
@@ -47,7 +48,16 @@ public class PushableBox : MonoBehaviour
             return false; // 장애물이 있으면 무조건 이동 불가
         }
 
-        // 2. 목표 위치에 "물"이 있는지 확인
+        // ▼▼▼ 여기에 새로운 코드가 추가되었어요! ▼▼▼
+        // 2. 목표 위치에 다른 상자가 있는지 확인
+        if (Physics2D.OverlapCircle(targetPos, 0.2f, boxLayer))
+        {
+            boxCollider.enabled = true; // 반드시 다시 활성화!
+            return false; // 다른 상자가 있으면 이동 불가
+        }
+        // ▲▲▲ 여기까지가 추가된 부분입니다 ▲▲▲
+
+        // 3. 목표 위치에 "물"이 있는지 확인
         Collider2D waterHit = Physics2D.OverlapCircle(targetPos, 0.2f, waterLayer);
         if (waterHit != null)
         {
@@ -58,7 +68,7 @@ public class PushableBox : MonoBehaviour
             return lotusHit != null;
         }
 
-        // 3. 위 모든 조건에 해당하지 않으면(장애물도 없고 물도 아니면) 일반 땅이므로 이동 가능
+        // 4. 위 모든 조건에 해당하지 않으면(장애물도, 다른 상자도, 물도 아니면) 일반 땅이므로 이동 가능
         boxCollider.enabled = true; // 반드시 다시 활성화!
         return true;
     }
