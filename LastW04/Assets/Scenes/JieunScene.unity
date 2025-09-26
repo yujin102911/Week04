@@ -1854,13 +1854,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 247861815}
-  solid: {fileID: 3050620625663354814}
+  solid: {fileID: 247861816}
   sr: {fileID: 247861817}
   openSprite: {fileID: 0}
   closedSprite: {fileID: 0}
   isOn: 1
   toggleGameObject: 1
-  disableSolidOnOpen: 0
+  disableSolidOnOpen: 1
 --- !u!61 &3050620625663354814
 BoxCollider2D:
   m_ObjectHideFlags: 0
