@@ -6,35 +6,50 @@ public class StayInWater : MonoBehaviour
 
     void Start()
     {
-        // "Water" 태그를 가진 오브젝트를 찾아서 그 콜라이더를 가져옵니다.
-        GameObject waterZone = GameObject.FindGameObjectWithTag("Water");
-        if (waterZone != null)
-        {
-            waterCollider = waterZone.GetComponent<Collider2D>();
-        }
-        else
+        GameObject[] waterZones = GameObject.FindGameObjectsWithTag("Water");
+
+        if (waterZones.Length == 0)
         {
             Debug.LogError("씬에 'Water' 태그를 가진 오브젝트가 없습니다!");
+            return;
+        }
+
+        GameObject closestWaterZone = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject waterZone in waterZones)
+        {
+            // ▼▼▼ 여기가 핵심! 이 부분을 수정합니다. ▼▼▼
+            Collider2D zoneCollider = waterZone.GetComponent<Collider2D>();
+            if (zoneCollider == null) continue; // 콜라이더가 없는 Water 존은 건너뜁니다.
+
+            // 이 연꽃잎의 위치에서부터 Water 존 콜라이더의 '가장 가까운 지점'까지의 거리를 계산합니다.
+            float distance = zoneCollider.Distance(transform.GetComponent<Collider2D>()).distance;
+            // ▲▲▲ 수정된 부분 ▲▲▲
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestWaterZone = waterZone;
+            }
+        }
+
+        if (closestWaterZone != null)
+        {
+            waterCollider = closestWaterZone.GetComponent<Collider2D>();
         }
     }
 
-    // 모든 Update 함수가 실행된 후 마지막에 호출됩니다.
-    // 오브젝트의 최종 위치를 보정하기에 가장 적합합니다.
     void LateUpdate()
     {
         if (waterCollider == null) return;
 
-        // 물 영역의 경계(Bounds)를 가져옵니다.
         Bounds waterBounds = waterCollider.bounds;
-
-        // 현재 연꽃의 위치를 가져옵니다.
         Vector3 currentPosition = transform.position;
 
-        // Mathf.Clamp를 사용하여 연꽃의 x, y 좌표가 물의 경계를 벗어나지 않도록 제한합니다.
         float clampedX = Mathf.Clamp(currentPosition.x, waterBounds.min.x, waterBounds.max.x);
         float clampedY = Mathf.Clamp(currentPosition.y, waterBounds.min.y, waterBounds.max.y);
 
-        // 최종적으로 보정된 위치를 연꽃의 위치에 다시 적용합니다.
         transform.position = new Vector3(clampedX, clampedY, currentPosition.z);
     }
 }
