@@ -267,6 +267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike
       objectReference: {fileID: 0}
+    - target: {fileID: 3022213260766737744, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: openSprite
+      value: 
+      objectReference: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
     - target: {fileID: 3766043328577801433, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: m_Name
       value: AttachPoint_Door23
@@ -3071,6 +3075,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3022213260766737744, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: openSprite
+      value: 
+      objectReference: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
     - target: {fileID: 7216727911829183811, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5.5
@@ -3173,6 +3181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3022213260766737744, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: openSprite
+      value: 
+      objectReference: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
     - target: {fileID: 7216727911829183811, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.5
@@ -3230,6 +3242,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3022213260766737744, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: openSprite
+      value: 
+      objectReference: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
     - target: {fileID: 3875147721432991249, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
