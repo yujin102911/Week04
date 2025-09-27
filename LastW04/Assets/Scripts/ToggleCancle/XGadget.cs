@@ -1,59 +1,33 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class XGadget : MonoBehaviour
 {
     [Header("Refs")]
-    public Camera cam; // Main Camera µå·¡±×
 
-    // ³»ºÎ »óÅÂ
+    // ë‚´ë¶€ ìƒíƒœ
     private bool isHeld = false;
-    private AttachPoint attachedAP;        // ºÙÀº ºÎÂøÁ¡
-    private DeletableTarget target;        // »èÁ¦ ´ë»ó
+    private AttachPoint attachedAP;        // ë¶™ì€ ë¶€ì°©ì 
+    private DeletableTarget target;        // ì‚­ì œ ëŒ€ìƒ
 
-    void Update()
+    void Start()
     {
-        // µé°í ÀÖÀ» ¶§´Â Ä¿¼­ µû¶ó´Ù´Ô
-        if (isHeld && cam != null)
-        {
-            Vector3 p = cam.ScreenToWorldPoint(Input.mousePosition);
-            p.z = 0f;
-            transform.position = p;
-        }
+        TryAttachAtMouse();
     }
 
     void OnMouseDown()
     {
-        // 1) ¾ÆÁ÷ µé°í ÀÖÁö ¾ÊÀ¸¸é Áı±â
-        if (!isHeld && attachedAP == null)
-        {
-            isHeld = true;
-            transform.SetParent(null);
-            return;
-        }
-
-        // 2) ¼Õ¿¡ µé°í ÀÖÀ¸¸é ¡æ ºÎÂø ½Ãµµ
-        if (isHeld)
-        {
-            TryAttachAtMouse();
-            return;
-        }
-
-        // 3) ÀÌ¹Ì ºÎÂøµÇ¾î ÀÖÀ¸¸é ¡æ ÀÛµ¿(»èÁ¦)
-        if (attachedAP != null && target != null)
-        {
-            Activate();
-        }
+        if (GameManager.mode == Mode.None)//ì¼ë°˜ ìƒíƒœë¼ë©´
+                                          // 3) ì´ë¯¸ ë¶€ì°©ë˜ì–´ ìˆë‹¤ â†’ ì´ ê°€ì ¯ì„ í´ë¦­í•˜ë©´ ëŒ€ìƒ í† ê¸€ ì‘ë™
+            if (attachedAP != null && target != null)
+            {
+                Activate();
+            }
     }
 
     private void TryAttachAtMouse()
     {
-        if (cam == null) return;
-
-        Vector3 p = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 point = new Vector2(p.x, p.y);
-
-        // Å¬¸¯ ÁöÁ¡°ú °ãÄ¡´Â ¸ğµç Äİ¶óÀÌ´õ °Ë»ç
-        var hits = Physics2D.OverlapPointAll(point);
+        // í´ë¦­ ì§€ì ê³¼ ê²¹ì¹˜ëŠ” ëª¨ë“  ì½œë¼ì´ë” ê²€ì‚¬
+        var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
         AttachPoint apFound = null;
         DeletableTarget targetFound = null;
 
@@ -72,23 +46,23 @@ public class XGadget : MonoBehaviour
 
         if (apFound == null || targetFound == null) return;
 
-        // ½º³À Transform È®º¸(¾øÀ¸¸é AP ÀÚ½ÅÀ» »ç¿ë)
+        // ìŠ¤ëƒ… Transform í™•ë³´(ì—†ìœ¼ë©´ AP ìì‹ ì„ ì‚¬ìš©)
         Transform snap = apFound.snap != null ? apFound.snap : apFound.transform;
         if (apFound.snap == null)
-            Debug.LogWarning($"[XGadget] '{apFound.name}'ÀÇ snapÀÌ ºñ¾î ÀÖ¾î AP À§Ä¡·Î ´ëÃ¼ÇÕ´Ï´Ù.");
+            Debug.LogWarning($"[XGadget] '{apFound.name}'ì˜ snapì´ ë¹„ì–´ ìˆì–´ AP ìœ„ì¹˜ë¡œ ëŒ€ì²´í•©ë‹ˆë‹¤.");
 
         attachedAP = apFound;
         target = targetFound;
 
-        // ¿ùµå ÁÂÇ¥¸¦ ¸ÕÀú ¸ÂÃá µÚ ºÎ¸ğ µî·Ï(Á¤È®ÇÑ ½º³À)
+        // ì›”ë“œ ì¢Œí‘œë¥¼ ë¨¼ì € ë§ì¶˜ ë’¤ ë¶€ëª¨ ë“±ë¡(ì •í™•í•œ ìŠ¤ëƒ…)
         transform.position = snap.position;
         transform.rotation = snap.rotation;
         transform.SetParent(snap, false);
-        transform.localPosition = Vector3.zero;
+        transform.localPosition = Vector3.zero + Vector3.back;
         transform.localRotation = Quaternion.identity;
 
         attachedAP.occupied = true;
-        isHeld = false; // ¼Õ¿¡¼­ ³»·Á³õÀ½
+        isHeld = false; // ì†ì—ì„œ ë‚´ë ¤ë†“ìŒ
     }
 
     private void Activate()
@@ -97,15 +71,15 @@ public class XGadget : MonoBehaviour
 
         if (!target.CanDelete)
         {
-            // ÇÇµå¹é¸¸ ÁÖ°í Á¾·á(ÇÊ¿ä ½Ã ¸ÓÆ¼¸®¾ó ±ôºıÀÓ, »ç¿îµå µî)
-            Debug.Log("»èÁ¦ ºÒ°¡ ´ë»óÀÔ´Ï´Ù(essential).");
+            // í”¼ë“œë°±ë§Œ ì£¼ê³  ì¢…ë£Œ(í•„ìš” ì‹œ ë¨¸í‹°ë¦¬ì–¼ ê¹œë¹¡ì„, ì‚¬ìš´ë“œ ë“±)
+            Debug.Log("ì‚­ì œ ë¶ˆê°€ ëŒ€ìƒì…ë‹ˆë‹¤(essential).");
             return;
         }
 
-        // ±âº» ¼³°è: ´ë»ó°ú ÇÔ²² °¡Á¬µµ ÆÄ±«(°¡Á¬ÀÌ SnapÀÇ ÀÚ½ÄÀÌ¹Ç·Î ºÎ¸ğ ÆÄ±« ½Ã °°ÀÌ »ç¶óÁü)
-        target.DeleteSelf();
+        // =ëŒ€ìƒê³¼ í•¨ê»˜ ê°€ì ¯ë„ íŒŒê´´(ê°€ì ¯ì´ Snapì˜ ìì‹ì´ë¯€ë¡œ ë¶€ëª¨ íŒŒê´´ ì‹œ ê°™ì´ ì‚¬ë¼ì§)
+        //target.DeleteSelf();
 
-        // ¸¸¾à Àç»ç¿ëÇüÀ¸·Î ¸¸µé°í ½Í´Ù¸é, ´ë»ó »èÁ¦ Àü¿¡ ºĞ¸®:
+        // ë§Œì•½ ì¬ì‚¬ìš©í˜•ìœ¼ë¡œ ë§Œë“¤ê³  ì‹¶ë‹¤ë©´, ëŒ€ìƒ ì‚­ì œ ì „ì— ë¶„ë¦¬:
         // transform.SetParent(null);
         // attachedAP.occupied = false;
         // attachedAP = null;
