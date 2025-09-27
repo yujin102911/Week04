@@ -4,26 +4,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Move")]
-    [SerializeField] private float moveSpeed = 5f;               // 플레이어 이동 속도
-    [SerializeField] private float interactionDistance = 1f;     // 상호작용 거리(보통 cellSize와 동일 또는 1.05배)
-    [SerializeField] private LayerMask boxLayer;                 // 돌/박스가 속한 레이어 마스크
-
-    [Header("Animation")]
-    [SerializeField] private Animator anim;                      // 애니메이터
-    [SerializeField, Range(0f, 0.3f)] private float deadZone = 0.05f;
-    [SerializeField, Range(0f, 0.5f)] private float snapHysteresis = 0.12f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float interactionDistance = 1f;
+    [SerializeField] private LayerMask boxLayer;
+    [SerializeField] private LayerMask waterLayer;
+    [SerializeField] private LayerMask lotusLayer;
 
     private Rigidbody2D rb;
     private PlayerControls playerControls;
     private Vector2 moveInput;
-    private Vector2 lastDirection = Vector2.down;   // 마지막 바라보는 방향(입력 기준)
-    private Vector2 lastCardinal = Vector2.down;    // 애니메이션용 스냅 방향
+    private Vector2 lastDirection = Vector2.down;
+
+    // ▼▼▼ [추가됨] 마지막 안전 위치를 저장할 변수 ▼▼▼
+    private Vector2 lastSafePosition;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerControls = new PlayerControls();
+        // ▼▼▼ [추가됨] 게임 시작 시 초기 위치를 안전 위치로 저장 ▼▼▼
+        lastSafePosition = transform.position;
     }
 
     private void OnEnable()
@@ -42,39 +42,35 @@ public class PlayerController : MonoBehaviour
         playerControls.Player.Disable();
     }
 
-    private void FixedUpdate()
-    {
-        // 이동은 물리 프레임에서 처리
-        rb.linearVelocity = moveInput * moveSpeed;
-    }
-
+    // ▼▼▼ [추가됨] 플레이어가 물에 끼었는지 확인하고 복구하는 로직 ▼▼▼
     private void Update()
     {
-        // === 애니메이션 로직 (PlayerMove와 동일한 스냅 규칙) ===
-        bool isMoving = moveInput.magnitude > deadZone;
+        // 현재 위치에 물이 있는지, 연꽃이 있는지 확인
+        bool isInWater = Physics2D.OverlapCircle(rb.position, 0.4f, waterLayer) != null;
+        bool isOnLotus = Physics2D.OverlapCircle(rb.position, 0.4f, lotusLayer) != null;
 
-        Vector2 cardinal = lastCardinal;
-        if (isMoving)
+        // 만약 연꽃 위도 아닌데 물 속에 있다면 (끼인 상태)
+        if (isInWater && !isOnLotus)
         {
-            float ax = Mathf.Abs(moveInput.x);
-            float ay = Mathf.Abs(moveInput.y);
-
-            if (ax >= ay + snapHysteresis)
-                cardinal = new Vector2(Mathf.Sign(moveInput.x), 0f);
-            else if (ay >= ax + snapHysteresis)
-                cardinal = new Vector2(0f, Mathf.Sign(moveInput.y));
-
-            lastCardinal = cardinal;         // 애니용 스냅 방향 저장
-            lastDirection = cardinal;        // 상호작용도 스냅된 방향을 사용하고 싶으면 유지
+            // 마지막으로 저장된 안전한 위치로 즉시 이동!
+            transform.position = lastSafePosition;
+            Debug.Log("플레이어가 물에 끼어 안전한 위치로 복귀합니다.");
         }
+    }
 
-        if (anim != null)
+
+    private void FixedUpdate()
+    {
+        Vector2 newPosition = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
+
+        Collider2D waterCollider = Physics2D.OverlapCircle(newPosition, 0.4f, waterLayer);
+        Collider2D lotusCollider = Physics2D.OverlapCircle(newPosition, 0.4f, lotusLayer);
+
+        if (waterCollider == null || lotusCollider != null)
         {
-            anim.SetBool("isMoving", isMoving);
-            anim.SetFloat("dirX", isMoving ? cardinal.x : 0f);
-            anim.SetFloat("dirY", isMoving ? cardinal.y : 0f);
-            anim.SetFloat("lastX", lastCardinal.x);
-            anim.SetFloat("lastY", lastCardinal.y);
+            rb.MovePosition(newPosition);
+            // ▼▼▼ [추가됨] 성공적으로 이동했을 때만 안전 위치를 갱신 ▼▼▼
+            lastSafePosition = rb.position;
         }
     }
 
@@ -82,9 +78,17 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
 
-        // 입력이 있을 때만 lastDirection 갱신 (대각 입력은 Update에서 스냅)
         if (moveInput.x != 0 || moveInput.y != 0)
-            lastDirection = moveInput;
+        {
+            if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
+            {
+                lastDirection = new Vector2(Mathf.Sign(moveInput.x), 0);
+            }
+            else
+            {
+                lastDirection = new Vector2(0, Mathf.Sign(moveInput.y));
+            }
+        }
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
@@ -94,23 +98,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        // 4방향 스냅한 방향(애니메이션 스냅 결과와 일치시키려면 lastCardinal 사용)
-        Vector2 dir = (Mathf.Abs(lastDirection.x) > Mathf.Abs(lastDirection.y))
-            ? new Vector2(Mathf.Sign(lastDirection.x), 0)
-            : new Vector2(0, Mathf.Sign(lastDirection.y));
+        RaycastHit2D hit = Physics2D.Raycast(rb.position, lastDirection, interactionDistance, boxLayer);
 
-        RaycastHit2D hit = Physics2D.Raycast(rb.position, dir, interactionDistance, boxLayer);
-        if (!hit) return;
-
-        if (hit.collider.TryGetComponent(out SlidingStone2D stone))
+        if (hit.collider != null)
         {
-            if (!stone.IsSliding) stone.Push(dir);
-            return;
-        }
-
-        if (hit.collider.TryGetComponent(out PushableBox box))
-        {
-            box.Push(dir);
+            if (hit.collider.TryGetComponent(out PushableBox box))
+            {
+                box.Push(lastDirection);
+            }
         }
     }
 }

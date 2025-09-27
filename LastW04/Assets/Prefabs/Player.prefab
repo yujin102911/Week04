@@ -110,7 +110,7 @@ MonoBehaviour:
   snapHysteresis: 0.12
   interactableLayers:
     serializedVersion: 2
-    m_Bits: 34816
+    m_Bits: 32768
   blockLayers:
     serializedVersion: 2
     m_Bits: 0

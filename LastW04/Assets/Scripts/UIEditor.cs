@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class UIEditor : MonoBehaviour
 {
     public Grid grid;
     public GameObject editingUI;//하단OnOFF용
-    public Transform draggingInstance;
+    public GameObject draggingInstance;
+    public Vector3 draggingStartPos;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,17 +32,18 @@ public class UIEditor : MonoBehaviour
             {
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+                RaycastHit2D hit = Physics2D.GetRayIntersection(ray);//범위 검사
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
                     if (hit.transform.parent != null)
                     {
-                        draggingInstance=hit.transform.parent;
+                        draggingInstance=hit.transform.parent.gameObject;
                     }
                     else
                     {
-                        draggingInstance=hit.transform;
+                        draggingInstance=hit.transform.gameObject;
                     }
+                    draggingStartPos= draggingInstance.transform.position;//초기 설정
                 }
             }
 
@@ -68,16 +71,18 @@ public class UIEditor : MonoBehaviour
                 Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
                 // 그리드에 스냅
                 Vector3Int cell = grid.WorldToCell(worldPos);
-                Vector3 aligned = grid.CellToWorld(cell);
+                Vector3 aligned = grid.GetCellCenterWorld(cell);
                 draggingInstance.transform.position = aligned + Vector3.back;
             }
-            if(Input.GetMouseButtonUp(0) && draggingInstance != null)
+            if(Input.GetMouseButtonUp(0) && draggingInstance != null)//좌클 때면
             {   //놓은 곳에 아무것도 없으면
-                var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
+                var hits = Physics2D.OverlapBoxAll(draggingInstance.transform.position, new Vector2(1, 1), 0);
                 foreach (var h in hits)
                 {
-                    if (h.CompareTag("EditorbleUI"))//다른 UI있으면
+                    if (h.CompareTag("EditorbleUI")&&h.gameObject!= draggingInstance && h.gameObject != h.transform.IsChildOf(draggingInstance.transform))//다른 UI있으면
                     {
+                        Debug.Log(1);
+                        draggingInstance.transform.position = draggingStartPos;
                         draggingInstance = null;
                         return;//밑에 코드 실행 ㄴㄴ
                     }
