@@ -90,6 +90,10 @@ public class HandleAttachment : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (GameManager.mode == Mode.Editing)
+        {
+            return;
+        }
         if (parentSlider == null || !parentSlider.IsInstalled)
         {
             return;
