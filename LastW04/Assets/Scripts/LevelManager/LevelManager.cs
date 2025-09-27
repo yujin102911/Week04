@@ -25,6 +25,9 @@ public class LevelManager : MonoBehaviour
     public Image deleteUI;
     public int[] levelUIDelete;
 
+
+    public int levelBefore;//이전레벨
+
     [Header("Teleport Safety")]
     [SerializeField, Min(0f)] private float postTeleportImmunity = 0.3f;
     private float teleportImmunityUntil = -1f;

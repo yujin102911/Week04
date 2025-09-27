@@ -9,10 +9,11 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
     public GameObject previewInstance;//미리보기할 프리팹
     private GameObject draggingInstance;//드래그중인 것
     private GameObject PlacedInstance;//드래그끝 배치한 것
-    public TextMeshPro textCount;//텍스트
+    public TextMeshProUGUI textCount;//텍스트
     public int levelCurrent;//레벨
     public int levelBefore;//이전레벨
     public int limit;//레벨당 배치 제한
+    public int Remain;//레벨당 남은 배치
 
     public GameObject gameManager;
     public void Update()
