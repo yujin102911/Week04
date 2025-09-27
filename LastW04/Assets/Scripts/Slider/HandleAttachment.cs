@@ -105,7 +105,7 @@ public class HandleAttachment : MonoBehaviour
             return;
         }
 
-        if (other.CompareTag("Box") || other.CompareTag("Lotus"))
+        if (other.CompareTag("Box") || other.CompareTag("Lotus") || other.CompareTag("Statue"))
         {
             isObjectInside = true;
             attachedObjectTransform = other.transform;
