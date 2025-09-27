@@ -50432,6 +50432,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3549678978103407951, guid: a0fd8c46c1aa889408cbecb12372039b, type: 3}
+      propertyPath: zoomNormal
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3549678978103407951, guid: a0fd8c46c1aa889408cbecb12372039b, type: 3}
+      propertyPath: zoomEditing
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 9215485835268229143, guid: a0fd8c46c1aa889408cbecb12372039b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

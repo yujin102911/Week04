@@ -5,9 +5,14 @@ public class CameraZoom : MonoBehaviour
     private Camera cam;
 
     [Header("Zoom Settings")]
-    [SerializeField] private float zoomEditing;
-    [SerializeField] private float zoomNormal;
-    [SerializeField] private float zoomSpeed; // 부드러운 전환 속도
+    [Tooltip("일반 모드 카메라 크기 (기본 뷰)")]
+    [SerializeField] private float zoomNormal = 5f;
+
+    [Tooltip("에디팅 모드 카메라 크기 (줌아웃)")]
+    [SerializeField] private float zoomEditing = 8f;
+
+    [Tooltip("부드러운 전환 속도")]
+    [SerializeField] private float zoomSpeed = 5f;
 
     private float targetSize;
 
@@ -19,8 +24,7 @@ public class CameraZoom : MonoBehaviour
 
     void Update()
     {
-
-        // UIEditor의 모드 상태 확인해서 목표 줌 크기 결정
+        // 에디팅 모드일 때 → 줌아웃(값 더 크게)
         if (GameManager.mode == Mode.Editing)
             targetSize = zoomEditing;
         else
