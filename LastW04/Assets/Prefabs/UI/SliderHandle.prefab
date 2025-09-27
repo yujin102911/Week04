@@ -140,7 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterLayer:
     serializedVersion: 2
-    m_Bits: 16
+    m_Bits: 8208
 --- !u!114 &1864024592107989859
 MonoBehaviour:
   m_ObjectHideFlags: 0
