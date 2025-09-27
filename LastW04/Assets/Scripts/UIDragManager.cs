@@ -22,8 +22,6 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
             }
             
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            worldPos.z = -1f; // 2D용 Z값
-
             // 그리드에 스냅
             Vector3Int cell = grid.WorldToCell(worldPos);
             Vector3 aligned = grid.GetCellCenterWorld(cell);
@@ -42,7 +40,17 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
     }
     public void OnPointerUp(PointerEventData eventData)//클릭 때면
     {
-        if (draggingInstance == null) return;           //든거 없음 종료     
+        if (draggingInstance == null) return;           //든거 없음 종료
+        var hits = Physics2D.OverlapBoxAll(draggingInstance.transform.position, new Vector2(1, 1), 0);
+        foreach (var h in hits)
+        {
+            if (h.CompareTag("EditorbleUI"))//다른 UI있으면
+            {
+                Destroy(draggingInstance);
+                draggingInstance = null;
+                return;//밑에 코드 실행 ㄴㄴ
+            }
+        }
         PlacedInstance = Instantiate(prefabToSpawn);//재대로 된거소환
         PlacedInstance.transform.position = draggingInstance.transform.position;//미리보기 위치로
         Destroy(draggingInstance);
