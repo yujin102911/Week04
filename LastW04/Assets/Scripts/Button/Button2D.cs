@@ -14,13 +14,6 @@ public sealed class Button2D : MonoBehaviour
     [Tooltip("이 값이 0이면 '누구든 올라오면' 활성화. 0보다 크면, 누르는 오브젝트들의 총 질량이 이 값 이상일 때만 활성화.")]
     [SerializeField, Min(0f)] private float minTotalMassToPress = 0f;
 
-    [Header("Visual (optional: Top move)")]
-    [Tooltip("눌릴 때 내려갈 윗판(Top) Transform")]
-    [SerializeField] private Transform top;
-    [SerializeField] private float pressedLocalY = -0.06f;
-    [SerializeField] private float unpressedLocalY = 0f;
-    [SerializeField, Min(1f)] private float moveLerpSpeed = 12f;
-
     [Header("Visual (optional: Sprite swap)")]
     [Tooltip("버튼의 스프라이트를 바꿔줄 대상(없으면 기능 비활성)")]
     [SerializeField] private SpriteRenderer sr;
@@ -78,14 +71,7 @@ public sealed class Button2D : MonoBehaviour
 
     private void Update()
     {
-        // 부드러운 윗판 이동
-        if (top)
-        {
-            float targetY = isPressed ? pressedLocalY : unpressedLocalY;
-            var lp = top.localPosition;
-            lp.y = Mathf.Lerp(lp.y, targetY, Time.deltaTime * moveLerpSpeed);
-            top.localPosition = lp;
-        }
+
     }
 
     private void LateUpdate()
@@ -169,6 +155,11 @@ public sealed class Button2D : MonoBehaviour
         onStateChanged?.Invoke(isPressed);
         if (isPressed) onPressed?.Invoke();
         else onReleased?.Invoke();
+    }
+
+    public void SetPressedFromToggle(bool value)
+    {
+        SetPressed(value); // 내부 private SetPressed 호출
     }
 
     private void RefreshSprite()
