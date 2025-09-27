@@ -172,6 +172,9 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 6359844142929196595, guid: 0058e781f2d0fa24485c769be299ef6d, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 6359844142929196595, guid: 3e1aff54a4a78b54e93b723f0117e056, type: 3}
+  levelCurrent: 0
+  levelBefore: 0
+  limit: 0
   gameManager: {fileID: 3971346329566038730}
 --- !u!1 &1371004122296284943
 GameObject:
@@ -261,9 +264,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545dbc503613af47b4d04dea4bcfc3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
+  prefabToSpawn: {fileID: 6499162172036089193, guid: 851857b660ffc8940a1314eea6ee8005, type: 3}
   grid: {fileID: 0}
-  previewInstance: {fileID: 0}
+  previewInstance: {fileID: 6499162172036089193, guid: 78d80ec33733fdc4ba5dfefa272180e8, type: 3}
+  levelCurrent: 0
+  levelBefore: 0
+  limit: 0
   gameManager: {fileID: 3971346329566038730}
 --- !u!1 &1373969857449395361
 GameObject:
@@ -357,6 +363,9 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 0}
+  levelCurrent: 0
+  levelBefore: 0
+  limit: 0
   gameManager: {fileID: 3971346329566038730}
 --- !u!1 &1863342616185348654
 GameObject:
@@ -656,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f271c6401e799024fa1e01fb822447b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defalutMode: 0
 --- !u!114 &5261137295418567967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,8 +679,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 0}
-  mode: 1
   editingUI: {fileID: 3018489488576255512}
+  draggingInstance: {fileID: 0}
+  draggingStartPos: {x: 0, y: 0}
+  draggingOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &5478717752196144437
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,6 +774,9 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 2004963710388601288, guid: 8abd1a6d4b126b54d9d3f2a09e40393a, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 775521057727584985, guid: b56bcb0dba7f43d46b7d27969b720d05, type: 3}
+  levelCurrent: 0
+  levelBefore: 0
+  limit: 0
   gameManager: {fileID: 3971346329566038730}
 --- !u!1 &8613766334478764455
 GameObject:
@@ -854,4 +869,7 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 1325802147553326018, guid: c3f4e6ccca984ea4ebd9fcac0163a524, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 0}
+  levelCurrent: 0
+  levelBefore: 0
+  limit: 0
   gameManager: {fileID: 3971346329566038730}

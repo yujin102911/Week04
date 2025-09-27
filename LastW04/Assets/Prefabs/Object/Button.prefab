@@ -179,19 +179,39 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16384
   minTotalMassToPress: 0
-  top: {fileID: 0}
-  pressedLocalY: -0.06
-  unpressedLocalY: 0
-  moveLerpSpeed: 12
   sr: {fileID: 4012531090448574731}
   pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
   unpressedSprite: {fileID: 3671325788559034056, guid: 35f7e91a659f47e47a2bcfc8d25dd9a5, type: 3}
   onPressed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DoorSwitch, Assembly-CSharp
+        m_MethodName: ApplyState
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onReleased:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DoorSwitch, Assembly-CSharp
+        m_MethodName: ApplyState
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onStateChanged:
     m_PersistentCalls:
       m_Calls: []

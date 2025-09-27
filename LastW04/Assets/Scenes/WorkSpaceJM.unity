@@ -267,6 +267,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike
       objectReference: {fileID: 0}
+    - target: {fileID: 3766043328577801433, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
+      propertyPath: m_Name
+      value: AttachPoint_Door23
+      objectReference: {fileID: 0}
     - target: {fileID: 7216727911829183811, guid: 3e1cf08cacba7054fa9b9f6fcc792c9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
