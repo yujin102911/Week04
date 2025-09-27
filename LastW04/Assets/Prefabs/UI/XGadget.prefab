@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1980418879092385585}
   - component: {fileID: 2504941193487996865}
   - component: {fileID: 2325492470799059650}
+  - component: {fileID: 2890882679137092206}
   m_Layer: 7
   m_Name: XGadget
   m_TagString: EditorbleUI
@@ -147,5 +148,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6a4bf6c41ba1b4e920cc4feced08ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHeld: 1
   attachedAP: {fileID: 0}
   target: {fileID: 0}
+--- !u!114 &2890882679137092206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6499162172036089193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2d097de62bca4c82b33f5b43f2c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placed: 0
+  sprite: {fileID: 2504941193487996865}
