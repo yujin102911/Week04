@@ -1,19 +1,38 @@
 ﻿using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using static UnityEngine.UI.Image;
 
 public class XGadget : MonoBehaviour
 {
     [Header("Refs")]
 
     // 내부 상태
-    private bool isHeld = false;
+    public bool isHeld = true;
     [SerializeField]
     private AttachPoint attachedAP;        // 붙은 부착점
     [SerializeField]
     private DeletableTarget target;        // 삭제 대상
 
-    void Start()
+    private void Start()
     {
         TryAttachAtMouse();
+    }
+
+    void Update()
+    {
+        if (isHeld)
+        {
+            Debug.Log("놓았음");
+            attachedAP.occupied = false;
+            TryAttachAtMouse();
+        }
+        Debug.DrawRay(transform.position, new Vector2(.5f, .5f), Color.red);
+
+        Debug.DrawRay(transform.position, new Vector2(.5f, -.5f), Color.red);
+
+        Debug.DrawRay(transform.position, new Vector2(-.5f, -.5f), Color.red);
+
+        Debug.DrawRay(transform.position, new Vector2(-.5f, .5f), Color.red);
     }
 
     void OnMouseDown()
@@ -26,48 +45,37 @@ public class XGadget : MonoBehaviour
             }
     }
 
-    void OnMouseUp()//클릭 땟을 때
-    {
-        if (GameManager.mode == Mode.Editing)//에딧 상태라면
-        {
-            attachedAP.occupied = false;//붙었던 정보 초기화
-            TryAttachAtMouse();
-        }
-    }
     private void TryAttachAtMouse()
     {
         // 클릭 지점과 겹치는 모든 콜라이더 검사
+        //Debug.Log(transform.position);
         var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
         AttachPoint apFound = null;
         DeletableTarget targetFound = null;
 
         foreach (var h in hits)
         {
-            var ap = h.GetComponentInParent<AttachPoint>();
-            var dt = h.GetComponentInParent<DeletableTarget>();
-
-            if (ap != null && !ap.occupied && dt != null)
-            {
-                apFound = ap;
-                targetFound = dt;
-                break;
-            }
+            apFound = h.GetComponentInParent<AttachPoint>();
+            targetFound = h.GetComponentInParent<DeletableTarget>();
         }
 
-        if (apFound == null || targetFound == null) return;
+        if (apFound == null)
+        {
+            if(targetFound != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+        }
+        else
+        {
+            attachedAP = apFound;
+        }
+            Debug.Log("붙는중!");
 
-        // 스냅 Transform 확보(없으면 AP 자신을 사용)
-        Transform snap = apFound.snap != null ? apFound.snap : apFound.transform;
-        if (apFound.snap == null)
-            Debug.LogWarning($"[XGadget] '{apFound.name}'의 snap이 비어 있어 AP 위치로 대체합니다.");
-
-        attachedAP = apFound;
         target = targetFound;
 
-        // 월드 좌표를 먼저 맞춘 뒤 부모 등록(정확한 스냅)
-        transform.position = snap.position;
-        transform.rotation = snap.rotation;
-        transform.SetParent(snap, false);
+        transform.SetParent(attachedAP.snap.transform, false);
         transform.localPosition = Vector3.zero + Vector3.back;
         transform.localRotation = Quaternion.identity;
 
