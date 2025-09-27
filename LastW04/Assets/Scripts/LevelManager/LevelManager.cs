@@ -83,7 +83,8 @@ public class LevelManager : MonoBehaviour
         // 새 Input System
         if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
             HardResetScene();
-        
+
+        levelCurrent = int.Parse(new string(CurrentRegionId.Where(char.IsDigit).ToArray()));//텍스트에서 레벨 추출
         if (levelBefore == levelCurrent)//이전 렙이랑 레벨같음?
         {
             levelChanged=false;//렙 안바낌
@@ -91,13 +92,14 @@ public class LevelManager : MonoBehaviour
         else
         {
             levelChanged = true;//렙 바낌
-        }
-        levelCurrent =int.Parse( new string(CurrentRegionId.Where(char.IsDigit).ToArray()));//텍스트에서 레벨 추출
-        levelCurrent = levelBefore;
-        if (levelChanged)
+        }                
+        if (levelChanged)//렙 바뀌면
         {
-            //levelUISlider.game.limit
+            SliderUI.limit = levelUISlider[levelCurrent];
+            toggleUI.limit = levelUIToggle[levelCurrent];
+            deleteUI.limit = levelUIDelete[levelCurrent];
         }
+        levelCurrent = levelBefore;
     }
 
     // ── 씬 로드가 끝난 후, 모든 참조 재바인딩 + 현재 지역으로 복구
