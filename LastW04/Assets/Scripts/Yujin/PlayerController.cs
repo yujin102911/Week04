@@ -1,4 +1,4 @@
-// PlayerController.cs (merged)
+// PlayerController.cs (with Editing guard)
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     // 마지막 안전 위치 저장
     private Vector2 lastSafePosition;
 
+    // --- Editing 모드 헬퍼 ---
+    private bool IsEditing => GameManager.mode == Mode.Editing;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,13 +53,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // --- EDITING: 모든 동작 정지(애니메이션도 Idle로 고정) ---
+        if (IsEditing)
+        {
+            moveInput = Vector2.zero;
+            if (anim != null)
+            {
+                anim.SetBool("isMoving", false);
+                anim.SetFloat("dirX", 0f);
+                anim.SetFloat("dirY", 0f);
+                anim.SetFloat("lastX", lastCardinal.x);
+                anim.SetFloat("lastY", lastCardinal.y);
+            }
+            return; // 물/연꽃 체크 및 나머지 로직 스킵
+        }
+
         // --- 물에 끼임 복구 ---
         bool isInWater = Physics2D.OverlapCircle(rb.position, 0.4f, waterLayer) != null;
         bool isOnLotus = Physics2D.OverlapCircle(rb.position, 0.4f, lotusLayer) != null;
         if (isInWater && !isOnLotus)
         {
             transform.position = lastSafePosition; // 즉시 복귀
-            // Debug.Log("플레이어가 물에 끼어 안전한 위치로 복귀합니다.");
         }
 
         // --- 애니메이션/스냅 ---
@@ -89,6 +106,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // --- EDITING: 물리 이동 정지 ---
+        if (IsEditing)
+        {
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         // 충돌/물 체크 후 이동(성공 시 안전 위치 갱신)
         Vector2 newPosition = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
 
@@ -104,6 +128,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
+        if (IsEditing) { moveInput = Vector2.zero; return; } // 입력 무시
         moveInput = context.ReadValue<Vector2>();
         // 입력이 있으면 우선 원시 입력으로 갱신(최종 스냅은 Update에서 처리)
         if (moveInput.x != 0 || moveInput.y != 0)
@@ -117,6 +142,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
+        if (IsEditing) return; // 상호작용 무시
+
         // 스냅된 4방향 사용
         Vector2 dir = (Mathf.Abs(lastDirection.x) > Mathf.Abs(lastDirection.y))
             ? new Vector2(Mathf.Sign(lastDirection.x), 0)
