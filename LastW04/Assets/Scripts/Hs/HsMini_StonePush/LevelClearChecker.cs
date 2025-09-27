@@ -25,7 +25,7 @@ public class LevelClearChecker : MonoBehaviour
     void CheckClear()
     {
         // 씬 내 모든 Statue가 만족이면 클리어
-        var all = FindObjectsOfType<Statue>();
+        var all = Object.FindObjectsByType<Statue>(FindObjectsSortMode.None); // ← 변경
         bool allOk = all.Length > 0 && all.All(s => s.IsSatisfied);
 
         if (allOk && autoLogClear)
