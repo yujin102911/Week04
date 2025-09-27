@@ -29,7 +29,10 @@ public class XGadget : MonoBehaviour
     void OnMouseUp()//클릭 땟을 때
     {
         if (GameManager.mode == Mode.Editing)//에딧 상태라면
+        {
+            attachedAP.occupied = false;//붙었던 정보 초기화
             TryAttachAtMouse();
+        }
     }
     private void TryAttachAtMouse()
     {

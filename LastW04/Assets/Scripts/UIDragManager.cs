@@ -8,6 +8,10 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
     public GameObject previewInstance;//미리보기할 프리팹
     private GameObject draggingInstance;//드래그중인 것
     private GameObject PlacedInstance;//드래그끝 배치한 것
+    public int levelCurrent;//레벨
+    public int levelBefore;//이전레벨
+    public int limit;//레벨당 배치 제한
+
     public GameObject gameManager;
     public void Update()
     {
@@ -27,6 +31,10 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
             Vector3 aligned = grid.GetCellCenterWorld(cell);
 
             draggingInstance.transform.position = aligned + Vector3.back;
+        }
+        if (levelCurrent != levelBefore) //이전 레벨과 달라지면
+        {
+            
         }
     }
     // UI에서 클릭 시작
