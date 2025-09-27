@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1203272972092352180}
   - component: {fileID: 3022213260766737744}
   - component: {fileID: 5065169879899779719}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: Spike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -118,6 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   essential: 0
+  deleteTarget: {fileID: 0}
   vfxOnDelete: {fileID: 0}
   sfxOnDelete: {fileID: 0}
 --- !u!1 &3766043328577801433
