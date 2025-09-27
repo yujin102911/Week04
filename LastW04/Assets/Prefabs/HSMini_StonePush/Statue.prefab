@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63858e7537560ef41aff742893a5e27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceptStoneId: 2
-  facing: 2
+  acceptStoneId: 1
+  facing: 0
   cellSize: 1
   goalBoxSize: {x: 0.8, y: 0.8}
   stoneMask:
     serializedVersion: 2
-    m_Bits: 513
+    m_Bits: 512
   stoneTag: Stone
   onFrontStoneIdChanged:
     m_PersistentCalls:
