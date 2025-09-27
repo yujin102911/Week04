@@ -1173,7 +1173,7 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 2004963710388601288, guid: 8abd1a6d4b126b54d9d3f2a09e40393a, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 775521057727584985, guid: b56bcb0dba7f43d46b7d27969b720d05, type: 3}
-  textCount: {fileID: 3342920665850908943}
+  textCount: {fileID: 0}
   levelCurrent: 0
   levelBefore: 0
   limit: 0
@@ -1759,6 +1759,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
+      propertyPath: SliderUI
+      value: 
+      objectReference: {fileID: 5831193123614514319}
+    - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
+      propertyPath: deleteUI
+      value: 
+      objectReference: {fileID: 1665625595594821790}
+    - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
+      propertyPath: toggleUI
+      value: 
+      objectReference: {fileID: 5307539846420392130}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
