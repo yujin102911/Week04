@@ -157,6 +157,11 @@ public sealed class Button2D : MonoBehaviour
         else onReleased?.Invoke();
     }
 
+    public void SetPressedFromToggle(bool value)
+    {
+        SetPressed(value); // 내부 private SetPressed 호출
+    }
+
     private void RefreshSprite()
     {
         if (isPressed)
