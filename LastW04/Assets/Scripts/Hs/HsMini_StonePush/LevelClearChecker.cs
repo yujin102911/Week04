@@ -1,15 +1,26 @@
+// LevelClearChecker.cs
 using System.Linq;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 public class LevelClearChecker : MonoBehaviour
 {
-    public bool autoLogClear = true; // 전부 만족 시 Debug.Log 출력
+    [Header("Targets")]
+    [SerializeField] private Statue[] statues;            // 직접 연결할 석상들
+    [SerializeField] private ToggleTarget[] doorsToOpen;  // 모두 완료되면 여는 문들
+
+    [Header("Options")]
+    [SerializeField] private bool autoLogClear = true;    // 완료 로그 출력 여부
+    [SerializeField] private bool openOnlyOnce = true;    // 한 번 열었으면 이후 무시
+
+    bool _clearedOnce = false;
 
     void OnEnable()
     {
+        // 씬 전체 검색은 하지 않되, 석상 상태 변화 알림은 전역 이벤트로 수신
         Statue.OnAnyStatueStateChanged += CheckClear;
     }
+
     void OnDisable()
     {
         Statue.OnAnyStatueStateChanged -= CheckClear;
@@ -17,21 +28,31 @@ public class LevelClearChecker : MonoBehaviour
 
     void Start()
     {
-        // 초기 진입 시 1회 판정
+        // 초기 1회 판정(현재 씬의 석상 상태 재평가)
         Statue.ReevaluateAll();
         CheckClear();
     }
 
     void CheckClear()
     {
-        // 씬 내 모든 Statue가 만족이면 클리어
-        var all = Object.FindObjectsByType<Statue>(FindObjectsSortMode.None); // ← 변경
-        bool allOk = all.Length > 0 && all.All(s => s.IsSatisfied);
+        if (statues == null || statues.Length == 0) return;
 
-        if (allOk && autoLogClear)
+        bool allOk = statues.All(s => s != null && s.IsSatisfied);
+        if (!allOk) return;
+
+        if (openOnlyOnce && _clearedOnce) return; // 이미 열었으면 다시 실행하지 않음
+        _clearedOnce = true;
+
+        // 문 열기: isOn=true
+        if (doorsToOpen != null)
         {
-            Debug.Log("[MiniPuzzle] CLEAR: 모든 석상이 만족 상태입니다.");
-            // 여기서 UI 토글/문 열기 등 원하는 액션 수행
+            foreach (var door in doorsToOpen)
+            {
+                if (door != null) door.SetState(true);
+            }
         }
+
+        if (autoLogClear)
+            Debug.Log("[MiniPuzzle] CLEAR: 연결된 모든 석상이 만족 상태입니다. 문을 엽니다 (isOn=true).");
     }
 }
