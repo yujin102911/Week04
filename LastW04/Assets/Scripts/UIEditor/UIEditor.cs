@@ -36,6 +36,11 @@ public class UIEditor : MonoBehaviour
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(screenPos);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);//범위 검사
+
+                if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//게임모드 들어가서 설치 완료된거면
+                {
+                    return;//걍 끝냄
+                }
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
                     if (hit.transform.parent.CompareTag("EditorbleUI"))
@@ -56,6 +61,11 @@ public class UIEditor : MonoBehaviour
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(screenPos);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
+
+                if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//게임모드 들어가서 설치 완료된거면
+                {
+                   return;//걍 끝냄
+                }
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
                     if (hit.transform.parent != null)
