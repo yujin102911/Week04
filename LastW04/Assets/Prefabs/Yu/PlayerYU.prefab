@@ -110,10 +110,10 @@ MonoBehaviour:
     m_Bits: 512
   waterLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   lotusLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   anim: {fileID: 2594395698027500528}
   deadZone: 0.05
   snapHysteresis: 0.12
