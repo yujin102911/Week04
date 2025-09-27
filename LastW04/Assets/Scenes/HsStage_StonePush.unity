@@ -230,9 +230,12 @@ MonoBehaviour:
   boxLayer:
     serializedVersion: 2
     m_Bits: 0
-  anim: {fileID: 0}
-  deadZone: 0.05
-  snapHysteresis: 0.12
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  lotusLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &235483943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1952,6 +1955,18 @@ PrefabInstance:
       value: Statue (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bb7da2c2e14e3a45b3e4265670f667b, type: 3}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.b
       value: 0.9245283
       objectReference: {fileID: 0}
@@ -1962,6 +1977,10 @@ PrefabInstance:
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.r
       value: 0.862499
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5497898573411290293, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2166,6 +2185,18 @@ PrefabInstance:
       value: Statue (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bb7da2c2e14e3a45b3e4265670f667b, type: 3}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.b
       value: 0.4784314
       objectReference: {fileID: 0}
@@ -2176,6 +2207,10 @@ PrefabInstance:
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.r
       value: 0.39607847
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5497898573411290293, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2547,6 +2582,18 @@ PrefabInstance:
       value: Statue (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bb7da2c2e14e3a45b3e4265670f667b, type: 3}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.b
       value: 0.28627452
       objectReference: {fileID: 0}
@@ -2557,6 +2604,10 @@ PrefabInstance:
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.r
       value: 0.9686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5497898573411290293, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6420,6 +6471,18 @@ PrefabInstance:
       value: Statue
       objectReference: {fileID: 0}
     - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2bb7da2c2e14e3a45b3e4265670f667b, type: 3}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_Color.b
       value: 0.63529414
       objectReference: {fileID: 0}
@@ -6431,9 +6494,13 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.8941177
       objectReference: {fileID: 0}
+    - target: {fileID: 4056164606271805328, guid: 7975e9655989198418df842f055f48dc, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5497898573411290293, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.5
+      value: 7.59
       objectReference: {fileID: 0}
     - target: {fileID: 5497898573411290293, guid: 7975e9655989198418df842f055f48dc, type: 3}
       propertyPath: m_LocalPosition.y
