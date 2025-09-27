@@ -2816,6 +2816,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8006410562254641123, guid: e99fe97181568d24890107772dc72259, type: 3}
+      propertyPath: m_Radius
+      value: 0.39234847
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006410562254641123, guid: e99fe97181568d24890107772dc72259, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8057378286707915100, guid: e99fe97181568d24890107772dc72259, type: 3}
       propertyPath: m_Name
       value: Lotus
