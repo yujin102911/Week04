@@ -32,8 +32,8 @@ public class PushableBox : MonoBehaviour
         if (CanMoveTo(targetPosition))
         {
             Vector3 finalPosition = new Vector3(
-                Mathf.Round(targetPosition.x),
-                Mathf.Round(targetPosition.y),
+                Mathf.Floor(targetPosition.x) +.5f,
+                Mathf.Floor(targetPosition.y) + .5f,
                 transform.position.z
             );
             transform.position = finalPosition;
