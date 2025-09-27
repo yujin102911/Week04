@@ -110,10 +110,10 @@ MonoBehaviour:
     m_Bits: 512
   waterLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   lotusLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32768
   anim: {fileID: 2594395698027500528}
   deadZone: 0.05
   snapHysteresis: 0.12
@@ -125,7 +125,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5790377530474011345}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

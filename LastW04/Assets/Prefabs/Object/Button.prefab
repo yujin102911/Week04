@@ -267,14 +267,14 @@ MonoBehaviour:
   openSprite: {fileID: 0}
   closedSprite: {fileID: 0}
   isOn: 1
-  toggleGameObject: 1
+  toggleGameObject: 0
   disableSolidOnOpen: 0
   onStateChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DoorSwitch, Assembly-CSharp
-        m_MethodName: ApplyState
+      - m_Target: {fileID: 6158014830091936530}
+        m_TargetAssemblyTypeName: Button2D, Assembly-CSharp
+        m_MethodName: SetPressedFromToggle
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
