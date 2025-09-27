@@ -26,7 +26,11 @@ public class ToggleGadget : MonoBehaviour
             Activate();
         }
     }
-
+    void OnMouseUp()//클릭 땟을 때
+    {
+        if (GameManager.mode == Mode.Editing)//에딧 상태라면
+            TryAttach();//다시 붙기 시도
+    }
     private void TryAttach()
     {
         // 마우스 지점과 겹치는 콜라이더 모두 확인
