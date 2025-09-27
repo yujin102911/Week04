@@ -36,8 +36,6 @@ public class PathMiniController : MonoBehaviour
     void OnEnable() => ApplyLightState();
     void OnValidate()
     {
-        // 인스펙터에서 값만 갱신하고, 실제 SetActive는 런타임에서만 수행
-        // 아무 것도 하지 않음, 또는 에디터용 표시만 갱신
     }
 
     // --- Light ---
