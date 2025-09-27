@@ -16,17 +16,18 @@ public class LevelManager : MonoBehaviour
 
     private CameraRegion2D[] regions;
     public string CurrentRegionId { get; [SerializeField] private set; }//현재 레벨
-    public string CurrentRegionIdCheck;
+    public string CurrentRegionIdCheck;    
+    public int levelBefore;//이전레벨
     public int levelCurrent;
-    public Image SliderUI;
+    public bool levelChanged;
+    public UIDragManager SliderUI;
     public int[] levelUISlider;
-    public Image toggleUI;
+    public UIDragManager toggleUI;
     public int[] levelUIToggle;
-    public Image deleteUI;
+    public UIDragManager deleteUI;
     public int[] levelUIDelete;
 
 
-    public int levelBefore;//이전레벨
 
     [Header("Teleport Safety")]
     [SerializeField, Min(0f)] private float postTeleportImmunity = 0.3f;
@@ -76,15 +77,27 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Update()//레벨 변경 확인
     {
         CurrentRegionIdCheck = CurrentRegionId;
         // 새 Input System
         if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
             HardResetScene();
-
+        
+        if (levelBefore == levelCurrent)//이전 렙이랑 레벨같음?
+        {
+            levelChanged=false;//렙 안바낌
+        }
+        else
+        {
+            levelChanged = true;//렙 바낌
+        }
         levelCurrent =int.Parse( new string(CurrentRegionId.Where(char.IsDigit).ToArray()));//텍스트에서 레벨 추출
-
+        levelCurrent = levelBefore;
+        if (levelChanged)
+        {
+            //levelUISlider.game.limit
+        }
     }
 
     // ── 씬 로드가 끝난 후, 모든 참조 재바인딩 + 현재 지역으로 복구
