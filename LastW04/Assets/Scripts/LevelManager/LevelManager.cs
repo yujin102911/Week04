@@ -1,19 +1,33 @@
+ï»¿using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class LevelManager : MonoBehaviour
 {
-    // ¦¡¦¡ Singleton (¿µ¼Ó)
+    // â”€â”€ Singleton (ì˜ì†)
     public static LevelManager Instance { get; private set; }
 
     [Header("Scene Refs")]
-    [SerializeField] private Transform player; // ¸®·Îµå ÈÄ Àç¹ÙÀÎµùµÊ
+    [SerializeField] private Transform player; // ë¦¬ë¡œë“œ í›„ ì¬ë°”ì¸ë”©ë¨
 
     private CameraRegion2D[] regions;
-    public string CurrentRegionId { get; private set; }
+    public string CurrentRegionId { get; [SerializeField] private set; }//í˜„ì¬ ë ˆë²¨
+    public string CurrentRegionIdCheck;    
+    public int levelBefore;//ì´ì „ë ˆë²¨
+    public int levelCurrent;
+    public bool levelChanged;
+    public UIDragManager SliderUI;
+    public int[] levelUISlider;
+    public UIDragManager toggleUI;
+    public int[] levelUIToggle;
+    public UIDragManager deleteUI;
+    public int[] levelUIDelete;
+
+
 
     [Header("Teleport Safety")]
     [SerializeField, Min(0f)] private float postTeleportImmunity = 0.3f;
@@ -22,7 +36,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        // ½Ì±ÛÅæ º¸Àå + ¿µ¼Ó
+        // ì‹±ê¸€í†¤ ë³´ì¥ + ì˜ì†
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -31,7 +45,7 @@ public class LevelManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // ¾À ·Îµå Äİ¹é µî·Ï
+        // ì”¬ ë¡œë“œ ì½œë°± ë“±ë¡
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -43,9 +57,9 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        // Ã¹ ºÎÆÃ(ºÎÆ® ¾À Æ÷ÇÔ)¿¡¼­µµ 1È¸ ¼¼ÆÃ
+        // ì²« ë¶€íŒ…(ë¶€íŠ¸ ì”¬ í¬í•¨)ì—ì„œë„ 1íšŒ ì„¸íŒ…
         CacheSceneObjects();
-        // CurrentRegionId°¡ ºñ¾úÀ¸¸é Æú¹é(¿¹: Region_01)
+        // CurrentRegionIdê°€ ë¹„ì—ˆìœ¼ë©´ í´ë°±(ì˜ˆ: Region_01)
         if (string.IsNullOrEmpty(CurrentRegionId))
         {
             var first = FindRegion("Region_01");
@@ -57,20 +71,36 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            // ºÎÆ®¾À¿¡¼­ ³Ñ¾î¿Â °æ¿ì, ÀÌ¹Ì °¡Áö°í ÀÖ´ø RegionÀ¸·Î Áï½Ã ¿öÇÁ
+            // ë¶€íŠ¸ì”¬ì—ì„œ ë„˜ì–´ì˜¨ ê²½ìš°, ì´ë¯¸ ê°€ì§€ê³  ìˆë˜ Regionìœ¼ë¡œ ì¦‰ì‹œ ì›Œí”„
             var region = FindRegion(CurrentRegionId);
             if (region) TeleportToRegion(CurrentRegionId, true, instantCamera: true);
         }
     }
 
-    private void Update()
+    private void Update()//ë ˆë²¨ ë³€ê²½ í™•ì¸
     {
-        // »õ Input System
+        CurrentRegionIdCheck = CurrentRegionId;
+        // ìƒˆ Input System
         if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
             HardResetScene();
+        
+        if (levelBefore == levelCurrent)//ì´ì „ ë ™ì´ë‘ ë ˆë²¨ê°™ìŒ?
+        {
+            levelChanged=false;//ë ™ ì•ˆë°”ë‚Œ
+        }
+        else
+        {
+            levelChanged = true;//ë ™ ë°”ë‚Œ
+        }
+        levelCurrent =int.Parse( new string(CurrentRegionId.Where(char.IsDigit).ToArray()));//í…ìŠ¤íŠ¸ì—ì„œ ë ˆë²¨ ì¶”ì¶œ
+        levelCurrent = levelBefore;
+        if (levelChanged)
+        {
+            //levelUISlider.game.limit
+        }
     }
 
-    // ¦¡¦¡ ¾À ·Îµå°¡ ³¡³­ ÈÄ, ¸ğµç ÂüÁ¶ Àç¹ÙÀÎµù + ÇöÀç Áö¿ªÀ¸·Î º¹±¸
+    // â”€â”€ ì”¬ ë¡œë“œê°€ ëë‚œ í›„, ëª¨ë“  ì°¸ì¡° ì¬ë°”ì¸ë”© + í˜„ì¬ ì§€ì—­ìœ¼ë¡œ ë³µêµ¬
     private void OnSceneLoaded(Scene s, LoadSceneMode mode)
     {
         CacheSceneObjects();
@@ -80,13 +110,13 @@ public class LevelManager : MonoBehaviour
             var region = FindRegion(CurrentRegionId);
             if (region)
             {
-                // ·Îµù ÈÄ Ã¹ ÇÁ·¹ÀÓÀº Áï½Ã ½º³À ±ÇÀå
+                // ë¡œë”© í›„ ì²« í”„ë ˆì„ì€ ì¦‰ì‹œ ìŠ¤ëƒ… ê¶Œì¥
                 TeleportToRegion(CurrentRegionId, affectCamera: true, instantCamera: true);
                 return;
             }
         }
 
-        // ÇöÀç Áö¿ªÀ» ¸ø Ã£À¸¸é Æú¹é
+        // í˜„ì¬ ì§€ì—­ì„ ëª» ì°¾ìœ¼ë©´ í´ë°±
         var first = FindRegion("Region_01");
         if (first)
         {
@@ -97,16 +127,16 @@ public class LevelManager : MonoBehaviour
 
     private void CacheSceneObjects()
     {
-        // Region Àç¼öÁı(ºñÈ°¼º Æ÷ÇÔ)
-        regions = Object.FindObjectsByType<CameraRegion2D>(
+        // Region ì¬ìˆ˜ì§‘(ë¹„í™œì„± í¬í•¨)
+        regions = UnityEngine.Object.FindObjectsByType<CameraRegion2D>(
             FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-        // ÇÃ·¹ÀÌ¾î Àç¹ÙÀÎµù(ÀÎ½ºÆåÅÍ ¼³Á¤ÀÌ ¾À ¸®·Îµå·Î ²÷¾îÁú ¼ö ÀÖÀ½)
+        // í”Œë ˆì´ì–´ ì¬ë°”ì¸ë”©(ì¸ìŠ¤í™í„° ì„¤ì •ì´ ì”¬ ë¦¬ë¡œë“œë¡œ ëŠì–´ì§ˆ ìˆ˜ ìˆìŒ)
         if (!player)
         {
             var go = GameObject.FindGameObjectWithTag("Player");
             if (go) player = go.transform;
-            // ÅÂ±×°¡ ¾ø´Ù¸é ¿©±â¼­ ´Ù¸¥ ¹æ½ÄÀ¸·Î Ã£¾Æµµ µÊ(ÀÌ¸§/ÄÄÆ÷³ÍÆ® µî)
+            // íƒœê·¸ê°€ ì—†ë‹¤ë©´ ì—¬ê¸°ì„œ ë‹¤ë¥¸ ë°©ì‹ìœ¼ë¡œ ì°¾ì•„ë„ ë¨(ì´ë¦„/ì»´í¬ë„ŒíŠ¸ ë“±)
         }
     }
 
@@ -123,7 +153,7 @@ public class LevelManager : MonoBehaviour
 
         var spawn = region.defaultSpawn ? region.defaultSpawn : region.transform;
 
-        // ÀÌµ¿ ÁØºñ
+        // ì´ë™ ì¤€ë¹„
         var rb = player.GetComponent<Rigidbody2D>();
         if (rb)
         {
@@ -135,16 +165,16 @@ public class LevelManager : MonoBehaviour
             rb.angularVelocity = 0f;
         }
 
-        // À§Ä¡ ½º³À
+        // ìœ„ì¹˜ ìŠ¤ëƒ…
         player.position = spawn.position;
         Physics2D.SyncTransforms();
         if (rb) rb.WakeUp();
 
-        // »óÅÂ °»½Å + Ä«¸Ş¶ó Àû¿ë
+        // ìƒíƒœ ê°±ì‹  + ì¹´ë©”ë¼ ì ìš©
         CurrentRegionId = regionId;
         ApplyCameraFrame(region, instant: instantCamera);
 
-        // µµÂø Á÷ÈÄ ÅÚ·¹Æ÷Æ® ¹«Àû
+        // ë„ì°© ì§í›„ í…”ë ˆí¬íŠ¸ ë¬´ì 
         teleportImmunityUntil = Time.time + postTeleportImmunity;
     }
 
@@ -159,12 +189,12 @@ public class LevelManager : MonoBehaviour
 
     public void HardResetScene()
     {
-        // ½Ì±ÛÅæÀÌ ¿µ¼ÓÀÌ¹Ç·Î CurrentRegionId´Â À¯ÁöµÊ.
+        // ì‹±ê¸€í†¤ì´ ì˜ì†ì´ë¯€ë¡œ CurrentRegionIdëŠ” ìœ ì§€ë¨.
         if (Time.timeScale != 1f) Time.timeScale = 1f;
 
         var active = SceneManager.GetActiveScene();
         SceneManager.LoadScene(active.buildIndex, LoadSceneMode.Single);
-        // ·Îµå ¿Ï·á ÈÄ OnSceneLoaded¿¡¼­ CurrentRegionId·Î º¹±¸µÊ.
+        // ë¡œë“œ ì™„ë£Œ í›„ OnSceneLoadedì—ì„œ CurrentRegionIdë¡œ ë³µêµ¬ë¨.
     }
 
     private void ApplyCameraFrame(CameraRegion2D region, bool instant = false)
