@@ -97,11 +97,14 @@ MonoBehaviour:
   target: {fileID: 5397115446922254668}
   solid: {fileID: 1927063751073709246}
   sr: {fileID: 5180482456322895249}
-  openSprite: {fileID: 0}
+  openSprite: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
   closedSprite: {fileID: 0}
   isOn: 1
   toggleGameObject: 1
   disableSolidOnOpen: 0
+  onStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5065169879899779719
 MonoBehaviour:
   m_ObjectHideFlags: 0

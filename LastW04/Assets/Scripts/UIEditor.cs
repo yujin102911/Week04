@@ -38,7 +38,7 @@ public class UIEditor : MonoBehaviour
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);//범위 검사
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
-                    if (hit.transform.parent != null)
+                    if (hit.transform.parent.CompareTag("EditorbleUI"))
                     {
                         draggingInstance=hit.transform.parent.gameObject;//집음
                     }
@@ -91,8 +91,15 @@ public class UIEditor : MonoBehaviour
                         return;//밑에 코드 실행 ㄴㄴ
                     }
                 }
-                draggingInstance = null;//현재위치에 있는 상태로 끝냄
+                var xGadget = draggingInstance.GetComponent<XGadget>();
+                
+                if (xGadget != null) { xGadget.isHeld = true;
+                }
 
+                var toggleGadget = draggingInstance.GetComponent<ToggleGadget>();
+                if (toggleGadget != null) toggleGadget.isHeld = true;
+
+                draggingInstance = null;//현재위치에 있는 상태로 끝냄
 
             }
         }
