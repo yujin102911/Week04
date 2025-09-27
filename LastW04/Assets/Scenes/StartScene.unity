@@ -330,10 +330,14 @@ MonoBehaviour:
   toggleButton: {fileID: 72706845}
   toggleImage: {fileID: 72706843}
   titleText: {fileID: 1804359725}
+  slideText: {fileID: 103094892}
   offSprite: {fileID: -5780495945911086345, guid: 474f6afc5041c944287f6e01a6fa0563, type: 3}
   onSprite: {fileID: -3154472396816579418, guid: ae379914e7430944881986a9262a59ec, type: 3}
   offText: Click Drag Solve
   onText: "\uC7A0 \uC880 \uC790\uACE0 \uC2F6\uB2E4"
+  slideOffText: Slide To Start
+  slideOnText: "\uC2AC\uB77C\uC774\uB4DC\uD574\uC11C \uC2DC\uC791\uD558\uC138\uC694"
+  onFontScale: 0.8
 --- !u!1 &103094890
 GameObject:
   m_ObjectHideFlags: 0
