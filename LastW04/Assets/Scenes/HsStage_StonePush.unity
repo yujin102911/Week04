@@ -141,11 +141,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.49
+      value: 7.23
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.59
+      value: 2.71
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -185,10 +185,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1537345801189895264, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: stoneId
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537345801189895264, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
-      propertyPath: blockingMask.m_Bits
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1964361459717672321, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
@@ -289,11 +285,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.46
+      value: -7.41
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.67
+      value: 2.92
       objectReference: {fileID: 0}
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -335,10 +331,6 @@ PrefabInstance:
       propertyPath: stoneId
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 1537345801189895264, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
-      propertyPath: blockingMask.m_Bits
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1964361459717672321, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_Color.b
       value: 0.48297948
@@ -371,7 +363,7 @@ GameObject:
   - component: {fileID: 657960269}
   - component: {fileID: 657960271}
   - component: {fileID: 657960270}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Tilemap (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2408,10 +2400,6 @@ PrefabInstance:
       propertyPath: stoneId
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 1537345801189895264, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
-      propertyPath: blockingMask.m_Bits
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1964361459717672321, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_Color.b
       value: 0.9245283
@@ -2635,7 +2623,7 @@ GameObject:
   - component: {fileID: 1836166519}
   - component: {fileID: 1836166518}
   - component: {fileID: 1836166520}
-  m_Layer: 1
+  m_Layer: 13
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6411,7 +6399,7 @@ TilemapCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -6551,10 +6539,6 @@ PrefabInstance:
     - target: {fileID: 1108531230999014755, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1537345801189895264, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
-      propertyPath: blockingMask.m_Bits
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1964361459717672321, guid: 8e39e91644c86f94484b1b306534f57d, type: 3}
       propertyPath: m_Color.b

@@ -177,7 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 18432
   minTotalMassToPress: 0
   top: {fileID: 0}
   pressedLocalY: -0.06
