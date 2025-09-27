@@ -6,7 +6,9 @@ public class XGadget : MonoBehaviour
 
     // 내부 상태
     private bool isHeld = false;
+    [SerializeField]
     private AttachPoint attachedAP;        // 붙은 부착점
+    [SerializeField]
     private DeletableTarget target;        // 삭제 대상
 
     void Start()
@@ -16,7 +18,7 @@ public class XGadget : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (GameManager.mode == Mode.None)//일반 상태라면
+        if (GameManager.mode != Mode.Editing)//일반 상태라면
                                           // 3) 이미 부착되어 있다 → 이 가젯을 클릭하면 대상 토글 작동
             if (attachedAP != null && target != null)
             {
@@ -24,6 +26,14 @@ public class XGadget : MonoBehaviour
             }
     }
 
+    void OnMouseUp()//클릭 땟을 때
+    {
+        if (GameManager.mode == Mode.Editing)//에딧 상태라면
+        {
+            attachedAP.occupied = false;//붙었던 정보 초기화
+            TryAttachAtMouse();
+        }
+    }
     private void TryAttachAtMouse()
     {
         // 클릭 지점과 겹치는 모든 콜라이더 검사
@@ -77,7 +87,7 @@ public class XGadget : MonoBehaviour
         }
 
         // =대상과 함께 가젯도 파괴(가젯이 Snap의 자식이므로 부모 파괴 시 같이 사라짐)
-        //target.DeleteSelf();
+        target.DeleteSelf();
 
         // 만약 재사용형으로 만들고 싶다면, 대상 삭제 전에 분리:
         // transform.SetParent(null);
