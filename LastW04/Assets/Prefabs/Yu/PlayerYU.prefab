@@ -108,6 +108,12 @@ MonoBehaviour:
   boxLayer:
     serializedVersion: 2
     m_Bits: 512
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  lotusLayer:
+    serializedVersion: 2
+    m_Bits: 0
   anim: {fileID: 2594395698027500528}
   deadZone: 0.05
   snapHysteresis: 0.12
@@ -182,7 +188,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.76, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &2594395698027500528
 Animator:
