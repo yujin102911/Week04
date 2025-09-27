@@ -35,10 +35,7 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
 
             draggingInstance.transform.position = aligned + Vector3.back;
         }
-        if (levelCurrent != levelBefore) //이전 레벨과 달라지면
-        {
-            
-        }
+        textCount.text = "X "+Remain.ToString( );
     }
     // UI에서 클릭 시작
     public void OnPointerDown(PointerEventData eventData)

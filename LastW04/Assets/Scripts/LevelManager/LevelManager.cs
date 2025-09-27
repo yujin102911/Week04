@@ -95,9 +95,9 @@ public class LevelManager : MonoBehaviour
         }                
         if (levelChanged)//렙 바뀌면
         {
-            SliderUI.limit = levelUISlider[levelCurrent];
-            toggleUI.limit = levelUIToggle[levelCurrent];
-            deleteUI.limit = levelUIDelete[levelCurrent];
+            SliderUI.limit = SliderUI.Remain = levelUISlider[levelCurrent];
+            toggleUI.limit = toggleUI.Remain = levelUIToggle[levelCurrent];
+            deleteUI.limit = deleteUI.Remain = levelUIDelete[levelCurrent];
         }
         levelCurrent = levelBefore;
     }
