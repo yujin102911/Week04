@@ -12,7 +12,8 @@ public class ToggleGadget : MonoBehaviour
     [SerializeField] private bool startAsOn = false; // 시작 시 아이콘 상태
 
     // 내부 상태
-    public bool isHeld = false;       // 손에 들고 있나
+    public bool isHeld = false;       // 손에 들고 있었나
+    public bool placed = false;       // 설치 완료된 상태인가
     private AttachPoint attachedPoint;    // 붙은 부착점
     private ToggleTarget attachedTT;   // 토글 대상
 
@@ -61,7 +62,7 @@ public class ToggleGadget : MonoBehaviour
 
         if (apFound == null)
         {
-            if (targetFound != null)
+            //if (targetFound != null)
             {
                 Destroy(gameObject);
                 return;
@@ -94,5 +95,10 @@ public class ToggleGadget : MonoBehaviour
             sr.sprite = (sr.sprite == onSprite) ? offSprite : onSprite;
         }
         // 필요하면 이펙트/사운드 추가
+    }
+    private void OnDestroy()
+    {
+        attachedPoint.occupied = false;
+        Debug.Log("왜안댐?");
     }
 }

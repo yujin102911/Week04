@@ -125,7 +125,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Radius: 0.35
 --- !u!114 &2588938244392932909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4589901846069580283}
   - component: {fileID: 2900217446349514682}
+  - component: {fileID: 8664982464560749128}
   m_Layer: 0
   m_Name: SliderHandle
   m_TagString: EditorbleUI
@@ -210,6 +211,21 @@ MonoBehaviour:
   finalColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 0.5019608}
   value: 0.5
   placed: 0
+--- !u!114 &8664982464560749128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004963710388601288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2d097de62bca4c82b33f5b43f2c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placed: 0
+  spawned: 1
+  sprite: {fileID: 5049851440334813385}
 --- !u!1 &3242325017479678541
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +268,7 @@ GameObject:
   - component: {fileID: 4264420463428605706}
   - component: {fileID: 4007939352785363406}
   - component: {fileID: 8236812923659008787}
+  - component: {fileID: 1957610192265014047}
   m_Layer: 0
   m_Name: Line
   m_TagString: EditorbleUI
@@ -375,6 +392,21 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1957610192265014047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3335697844463229070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2d097de62bca4c82b33f5b43f2c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placed: 0
+  spawned: 1
+  sprite: {fileID: 4007939352785363406}
 --- !u!1 &7202158329952385455
 GameObject:
   m_ObjectHideFlags: 0

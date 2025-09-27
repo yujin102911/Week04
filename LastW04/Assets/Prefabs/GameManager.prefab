@@ -309,11 +309,9 @@ MonoBehaviour:
   grid: {fileID: 0}
   previewInstance: {fileID: 6359844142929196595, guid: 3e1aff54a4a78b54e93b723f0117e056, type: 3}
   textCount: {fileID: 1544875916296798893}
-  levelCurrent: 0
-  levelBefore: 0
   limit: 0
   Remain: 0
-  gameManager: {fileID: 3971346329566038730}
+  PlacedInstance: []
 --- !u!1 &1371004122296284943
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,11 +407,9 @@ MonoBehaviour:
   grid: {fileID: 0}
   previewInstance: {fileID: 6499162172036089193, guid: 78d80ec33733fdc4ba5dfefa272180e8, type: 3}
   textCount: {fileID: 9005587832439849379}
-  levelCurrent: 0
-  levelBefore: 0
   limit: 0
   Remain: 0
-  gameManager: {fileID: 3971346329566038730}
+  PlacedInstance: []
 --- !u!1 &1572216641664156582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1173,12 +1169,10 @@ MonoBehaviour:
   prefabToSpawn: {fileID: 2004963710388601288, guid: 8abd1a6d4b126b54d9d3f2a09e40393a, type: 3}
   grid: {fileID: 0}
   previewInstance: {fileID: 775521057727584985, guid: b56bcb0dba7f43d46b7d27969b720d05, type: 3}
-  textCount: {fileID: 0}
-  levelCurrent: 0
-  levelBefore: 0
+  textCount: {fileID: 3342920665850908943}
   limit: 0
   Remain: 0
-  gameManager: {fileID: 3971346329566038730}
+  PlacedInstance: []
 --- !u!1 &5802419489903093523
 GameObject:
   m_ObjectHideFlags: 0

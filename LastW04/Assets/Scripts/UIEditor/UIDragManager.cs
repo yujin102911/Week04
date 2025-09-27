@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,14 +9,12 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
     public Grid grid;                // 씬의 Grid
     public GameObject previewInstance;//미리보기할 프리팹
     private GameObject draggingInstance;//드래그중인 것
-    private GameObject PlacedInstance;//드래그끝 배치한 것
+    //private GameObject PlacedInstance;//드래그끝 배치한 것
     public TextMeshProUGUI textCount;//텍스트
-    public int levelCurrent;//레벨
-    public int levelBefore;//이전레벨
     public int limit;//레벨당 배치 제한
     public int Remain;//레벨당 남은 배치
-
-    public GameObject gameManager;
+    [SerializeField]
+    public List<GameObject> PlacedInstance;
     public void Update()
     {
         if (draggingInstance != null)
@@ -29,19 +28,19 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
             }
             
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            // 그리드에 스냅
-            Vector3Int cell = grid.WorldToCell(worldPos);
+            Vector3Int cell = grid.WorldToCell(worldPos);            // 그리드에 스냅
             Vector3 aligned = grid.GetCellCenterWorld(cell);
 
             draggingInstance.transform.position = aligned + Vector3.back;
         }
-        textCount.text = "X "+Remain.ToString( );
+        PlacedInstance.RemoveAll(obj => obj == null);
+        textCount.text = "X"+(limit- PlacedInstance.Count).ToString( );//제한 설정은 레벨 메니저에서 
     }
     // UI에서 클릭 시작
     public void OnPointerDown(PointerEventData eventData)
     {
         // 드래그 시작할 때 프리팹 인스턴스 생성
-        //if (!PlacedInstance)
+        if (PlacedInstance.Count< limit)
         {
             draggingInstance = Instantiate(previewInstance);
         }
@@ -59,8 +58,8 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
                 return;//밑에 코드 실행 ㄴㄴ
             }
         }
-        PlacedInstance = Instantiate(prefabToSpawn);//재대로 된거소환
-        PlacedInstance.transform.position = draggingInstance.transform.position;//미리보기 위치로
+        PlacedInstance.Add(Instantiate(prefabToSpawn, draggingInstance.transform.position, Quaternion.identity));//재대로 된거소환
+        //생성후 리스트에 추가 및 미리보기 위치로
         Destroy(draggingInstance);
 
     }

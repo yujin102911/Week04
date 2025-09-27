@@ -60,7 +60,7 @@ public class XGadget : MonoBehaviour
 
         if (apFound == null)
         {
-            if(targetFound != null)
+            //if(targetFound != null)
             {
                 Destroy(gameObject);
                 return;
