@@ -22,7 +22,6 @@ public class XGadget : MonoBehaviour
     {
         if (isHeld)
         {
-            Debug.Log("놓았음");
             attachedAP.occupied = false;
             TryAttachAtMouse();
         }
@@ -71,7 +70,6 @@ public class XGadget : MonoBehaviour
         {
             attachedAP = apFound;
         }
-            Debug.Log("붙는중!");
 
         target = targetFound;
 

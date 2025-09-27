@@ -71,7 +71,6 @@ public class ToggleGadget : MonoBehaviour
         {
             attachedPoint = apFound;
         }
-        Debug.Log("붙는중!");
 
         attachedTT = targetFound;
 
