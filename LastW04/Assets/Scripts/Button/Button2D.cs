@@ -14,12 +14,20 @@ public sealed class Button2D : MonoBehaviour
     [Tooltip("이 값이 0이면 '누구든 올라오면' 활성화. 0보다 크면, 누르는 오브젝트들의 총 질량이 이 값 이상일 때만 활성화.")]
     [SerializeField, Min(0f)] private float minTotalMassToPress = 0f;
 
-    [Header("Visual (optional)")]
+    [Header("Visual (optional: Top move)")]
     [Tooltip("눌릴 때 내려갈 윗판(Top) Transform")]
     [SerializeField] private Transform top;
     [SerializeField] private float pressedLocalY = -0.06f;
     [SerializeField] private float unpressedLocalY = 0f;
     [SerializeField, Min(1f)] private float moveLerpSpeed = 12f;
+
+    [Header("Visual (optional: Sprite swap)")]
+    [Tooltip("버튼의 스프라이트를 바꿔줄 대상(없으면 기능 비활성)")]
+    [SerializeField] private SpriteRenderer sr;
+    [Tooltip("눌렸을 때 표시할 스프라이트")]
+    [SerializeField] private Sprite pressedSprite;
+    [Tooltip("안 눌렸을 때 표시할 스프라이트")]
+    [SerializeField] private Sprite unpressedSprite;
 
     [Header("Events")]
     public UnityEvent onPressed;
@@ -43,6 +51,29 @@ public sealed class Button2D : MonoBehaviour
         }
         var col = GetComponent<Collider2D>();
         if (col) col.isTrigger = true;
+
+        // 편의상 자동 할당 시도
+        if (!sr) sr = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void Awake()
+    {
+        // 혹시 누락되었으면 한 번 더 찾아줌(옵션)
+        if (!sr) sr = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {
+        // 안전: 비활성→활성시 초기화
+        occupants.Clear();
+        SetPressed(false, forceRefresh: true); // 초기 상태로 시각 동기화
+    }
+
+    private void OnDisable()
+    {
+        // 안전: 비활성화될 때 항상 해제 상태로
+        occupants.Clear();
+        SetPressed(false, forceRefresh: true);
     }
 
     private void Update()
@@ -57,18 +88,24 @@ public sealed class Button2D : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void LateUpdate()
     {
-        // 안전: 비활성→활성시 초기화
-        occupants.Clear();
-        SetPressed(false);
-    }
+        if (occupants.Count == 0) return;
 
-    private void OnDisable()
-    {
-        // 안전: 비활성화될 때 항상 해제 상태로
-        occupants.Clear();
-        SetPressed(false);
+        // 살아있는 Rigidbody만 남기기
+        bool changed = false;
+        var toRemove = new List<Rigidbody2D>();
+        foreach (var rb in occupants)
+        {
+            if (rb == null || !rb.gameObject.activeInHierarchy)
+                toRemove.Add(rb);
+        }
+        if (toRemove.Count > 0)
+        {
+            foreach (var dead in toRemove) occupants.Remove(dead);
+            changed = true;
+        }
+        if (changed) RecomputePressed();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -90,27 +127,6 @@ public sealed class Button2D : MonoBehaviour
 
         if (occupants.Remove(rb))
             RecomputePressed();
-    }
-
-    // 충돌체가 파괴되거나 비활성화되면서 Exit가 누락되는 경우를 보완
-    private void LateUpdate()
-    {
-        if (occupants.Count == 0) return;
-
-        // 살아있는 Rigidbody만 남기기
-        bool changed = false;
-        var toRemove = new List<Rigidbody2D>();
-        foreach (var rb in occupants)
-        {
-            if (rb == null || !rb.gameObject.activeInHierarchy)
-                toRemove.Add(rb);
-        }
-        if (toRemove.Count > 0)
-        {
-            foreach (var dead in toRemove) occupants.Remove(dead);
-            changed = true;
-        }
-        if (changed) RecomputePressed();
     }
 
     private bool MatchesLayer(int layer)
@@ -137,20 +153,34 @@ public sealed class Button2D : MonoBehaviour
         SetPressed(nextPressed);
     }
 
-    private void SetPressed(bool pressed)
+    private void SetPressed(bool pressed, bool forceRefresh = false)
     {
-        if (isPressed == pressed) return;
+        if (!forceRefresh && isPressed == pressed) return;
         isPressed = pressed;
 
-        // ★ 여기서 로그 출력
-        if (isPressed)
-            Debug.Log($"{name} 버튼이 눌렸습니다!");
-        else
-            Debug.Log($"{name} 버튼에서 내려왔습니다!");
+        // 로그(원하면 끄셔도 됨)
+        if (isPressed) Debug.Log($"{name} 버튼이 눌렸습니다!");
+        else Debug.Log($"{name} 버튼에서 내려왔습니다!");
 
+        // 스프라이트 갱신
+        RefreshSprite();
+
+        // 이벤트 발행
         onStateChanged?.Invoke(isPressed);
         if (isPressed) onPressed?.Invoke();
         else onReleased?.Invoke();
+    }
+
+    private void RefreshSprite()
+    {
+        if (isPressed)
+        {
+            if (pressedSprite) sr.sprite = pressedSprite;
+        }
+        else
+        {
+            if (unpressedSprite) sr.sprite = unpressedSprite;
+        }
     }
 
     // 디버그 표시(선택)

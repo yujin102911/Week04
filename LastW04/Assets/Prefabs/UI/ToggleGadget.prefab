@@ -92,6 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f0037e06f2ef27428d1834b98c4b1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 6081960258477100326}
+  offSprite: {fileID: -6792661663267336770, guid: 4ab382760f52c02419c061f9755b2eab, type: 3}
+  onSprite: {fileID: 1291200723283367101, guid: c7694bf359473a2459de17ea72d0292d, type: 3}
+  startAsOn: 0
 --- !u!212 &6081960258477100326
 SpriteRenderer:
   m_ObjectHideFlags: 0

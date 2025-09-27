@@ -300,6 +300,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1613757178}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &700084174 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4012531090448574731, guid: 480d93585932cce489098614fc5b0086, type: 3}
+  m_PrefabInstance: {fileID: 1013750841432312298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &799059890
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,6 +1152,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4012531090448574731, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012531090448574731, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4012531090448574731, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6158014830091936530, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: sr
+      value: 
+      objectReference: {fileID: 700084174}
+    - target: {fileID: 6158014830091936530, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: pressedSprite
+      value: 
+      objectReference: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
+    - target: {fileID: 6158014830091936530, guid: 480d93585932cce489098614fc5b0086, type: 3}
+      propertyPath: unpressedSprite
+      value: 
+      objectReference: {fileID: 3671325788559034056, guid: 35f7e91a659f47e47a2bcfc8d25dd9a5, type: 3}
     - target: {fileID: 6158014830091936530, guid: 480d93585932cce489098614fc5b0086, type: 3}
       propertyPath: detectionLayers.m_Bits
       value: 16384

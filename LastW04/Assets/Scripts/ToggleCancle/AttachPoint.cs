@@ -1,7 +1,7 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class AttachPoint : MonoBehaviour
 {
-    public Transform snap;          // °¡Á¬ÀÌ ºÙÀ» À§Ä¡/È¸Àü ±âÁØ
-    [HideInInspector] public bool occupied; // ÀÌ¹Ì °¡Á¬ÀÌ ºÙ¾ú´ÂÁö ¿©ºÎ
+    public Transform snap;          // ê°€ì ¯ì´ ë¶™ì„ ìœ„ì¹˜/íšŒì „ ê¸°ì¤€
+    public bool occupied; // ì´ë¯¸ ê°€ì ¯ì´ ë¶™ì—ˆëŠ”ì§€ ì—¬ë¶€
 }

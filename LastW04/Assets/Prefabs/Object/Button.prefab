@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 40
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.17225882, g: 0.62262946, b: 0.745283, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -183,6 +183,9 @@ MonoBehaviour:
   pressedLocalY: -0.06
   unpressedLocalY: 0
   moveLerpSpeed: 12
+  sr: {fileID: 4012531090448574731}
+  pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
+  unpressedSprite: {fileID: 3671325788559034056, guid: 35f7e91a659f47e47a2bcfc8d25dd9a5, type: 3}
   onPressed:
     m_PersistentCalls:
       m_Calls: []
