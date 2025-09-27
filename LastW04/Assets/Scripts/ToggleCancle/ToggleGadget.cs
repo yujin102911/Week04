@@ -3,44 +3,55 @@
 public class ToggleGadget : MonoBehaviour
 {
     [Header("Refs")]
+    [SerializeField] private SpriteRenderer sr; // 가젯 아이콘(필수)
+
+    [Header("Visuals")]
+    [SerializeField] private Sprite offSprite;   // 꺼짐 아이콘
+    [SerializeField] private Sprite onSprite;    // 켜짐 아이콘
+    [SerializeField] private bool startAsOn = false; // 시작 시 아이콘 상태
 
     // 내부 상태
     private bool isHeld = false;       // 손에 들고 있나
     private AttachPoint attachedAP;    // 붙은 부착점
-    private ToggleTarget attachedTT;     // 토글 대상
+    private ToggleTarget attachedTT;   // 토글 대상
+
     private void Start()
     {
+        // 아이콘 초기화(인스펙터에서 offSprite/onSprite를 할당해두세요)
+        if (sr)
+            sr.sprite = startAsOn ? onSprite : offSprite;
+
         TryAttach();
     }
-    void Update()
-    {
 
-    }
+    void Update() { }
 
     void OnMouseDown()
     {
-        if(GameManager.mode==Mode.None)//일반 상태라면
-        // 3) 이미 부착되어 있다 → 이 가젯을 클릭하면 대상 토글 작동
-        if (attachedAP != null && attachedTT != null)
+        if (GameManager.mode == Mode.None)
         {
-            Activate();
+            // 3) 이미 부착되어 있다 → 이 가젯을 클릭하면 대상 토글 작동
+            if (attachedAP != null && attachedTT != null)
+            {
+                Activate();
+            }
         }
     }
-    void OnMouseUp()//클릭 땟을 때
+
+    void OnMouseUp() // 클릭 뗐을 때
     {
-        if (GameManager.mode == Mode.Editing)//에딧 상태라면
-            TryAttach();//다시 붙기 시도
+        if (GameManager.mode == Mode.Editing) // 에딧 상태라면
+            TryAttach(); // 다시 붙기 시도
     }
+
     private void TryAttach()
     {
-        // 마우스 지점과 겹치는 콜라이더 모두 확인
-        var hits = Physics2D.OverlapBoxAll(transform.position,new Vector2(1,1),0);
+        var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
         AttachPoint apFound = null;
         ToggleTarget ttFound = null;
 
         foreach (var h in hits)
         {
-            // 같은 오브젝트에 두 컴포넌트가 따로 있을 수 있어 GetComponentInParent 사용
             var ap = h.GetComponentInParent<AttachPoint>();
             var tt = h.GetComponentInParent<ToggleTarget>();
 
@@ -59,7 +70,7 @@ public class ToggleGadget : MonoBehaviour
         attachedTT = ttFound;
 
         transform.SetParent(attachedAP.snap, false);
-        transform.localPosition = Vector3.zero+Vector3.back;
+        transform.localPosition = Vector3.zero + Vector3.back;
         transform.localRotation = Quaternion.identity;
 
         attachedAP.occupied = true;
@@ -68,7 +79,16 @@ public class ToggleGadget : MonoBehaviour
 
     private void Activate()
     {
+        // 1) 토글 실행
         attachedTT.Toggle();
+
+        // 2) 아이콘 스프라이트 토글(간단 버전)
+        if (sr && onSprite && offSprite)
+        {
+            // 현재 무엇이 표시 중이든 반대로 전환
+            sr.sprite = (sr.sprite == onSprite) ? offSprite : onSprite;
+        }
+
         // 필요하면 이펙트/사운드 추가
     }
 }
