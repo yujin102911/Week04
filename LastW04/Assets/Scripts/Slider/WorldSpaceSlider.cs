@@ -62,8 +62,8 @@ public class WorldSpaceSlider : MonoBehaviour
 
     private Vector3 GetSnappedPosition(Vector3 originalPosition)//스냅 시키기
     {
-        float snappedX = Mathf.Round(originalPosition.x);
-        float snappedY = Mathf.Round(originalPosition.y);
+        float snappedX = Mathf.Floor(originalPosition.x)+0.5f;
+        float snappedY = Mathf.Floor(originalPosition.y) + 0.5f;
         return new Vector3(snappedX, snappedY, 0);
     }
 
@@ -135,7 +135,12 @@ public class WorldSpaceSlider : MonoBehaviour
     {
         // 값을 0과 1 사이로 제한합니다.
         value = Mathf.Clamp01(newValue);
-        UpdateHandlePosition();
+
+        if (placed)
+        {
+            UpdateHandlePosition();
+        }
+        
     }
 
     // 현재 value 값에 맞춰 핸들의 위치를 업데이트합니다.
