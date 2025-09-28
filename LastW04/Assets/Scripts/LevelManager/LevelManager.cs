@@ -96,11 +96,15 @@ public class LevelManager : MonoBehaviour
         }                
         if (levelChanged)//렙 바뀌면
         {
-            SliderUI.limit = SliderUI.Remain = levelUISlider[levelCurrent];
-            toggleUI.limit = toggleUI.Remain = levelUIToggle[levelCurrent];
-            deleteUI.limit = deleteUI.Remain = levelUIDelete[levelCurrent];
+            Debug.Log("레벨바뀜");
+            SliderUI.limit = levelUISlider[levelCurrent];//제한 수 갱신
+            toggleUI.limit = levelUIToggle[levelCurrent];
+            deleteUI.limit = levelUIDelete[levelCurrent];
+            SliderUI.PlacedInstance.RemoveAll(obj => true);//이전렙 배치된거 제거
+            toggleUI.PlacedInstance.RemoveAll(obj => true);
+            deleteUI.PlacedInstance.RemoveAll(obj => true);
         }
-        levelCurrent = levelBefore;
+        levelBefore= levelCurrent;
     }
 
     // ── 씬 로드가 끝난 후, 모든 참조 재바인딩 + 현재 지역으로 복구

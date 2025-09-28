@@ -99,6 +99,5 @@ public class ToggleGadget : MonoBehaviour
     private void OnDestroy()
     {
         attachedPoint.occupied = false;
-        Debug.Log("왜안댐?");
     }
 }
