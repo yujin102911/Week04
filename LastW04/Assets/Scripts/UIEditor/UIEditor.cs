@@ -31,19 +31,20 @@ public class UIEditor : MonoBehaviour
         {
             Vector2 screenPos = Input.mousePosition;//마우스 좌표 저장
             Vector2 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);//스크린에서 마우스 좌표
+
             if (Input.GetMouseButtonDown(0))//좌클 시
             {
                 // 마우스 아래 오브젝트 감지
                 Ray ray = Camera.main.ScreenPointToRay(screenPos);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);//범위 검사
 
-                if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//게임모드 들어가서 설치 완료된거면
-                {
-                    return;//걍 끝냄
-                }
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
-                    if (hit.transform.parent.CompareTag("EditorbleUI"))
+                    if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//이미 게임모드 들어가서 설치 완료된거면
+                    {
+                        return;//걍 끝냄
+                    }
+                    if (hit.transform.parent.CompareTag("EditorbleUI"))//집는 대상 찾기
                     {
                         draggingInstance=hit.transform.parent.gameObject;//집음
                     }
@@ -62,13 +63,13 @@ public class UIEditor : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(screenPos);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);
 
-                if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//게임모드 들어가서 설치 완료된거면
-                {
-                   return;//걍 끝냄
-                }
                 if (hit.collider != null && hit.collider.CompareTag("EditorbleUI"))
                 {
-                    if (hit.transform.parent != null)
+                    if (hit.collider.gameObject.GetComponent<UIPlacer>().placed)//이미 게임모드 들어가서 설치 완료된거면
+                    {
+                        return;//걍 끝냄
+                    }
+                    if (hit.transform.parent != null)//제거 대상 찾기
                     {
                         Destroy(hit.transform.parent.gameObject);
                     }

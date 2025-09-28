@@ -96,9 +96,13 @@ public class LevelManager : MonoBehaviour
         }                
         if (levelChanged)//렙 바뀌면
         {
-            SliderUI.limit = SliderUI.Remain = levelUISlider[levelCurrent];
+            Debug.Log("레벨바뀜");
+            SliderUI.limit = SliderUI.Remain = levelUISlider[levelCurrent];//제한 수 갱신
             toggleUI.limit = toggleUI.Remain = levelUIToggle[levelCurrent];
             deleteUI.limit = deleteUI.Remain = levelUIDelete[levelCurrent];
+            SliderUI.PlacedInstance.RemoveAll(obj => true);//이전렙 배치된거 제거
+            toggleUI.PlacedInstance.RemoveAll(obj => true);
+            deleteUI.PlacedInstance.RemoveAll(obj => true);
         }
         levelCurrent = levelBefore;
     }
