@@ -25,13 +25,6 @@ public class XGadget : MonoBehaviour
             attachedAP.occupied = false;
             TryAttachAtMouse();
         }
-        Debug.DrawRay(transform.position, new Vector2(.5f, .5f), Color.red);
-
-        Debug.DrawRay(transform.position, new Vector2(.5f, -.5f), Color.red);
-
-        Debug.DrawRay(transform.position, new Vector2(-.5f, -.5f), Color.red);
-
-        Debug.DrawRay(transform.position, new Vector2(-.5f, .5f), Color.red);
     }
 
     void OnMouseDown()
@@ -73,11 +66,11 @@ public class XGadget : MonoBehaviour
 
         target = targetFound;
 
-        transform.SetParent(attachedAP.snap.transform, false);
+        /*transform.SetParent(attachedAP.snap.transform, false);
         transform.localPosition = Vector3.zero + Vector3.back;
-        transform.localRotation = Quaternion.identity;
-
-        attachedAP.occupied = true;
+        transform.localRotation = Quaternion.identity;*/
+        Destroy(attachedAP.transform.parent.gameObject);
+        //attachedAP.occupied = true;
         isHeld = false; // 손에서 내려놓음
     }
 

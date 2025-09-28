@@ -44,7 +44,7 @@ public class UIEditor : MonoBehaviour
                     {
                         return;//걍 끝냄
                     }
-                    if (hit.transform.parent.CompareTag("EditorbleUI"))//집는 대상 찾기
+                    if (hit.transform.parent != null && hit.transform.parent.CompareTag("EditorbleUI"))//집는 대상 찾기
                     {
                         draggingInstance=hit.transform.parent.gameObject;//집음
                     }
