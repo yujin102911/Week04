@@ -42,10 +42,7 @@ GameObject:
   - component: {fileID: 536603008869904458}
   - component: {fileID: 4012531090448574731}
   - component: {fileID: 7795560862873358946}
-  - component: {fileID: 1521433588810627536}
-  - component: {fileID: 6158014830091936530}
-  - component: {fileID: 7265498958636551946}
-  - component: {fileID: 2427527754895833234}
+  - component: {fileID: 3445591319543108482}
   m_Layer: 15
   m_Name: Button
   m_TagString: Untagged
@@ -62,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 7328597588123934111}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.64, y: -2.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -170,34 +167,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7654662, y: 0.82344055}
   m_EdgeRadius: 0
---- !u!50 &1521433588810627536
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328597588123934111}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &6158014830091936530
+--- !u!114 &3445591319543108482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,38 +176,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 7328597588123934111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdb44a5822ea4054e95d648a2f175120, type: 3}
+  m_Script: {fileID: 11500000, guid: c374b67741527be48ad70adeb133c8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionLayers:
-    serializedVersion: 2
-    m_Bits: 16896
-  minTotalMassToPress: 0
-  sr: {fileID: 4012531090448574731}
-  pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
+  buttonSpriteRenderer: {fileID: 4012531090448574731}
   unpressedSprite: {fileID: 3671325788559034056, guid: 35f7e91a659f47e47a2bcfc8d25dd9a5, type: 3}
+  pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
   onPressed:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DoorSwitch, Assembly-CSharp
-        m_MethodName: ApplyState
-        m_Mode: 6
+        m_TargetAssemblyTypeName: SimpleDoor, Assembly-CSharp
+        m_MethodName: OpenDoor
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
   onReleased:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DoorSwitch, Assembly-CSharp
-        m_MethodName: ApplyState
-        m_Mode: 6
+        m_TargetAssemblyTypeName: SimpleDoor, Assembly-CSharp
+        m_MethodName: CloseDoor
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -246,60 +212,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  onStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7265498958636551946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328597588123934111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2fc42c11cf5c8489c7dd83413998b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  solid: {fileID: 0}
-  sr: {fileID: 0}
-  openSprite: {fileID: 0}
-  closedSprite: {fileID: 0}
-  isOn: 1
-  toggleGameObject: 0
-  disableSolidOnOpen: 0
-  onStateChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6158014830091936530}
-        m_TargetAssemblyTypeName: Button2D, Assembly-CSharp
-        m_MethodName: SetPressedFromToggle
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2427527754895833234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328597588123934111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cccea97f85c1ec40924d867abb373ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  essential: 0
-  deleteTarget: {fileID: 0}
-  vfxOnDelete: {fileID: 0}
-  sfxOnDelete: {fileID: 0}
 --- !u!1 &8826104403233441660
 GameObject:
   m_ObjectHideFlags: 0
