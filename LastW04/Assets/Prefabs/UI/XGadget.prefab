@@ -126,7 +126,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 99
   m_Sprite: {fileID: -6490462202804676142, guid: ff97e413a7479f94a9ef2dd29d372428, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -151,6 +151,7 @@ MonoBehaviour:
   isHeld: 1
   attachedAP: {fileID: 0}
   target: {fileID: 0}
+  UIPlacer: {fileID: 2890882679137092206}
 --- !u!114 &2890882679137092206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,4 +165,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placed: 0
+  spawned: 1
   sprite: {fileID: 2504941193487996865}

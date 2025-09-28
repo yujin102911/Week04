@@ -104,7 +104,18 @@ public class HandleAttachment : MonoBehaviour
         {
             return;
         }
+        if (other.CompareTag("Box"))
+        {
+            // 박스에서 PushableBox 스크립트를 가져옵니다.
+            PushableBox box = other.GetComponent<PushableBox>();
 
+            // 스크립트가 있고, 그 박스가 현재 연꽃 위에 있다면(IsOnLotus == true),
+            if (box != null && box.IsOnLotus)
+            {
+                // 핸들에 붙이지 않고 함수를 즉시 종료합니다.
+                return;
+            }
+        }
         if (other.CompareTag("Box") || other.CompareTag("Lotus") || other.CompareTag("Statue"))
         {
             isObjectInside = true;
