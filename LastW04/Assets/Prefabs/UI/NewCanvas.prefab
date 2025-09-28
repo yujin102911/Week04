@@ -246,6 +246,7 @@ GameObject:
   - component: {fileID: 1024327306791244139}
   - component: {fileID: 8292603145528243599}
   - component: {fileID: 5178377568348653167}
+  - component: {fileID: 2051315990379142949}
   m_Layer: 5
   m_Name: NewCanvas
   m_TagString: Untagged
@@ -338,6 +339,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2051315990379142949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462217258446124163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ad507cf09e91a47a35aab11a563911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  editingUI: {fileID: 4381281949557433184}
+  draggingInstance: {fileID: 0}
+  draggingStartPos: {x: 0, y: 0}
+  draggingOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &628391369509901731
 GameObject:
   m_ObjectHideFlags: 0
