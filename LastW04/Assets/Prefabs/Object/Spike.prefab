@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 4075273012335010603}
   closedSprite: {fileID: 1095952140970740251, guid: 2c52d1689f8b7184da2bd710817fd37b, type: 3}
-  openSprite: {fileID: 6723963429988506304, guid: 91680fd6efe3188428d2d90c3599a23f, type: 3}
+  openSprite: {fileID: 21300000, guid: 4cf000af4d87a254e8c1be91f10f20d1, type: 3}
   doorCollider: {fileID: 1203272972092352180}
   extraColliders:
   - {fileID: 2797304617102225277}
