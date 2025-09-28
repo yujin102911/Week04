@@ -42,8 +42,6 @@ GameObject:
   - component: {fileID: 536603008869904458}
   - component: {fileID: 4012531090448574731}
   - component: {fileID: 7795560862873358946}
-  - component: {fileID: 7265498958636551946}
-  - component: {fileID: 2427527754895833234}
   - component: {fileID: 3445591319543108482}
   m_Layer: 15
   m_Name: Button
@@ -169,57 +167,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7654662, y: 0.82344055}
   m_EdgeRadius: 0
---- !u!114 &7265498958636551946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328597588123934111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2fc42c11cf5c8489c7dd83413998b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  solid: {fileID: 0}
-  sr: {fileID: 0}
-  openSprite: {fileID: 0}
-  closedSprite: {fileID: 0}
-  isOn: 1
-  toggleGameObject: 0
-  disableSolidOnOpen: 0
-  onStateChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Button2D, Assembly-CSharp
-        m_MethodName: SetPressedFromToggle
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2427527754895833234
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7328597588123934111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cccea97f85c1ec40924d867abb373ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  essential: 0
-  deleteTarget: {fileID: 0}
-  vfxOnDelete: {fileID: 0}
-  sfxOnDelete: {fileID: 0}
 --- !u!114 &3445591319543108482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,10 +184,34 @@ MonoBehaviour:
   pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
   onPressed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SimpleDoor, Assembly-CSharp
+        m_MethodName: OpenDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onReleased:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: SimpleDoor, Assembly-CSharp
+        m_MethodName: CloseDoor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8826104403233441660
 GameObject:
   m_ObjectHideFlags: 0

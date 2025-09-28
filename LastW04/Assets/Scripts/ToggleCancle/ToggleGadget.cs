@@ -16,6 +16,7 @@ public class ToggleGadget : MonoBehaviour
     private AttachPoint attachedPoint;    // 붙은 부착점
     private ToggleTarget attachedTT;      // 기존 토글 대상(유지)
     private DoorToggle attachedDoor;      // 추가: 문 전용 토글 대상
+    private SimpleButton attachedButton;
 
     private void Start()
     {
@@ -32,9 +33,10 @@ public class ToggleGadget : MonoBehaviour
         if (GameManager.mode == Mode.None)
         {
             // 부착되어 있으면 작동
-            if (attachedPoint != null && (attachedTT != null || attachedDoor != null))
+            if (attachedPoint != null && (attachedTT != null || attachedDoor != null || attachedButton != null))
             {
                 Activate();
+                Debug.Log("토글실행");
             }
         }
     }
@@ -52,6 +54,7 @@ public class ToggleGadget : MonoBehaviour
         AttachPoint apFound = null;
         ToggleTarget ttFound = null;
         DoorToggle doorFound = null;
+        SimpleButton buttonFound = null;
 
         foreach (var h in hits)
         {
@@ -59,9 +62,10 @@ public class ToggleGadget : MonoBehaviour
             if (!apFound) apFound = h.GetComponentInParent<AttachPoint>();
             if (!ttFound) ttFound = h.GetComponentInParent<ToggleTarget>();
             if (!doorFound) doorFound = h.GetComponentInParent<DoorToggle>();
+            if (!buttonFound) buttonFound = h.GetComponentInParent<SimpleButton>();
 
             // 다 찾았으면 조기 종료(선택)
-            if (apFound && (ttFound || doorFound))
+            if (apFound && (ttFound || doorFound || buttonFound))
                 break;
         }
 
@@ -75,6 +79,7 @@ public class ToggleGadget : MonoBehaviour
         attachedPoint = apFound;
         attachedTT = ttFound;    // 기존 유지
         attachedDoor = doorFound;  // 추가
+        attachedButton = buttonFound;
 
         // 스냅 부착
         if (attachedPoint && attachedPoint.snap)
@@ -102,6 +107,11 @@ public class ToggleGadget : MonoBehaviour
         if (attachedDoor != null)
         {
             attachedDoor.Toggle();
+        }
+        // 1) DoorToggle이 있으면 우선 실행 (문: 스프라이트+콜라이더 자동 처리)
+        if (attachedButton != null)
+        {
+            attachedButton.Toggle();
         }
         // 2) 그 외엔 기존 ToggleTarget으로 실행 (기존 동작 보존)
         else if (attachedTT != null)
