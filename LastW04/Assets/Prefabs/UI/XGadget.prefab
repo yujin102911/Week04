@@ -151,6 +151,7 @@ MonoBehaviour:
   isHeld: 1
   attachedAP: {fileID: 0}
   target: {fileID: 0}
+  UIPlacer: {fileID: 2890882679137092206}
 --- !u!114 &2890882679137092206
 MonoBehaviour:
   m_ObjectHideFlags: 0

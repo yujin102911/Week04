@@ -12,6 +12,8 @@ public class XGadget : MonoBehaviour
     private AttachPoint attachedAP;        // 붙은 부착점
     [SerializeField]
     private DeletableTarget target;        // 삭제 대상
+    [SerializeField]
+    private UIPlacer UIPlacer;
 
     private void Start()
     {
@@ -70,6 +72,7 @@ public class XGadget : MonoBehaviour
         transform.localPosition = Vector3.zero + Vector3.back;
         transform.localRotation = Quaternion.identity;*/
         Destroy(attachedAP.transform.parent.gameObject);
+        UIPlacer.placed = true;//나 더 못옮겨욧
         //attachedAP.occupied = true;
         isHeld = false; // 손에서 내려놓음
     }
