@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 7543198417364267825}
   - component: {fileID: 2611869977471157060}
   - component: {fileID: 6920351807120761030}
-  - component: {fileID: 5550549264371162850}
   - component: {fileID: 7720958272278707030}
   - component: {fileID: 7736613448948478122}
+  - component: {fileID: 1965612389593469327}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -169,29 +169,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.9533014, y: 2.9713774}
   m_EdgeRadius: 0
---- !u!114 &5550549264371162850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4619494788888716882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe2fc42c11cf5c8489c7dd83413998b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 4619494788888716882}
-  solid: {fileID: 6920351807120761030}
-  sr: {fileID: 2611869977471157060}
-  openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
-  closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
-  isOn: 0
-  toggleGameObject: 0
-  disableSolidOnOpen: 0
-  onStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &7720958272278707030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   essential: 0
+  deleteTarget: {fileID: 0}
   vfxOnDelete: {fileID: 0}
   sfxOnDelete: {fileID: 0}
 --- !u!114 &7736613448948478122
@@ -223,7 +201,31 @@ MonoBehaviour:
   closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
   openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
   doorCollider: {fileID: 6920351807120761030}
+  attachPointColliders:
+  - {fileID: 7444783495909855297}
+  - {fileID: 6920351807120761030}
   openDisablesCollider: 0
+  openDisablesAttachPoints: 1
+--- !u!114 &1965612389593469327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619494788888716882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425f477d0b726a447833d5c2405999cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 2611869977471157060}
+  closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
+  openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
+  doorCollider: {fileID: 6920351807120761030}
+  extraColliders:
+  - {fileID: 7444783495909855297}
+  isOpen: 0
+  disableCollidersWhenOpen: 1
 --- !u!1 &6460004379551096601
 GameObject:
   m_ObjectHideFlags: 0

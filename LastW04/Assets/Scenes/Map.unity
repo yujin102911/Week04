@@ -38229,6 +38229,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9482bc961730af488f5067c295ac4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &609089299 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6920351807120761030, guid: 2cb686ea00a52ca45bc22d9db628d86c, type: 3}
+  m_PrefabInstance: {fileID: 1243327960}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &618544763 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7328597588123934111, guid: 480d93585932cce489098614fc5b0086, type: 3}
@@ -40676,6 +40681,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 609563636815624333, guid: 1429d914116c0fd4ebfb1b1201cc9c79, type: 3}
   m_PrefabInstance: {fileID: 169317411}
+  m_PrefabAsset: {fileID: 0}
+--- !u!61 &966803658 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 7444783495909855297, guid: 2cb686ea00a52ca45bc22d9db628d86c, type: 3}
+  m_PrefabInstance: {fileID: 1243327960}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &975716346
 PrefabInstance:
@@ -54721,6 +54731,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7736613448948478122, guid: 2cb686ea00a52ca45bc22d9db628d86c, type: 3}
+      propertyPath: attachPointColliders.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736613448948478122, guid: 2cb686ea00a52ca45bc22d9db628d86c, type: 3}
+      propertyPath: 'attachPointColliders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 966803658}
+    - target: {fileID: 7736613448948478122, guid: 2cb686ea00a52ca45bc22d9db628d86c, type: 3}
+      propertyPath: 'attachPointColliders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 609089299}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
