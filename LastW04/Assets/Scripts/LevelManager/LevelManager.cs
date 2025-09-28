@@ -80,9 +80,10 @@ public class LevelManager : MonoBehaviour
     private void Update()//레벨 변경 확인
     {
         CurrentRegionIdCheck = CurrentRegionId;
-        // 새 Input System
+        /* 새 Input System
         if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
             HardResetScene();
+        */
 
         levelCurrent = int.Parse(new string(CurrentRegionId.Where(char.IsDigit).ToArray()));//텍스트에서 레벨 추출
         if (levelBefore == levelCurrent)//이전 렙이랑 레벨같음?
