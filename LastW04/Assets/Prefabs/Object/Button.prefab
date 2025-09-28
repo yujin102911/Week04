@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 1521433588810627536}
   - component: {fileID: 6158014830091936530}
   - component: {fileID: 7265498958636551946}
-  m_Layer: 0
+  - component: {fileID: 2427527754895833234}
+  m_Layer: 15
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +112,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 40
+  m_SortingOrder: 30
   m_Sprite: {fileID: 3671325788559034056, guid: 35f7e91a659f47e47a2bcfc8d25dd9a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -157,7 +158,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0039527416, y: -0.014493704}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -167,7 +168,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7654662, y: 0.82344055}
   m_EdgeRadius: 0
 --- !u!50 &1521433588810627536
 Rigidbody2D:
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionLayers:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 16896
   minTotalMassToPress: 0
   sr: {fileID: 4012531090448574731}
   pressedSprite: {fileID: -9039256273923579169, guid: 6f59f2cb2d14b0d47ae92d75a9a27294, type: 3}
@@ -283,6 +284,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2427527754895833234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328597588123934111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cccea97f85c1ec40924d867abb373ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  essential: 0
+  deleteTarget: {fileID: 0}
+  vfxOnDelete: {fileID: 0}
+  sfxOnDelete: {fileID: 0}
 --- !u!1 &8826104403233441660
 GameObject:
   m_ObjectHideFlags: 0
