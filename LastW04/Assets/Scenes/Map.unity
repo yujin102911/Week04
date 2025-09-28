@@ -62729,7 +62729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[9]'
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUIToggle.Array.data[1]'
@@ -63108,7 +63108,7 @@ PrefabInstance:
       objectReference: {fileID: 516749736}
     - target: {fileID: 4086082272295101182, guid: 402128ff76644144c8e782c1ba01a3fe, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5161807661943704654, guid: 402128ff76644144c8e782c1ba01a3fe, type: 3}
       propertyPath: m_Pivot.x
