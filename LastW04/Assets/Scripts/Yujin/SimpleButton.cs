@@ -1,12 +1,15 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class SimpleButton : MonoBehaviour
 {
+
     [Tooltip("다른 스크립트에서 이 버튼이 눌렸는지 확인할 때 사용하는 변수")]
     public bool IsPressed { get; private set; } = false; //기본적으로 false : 안눌린 상태
 
     private int occupantCount = 0; //버튼 위에 올라온 오브젝트의 수
+    private bool isToggled = false;
 
     [Header("버튼 스프라이트")]
     [SerializeField, Tooltip("버튼 몸통(스프라이트렌더러)")]
@@ -26,7 +29,7 @@ public class SimpleButton : MonoBehaviour
         {
             buttonSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
-        UpdateSprite();
+        UpdatePressedState();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -47,8 +50,8 @@ public class SimpleButton : MonoBehaviour
     }
 
     private void UpdatePressedState()
-    {
-        bool shouldBePressed = occupantCount > 0;
+    {  
+        bool shouldBePressed = (occupantCount > 0) || isToggled;
 
         if (shouldBePressed != IsPressed)
         {
@@ -59,6 +62,14 @@ public class SimpleButton : MonoBehaviour
             else onReleased.Invoke();
         }
     }
+
+    public void Toggle()
+    {
+        Debug.Log("토글 활성화");
+        isToggled = !isToggled;
+        UpdatePressedState();
+    }
+
     private void UpdateSprite()
     {
         if (buttonSpriteRenderer == null) return;
