@@ -1,16 +1,19 @@
+// SceneBindings.cs
 using UnityEngine;
 
-public class Scenebinding : MonoBehaviour
+[DisallowMultipleComponent]
+public class SceneBindings : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Scene-scoped refs")]
+    public Transform player;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("UI Drag Managers")]
+    public UIDragManager sliderUI;
+    public UIDragManager toggleUI;
+    public UIDragManager deleteUI;
+
+    [Header("Level UI Limits (index = level number)")]
+    public int[] levelUISlider;
+    public int[] levelUIToggle;
+    public int[] levelUIDelete;
 }
