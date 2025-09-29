@@ -101,8 +101,7 @@ public class UIEditor : MonoBehaviour
                 {
                     if (h.CompareTag("EditorbleUI")&&h.gameObject!= draggingInstance && h.gameObject != h.transform.IsChildOf(draggingInstance.transform))//다른 UI있으면
                     {
-                        draggingInstance.transform.position = draggingStartPos;
-                        draggingInstance = null;
+                        GoToStartPos();
                         return;//밑에 코드 실행 ㄴㄴ
                     }
                 }
@@ -118,5 +117,15 @@ public class UIEditor : MonoBehaviour
 
             }
         }
+        else if (draggingInstance != null)//드래그중인게 있는데 에딧모드가아니며ㅛㄴ
+        {
+            GoToStartPos();
+        }
+    }
+     void GoToStartPos()
+    {
+        draggingInstance.transform.position = draggingStartPos;//원래 위치로
+        draggingInstance = null;
+
     }
 }
