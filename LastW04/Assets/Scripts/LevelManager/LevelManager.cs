@@ -62,7 +62,7 @@ public class LevelManager : MonoBehaviour
         // CurrentRegionId가 비었으면 폴백(예: Region_01)
         if (string.IsNullOrEmpty(CurrentRegionId))
         {
-            var first = FindRegion("Region_01");
+            var first = FindRegion("Region_07");
             if (first)
             {
                 CurrentRegionId = first.regionId;
@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
         }
 
         // 현재 지역을 못 찾으면 폴백
-        var first = FindRegion("Region_01");
+        var first = FindRegion("Region_07");
         if (first)
         {
             CurrentRegionId = first.regionId;
