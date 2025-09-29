@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 8006410562254641123}
   - component: {fileID: 8688452026723597850}
   - component: {fileID: 3471907946397665416}
+  - component: {fileID: 9099490780106299061}
+  - component: {fileID: 7862528516662955236}
   m_Layer: 15
   m_Name: Lotus
   m_TagString: Lotus
@@ -178,3 +180,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bec93ad87ff1b941b5b79b9968caf18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9099490780106299061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057378286707915100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262c199b3d49be64cba454b854a7e597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showWhen: 0
+  hintSprite: {fileID: 559653862641570742, guid: f4ba98941a9fe4b4da75dd9c975c5798, type: 3}
+  rightOffset: {x: 2, y: 0.9}
+  leftOffset: {x: -2, y: 0.9}
+  side: 0
+  sortingLayerName: 
+  sortingOrder: 100
+  viewportPadding: 0.03
+  showLabel: 1
+  labelText: "\uB450 \uC0AC\uB78C\uC774 \uB109\uB109\uD788 \uD0C8 \uC218 \uC788\uB294
+    \uC5F0\uAF43\uC78E.\n<color=#B8EFAC>\uC2AC\uB77C\uC774\uB354</color>\uC5D0 \uBD99\uB294\uB2E4."
+  labelFont: {fileID: 11400000, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
+  labelFontSize: 4
+  labelColor: {r: 1, g: 1, b: 1, a: 1}
+  labelLocalOffset: {x: 0, y: 0, z: 0}
+  autoResizeBackground: 1
+  backgroundPadding: {x: 0.2, y: 0.2}
+  backgroundMinSize: {x: 0.6, y: 0.4}
+  backgroundMaxSize: {x: 0, y: 0}
+--- !u!114 &7862528516662955236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057378286707915100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9099490780106299061}
+          m_TargetAssemblyTypeName: HoverHint, Assembly-CSharp
+          m_MethodName: OnPointerEnterFromET
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 9099490780106299061}
+          m_TargetAssemblyTypeName: HoverHint, Assembly-CSharp
+          m_MethodName: OnPointerExitFromET
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
