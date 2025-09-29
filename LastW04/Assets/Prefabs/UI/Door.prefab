@@ -241,13 +241,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showWhen: 0
-  hintSprite: {fileID: 649223268058989734, guid: ffd45975044bd364e90594184436d9ea, type: 3}
-  rightOffset: {x: 1, y: 0.9}
-  leftOffset: {x: -1, y: 0.9}
+  hintSprite: {fileID: 559653862641570742, guid: f4ba98941a9fe4b4da75dd9c975c5798, type: 3}
+  rightOffset: {x: 2, y: 0.9}
+  leftOffset: {x: -2, y: 0.9}
   side: 0
   sortingLayerName: 
   sortingOrder: 100
   viewportPadding: 0.03
+  showLabel: 1
+  labelText: "\uC5F4\uB9AC\uAC70\uB098 \uB2EB\uD790\uC218 \uC788\uB294 \uBB38.\n<color=#B8EFAC>\uD1A0\uAE00</color>\uACFC
+    <color=#B8EFAC>\uC5D1\uC2A4\uBC84\uD2BC</color>\uC5D0 \uBD99\uB294\uB2E4."
+  labelFont: {fileID: 11400000, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
+  labelFontSize: 3.5
+  labelColor: {r: 1, g: 1, b: 1, a: 1}
+  labelLocalOffset: {x: 0, y: 0, z: 0}
+  autoResizeBackground: 1
+  backgroundPadding: {x: 0.2, y: 0.2}
+  backgroundMinSize: {x: 0.6, y: 0.4}
+  backgroundMaxSize: {x: 0, y: 0}
 --- !u!114 &7123096245150773904
 MonoBehaviour:
   m_ObjectHideFlags: 0
