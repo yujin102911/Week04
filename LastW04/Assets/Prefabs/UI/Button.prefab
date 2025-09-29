@@ -324,7 +324,7 @@ MonoBehaviour:
   viewportPadding: 0.03
   showLabel: 1
   labelText: "\uB204\uB974\uACE0 \uC2F6\uAC8C \uC0DD\uAE34 \uBC84\uD2BC.\n<color=#B8EFAC>\uD1A0\uAE00</color>\uACFC
-    <color=#B8EFAC>\uC5D1\uC2A4\uBC84\uD2BC</color>\uC5D0 \uBD99\uB294\uB2E4."
+    <color=#B8EFAC>\uC5D1\uC2A4\uBC84\uD2BC</color>\uC774 \uBD99\uB294\uB2E4."
   labelFont: {fileID: 11400000, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
   labelFontSize: 4
   labelColor: {r: 1, g: 1, b: 1, a: 1}
