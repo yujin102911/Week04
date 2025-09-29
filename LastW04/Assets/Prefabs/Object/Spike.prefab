@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4075273012335010603}
   - component: {fileID: 2361872562353233259}
   - component: {fileID: 3333639087896344207}
+  - component: {fileID: 4433917423478367627}
   m_Layer: 13
   m_Name: Spike
   m_TagString: Untagged
@@ -75,8 +76,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.011457264}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.89, y: 0.98}
+    pivot: {x: 0.49999997, y: 0.5}
+    oldSize: {x: 0.93, y: 1.03}
     newSize: {x: 0.89, y: 0.98}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -143,7 +144,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,6 +253,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &4433917423478367627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898350261821152256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e410990403782244ac7f91e72722518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  highlightMaterial: {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
+  typeUI: 
 --- !u!1 &3766043328577801433
 GameObject:
   m_ObjectHideFlags: 0
