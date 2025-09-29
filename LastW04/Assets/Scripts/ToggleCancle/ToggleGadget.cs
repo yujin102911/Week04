@@ -26,7 +26,13 @@ public class ToggleGadget : MonoBehaviour
         TryAttach();
     }
 
-    void Update() { }
+    void Update() 
+    {
+        if (isHeld) 
+        {
+            TryAttach();
+        }
+    }
 
     private void OnMouseDown()
     {
@@ -47,7 +53,7 @@ public class ToggleGadget : MonoBehaviour
             TryAttach(); // 다시 부착 시도
     }
 
-    private void TryAttach()
+    public void TryAttach()
     {
         var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0f);
 
