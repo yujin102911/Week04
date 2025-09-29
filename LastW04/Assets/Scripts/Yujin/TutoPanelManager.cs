@@ -12,6 +12,9 @@ public class TutoPanelManager : MonoBehaviour
 
     private bool isSwitching = false;
 
+    private void Update()
+    {
+    }
     public void SwitchPanel1To2()
     {
         if (!isSwitching)
