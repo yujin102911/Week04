@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -20,19 +21,21 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
     {
         if (draggingInstance != null)
         {
-            Vector2 screenPos = Input.mousePosition;
-            //Vector3 screenPos = Camera.main.WorldToScreenPoint(draggingInstance.transform.position);
-            //if (screenPos.z > 0 && screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
-            if (screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
+            if (GameManager.mode != Mode.Editing)
             {
-                // 화면 안에 있을 때만 GUI 처리
+                Destroy(draggingInstance);
             }
-            
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-            Vector3Int cell = grid.WorldToCell(worldPos);            // 그리드에 스냅
-            Vector3 aligned = grid.GetCellCenterWorld(cell);
-
-            draggingInstance.transform.position = aligned + Vector3.back;
+            else 
+            {
+                Vector2 screenPos = Input.mousePosition;
+                if (screenPos.x >= 0 && screenPos.x <= Screen.width && screenPos.y >= 0 && screenPos.y <= Screen.height)
+                {
+                    Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+                    Vector3Int cell = grid.WorldToCell(worldPos);            // 그리드에 스냅
+                    Vector3 aligned = grid.GetCellCenterWorld(cell);
+                    draggingInstance.transform.position = aligned + Vector3.back;    // 화면 안에 있을 때만 GUI 처리  
+                }
+            }
         }
         PlacedInstance.RemoveAll(obj => obj == null);
         textCount.text = "X"+(limit- PlacedInstance.Count).ToString( );//제한 설정은 레벨 메니저에서 

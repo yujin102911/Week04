@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        selectedUICheck = selectedUI;
         if (Input.GetKeyUp(KeyCode.Tab)) //에딧모드 전환
         {
             if (GameManager.mode != Mode.Editing)
@@ -46,7 +45,9 @@ public class GameManager : MonoBehaviour
             else
             {
                 GameManager.mode = Mode.None;
+                selectedUI = SelectedUI.None;
             }
         }
+        selectedUICheck = selectedUI;
     }
 }
