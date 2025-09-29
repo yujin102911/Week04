@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class TutorialEventBridge : MonoBehaviour
 {
@@ -14,6 +13,8 @@ public class TutorialEventBridge : MonoBehaviour
     /// <summary>
     /// 버튼의 UnityEvent에 연결할 메인 함수입니다.
     /// </summary>
+    /// 
+
     public void TriggerSwitchAndRegionUpdate()
     {
         // 1. 카메라 전환을 요청합니다.

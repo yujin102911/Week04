@@ -16,6 +16,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Range(0f, 0.3f)] private float deadZone = 0.05f;
     [SerializeField, Range(0f, 0.5f)] private float snapHysteresis = 0.12f;
 
+    [Header("Stuck Recovery")]
+    [SerializeField, Tooltip("물에 빠졌다고 판단하기까지의 시간(초)")]
+    private float unstuckThreshold = 0.1f;
+    private float timeStuckInWater = 0f;
+
     private Rigidbody2D rb;
     private PlayerControls playerControls;
     private Vector2 moveInput;
@@ -71,9 +76,25 @@ public class PlayerController : MonoBehaviour
         // --- 물에 끼임 복구 ---
         bool isInWater = Physics2D.OverlapCircle(rb.position, 0.4f, waterLayer) != null;
         bool isOnLotus = Physics2D.OverlapCircle(rb.position, 0.4f, lotusLayer) != null;
-        if (isInWater && !isOnLotus)
+
+        bool isCurrentlySafe = !isInWater || isOnLotus;
+
+        if (isCurrentlySafe)
         {
-            transform.position = lastSafePosition; // 즉시 복귀
+            // 1. 현재 위치가 안전하다면, 매 프레임 lastSafePosition을 갱신합니다.
+            lastSafePosition = rb.position;
+            timeStuckInWater = 0f; // 안전하므로 물에 빠진 시간 초기화
+        }
+        else
+        {
+            // 2. 현재 위치가 안전하지 않다면 (물 속이라면), 타이머를 작동시킵니다.
+            timeStuckInWater += Time.deltaTime;
+            if (timeStuckInWater > unstuckThreshold)
+            {
+                // 3. 유예 시간이 지나면, 마지막으로 안전했던 위치로 복귀시킵니다.
+                transform.position = lastSafePosition;
+                timeStuckInWater = 0f; // 타이머 리셋
+            }
         }
 
         // --- 애니메이션/스냅 ---
