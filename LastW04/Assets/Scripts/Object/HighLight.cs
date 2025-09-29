@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class HighLight : MonoBehaviour
 {
-    public Material defaultMaterial;  // 인스펙터에서 할당
-    public Material highlightMaterial;  // 인스펙터에서 할당
+    [SerializeField] Material defaultMaterial;  // 인스펙터에서 할당
+    [SerializeField] Material highlightMaterial;  // 인스펙터에서 할당Grid
+    [SerializeField]
+    SelectedUI[] typeUI;//내 UI 타입
 
     private SpriteRenderer sr;
     void Awake()
@@ -11,14 +14,15 @@ public class HighLight : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
     }
 
-    public void ChangeMaterial()
-    {
-        sr.material = highlightMaterial; // Material 교체
-    }    
-
     // Update is called once per frame
     void Update()
     {
-        
+        if (typeUI.Contains(GameManager.selectedUI))
+        {
+            sr.material = highlightMaterial;
+        }else
+        {
+            sr.material = defaultMaterial;
+        }
     }
 }

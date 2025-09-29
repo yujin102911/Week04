@@ -3,10 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler
+public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject prefabToSpawn; // 씬에 배치할 프리팹
     public Grid grid;                // 씬의 Grid
+    public SelectedUI typeUI;//내 UI 타입
     public GameObject previewInstance;//미리보기할 프리팹
     private GameObject draggingInstance;//드래그중인 것
     //private GameObject PlacedInstance;//드래그끝 배치한 것
@@ -37,6 +38,20 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
         textCount.text = "X"+(limit- PlacedInstance.Count).ToString( );//제한 설정은 레벨 메니저에서 
     }
     // UI에서 클릭 시작
+    public void     OnPointerEnter( PointerEventData eventData )
+    {
+        if (draggingInstance == null)//드래그중인 코드가 없으면
+        {
+            GameManager.selectedUI = typeUI;
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (draggingInstance == null)//드래그중인 코드가 없으면
+        {
+            GameManager.selectedUI = SelectedUI.None;
+        }
+    }
     public void OnPointerDown(PointerEventData eventData)
     {
         // 드래그 시작할 때 프리팹 인스턴스 생성
@@ -61,6 +76,6 @@ public class UIDragManager : MonoBehaviour, IPointerDownHandler,  IPointerUpHand
         PlacedInstance.Add(Instantiate(prefabToSpawn, draggingInstance.transform.position, Quaternion.identity));//재대로 된거소환
         //생성후 리스트에 추가 및 미리보기 위치로
         Destroy(draggingInstance);
-
+        GameManager.selectedUI = SelectedUI.None;
     }
 }
