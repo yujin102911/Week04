@@ -3054,6 +3054,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
+      propertyPath: 'levelUIDelete.Array.data[7]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
+      propertyPath: 'levelUISlider.Array.data[7]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
+      propertyPath: 'levelUIToggle.Array.data[7]'
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1665625595594821790, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: grid
       value: 
