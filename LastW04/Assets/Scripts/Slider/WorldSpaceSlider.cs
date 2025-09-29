@@ -33,17 +33,18 @@ public class WorldSpaceSlider : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.mode==Mode.Editing)
+        if (!IsInstalled)//설치 상태가 아니면
         {
-            if (!IsInstalled)//설치 상태가 아니면
+            if (GameManager.mode == Mode.Editing)
             {
-                HandlePlacement();
+                HandlePlacement();//핸들 보여지기
+            }
+            else
+            {
+                Destroy(gameObject);//에딧모드 아닌데 설치 안된거면 주거
             }
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+            
 
     }
     private void HandlePlacement()
