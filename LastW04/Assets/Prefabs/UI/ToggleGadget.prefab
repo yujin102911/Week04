@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b2d097de62bca4c82b33f5b43f2c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typeUI: 2
   placed: 0
   spawned: 1
   sprite: {fileID: 6081960258477100326}

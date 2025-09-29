@@ -52,6 +52,8 @@ public class UIEditor : MonoBehaviour
                     {
                         draggingInstance=hit.transform.gameObject;
                     }
+
+                    GameManager.selectedUI=draggingInstance.GetComponent<UIPlacer>().typeUI;//내가 집은 UI타입 을 게임 메니저 타입으로
                     draggingStartPos= draggingInstance.transform.position;//초기 위치 설정
                     draggingOffset = draggingStartPos - mouseWorld;
                 }
@@ -71,10 +73,12 @@ public class UIEditor : MonoBehaviour
                     }
                     if (hit.transform.parent != null&& hit.transform.CompareTag("EditorbleUI"))//제거 대상 찾기
                     {
+                        GameManager.selectedUI = SelectedUI.None;//내가 집은 UI타입을 none으로 
                         Destroy(hit.transform.parent.gameObject);
                     }
                     else
                     {
+                        GameManager.selectedUI = SelectedUI.None;//내가 집은 UI타입을 none으로
                         Destroy(hit.collider.gameObject);
                     }
                 }                
@@ -109,7 +113,7 @@ public class UIEditor : MonoBehaviour
 
                 var toggleGadget = draggingInstance.GetComponent<ToggleGadget>();
                 if (toggleGadget != null) toggleGadget.isHeld = true;
-
+                GameManager.selectedUI = SelectedUI.None;//내가 집은 UI타입을 none으로
                 draggingInstance = null;//현재위치에 있는 상태로 끝냄
 
             }
