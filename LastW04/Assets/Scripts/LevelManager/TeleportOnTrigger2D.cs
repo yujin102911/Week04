@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class TeleportOnTrigger2D : MonoBehaviour
 {
+
     [Header("Refs")]
     [SerializeField] private LevelManager levelManager;   // 인스펙터 연결되면 사용, 아니면 자동 탐색
 
@@ -66,5 +68,6 @@ public class TeleportOnTrigger2D : MonoBehaviour
         }
 
         levelManager.TeleportToRegion(destinationRegionId, affectCamera: true);
+
     }
 }

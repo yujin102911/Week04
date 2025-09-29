@@ -1,211 +1,201 @@
-using System.Collections;
-using System.Text;
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 
 public class TutoPanelManager : MonoBehaviour
 {
-    [Header("Æ©Åä¸®¾ó ÆĞ³Î")]
+    [Header("íŠœí† ë¦¬ì–¼ íŒ¨ë„ (ë¦¬ì „ë³„ë¡œ í•˜ë‚˜ë§Œ í‘œì‹œ)")]
     [SerializeField] private GameObject panel1;   // Region_07
     [SerializeField] private GameObject panel2;   // Region_08
     [SerializeField] private GameObject panel3;   // Region_09
 
-    [Header("Æ©Åä¸®¾ó ÅØ½ºÆ® (TMP)")]
+    [Header("íŠœí† ë¦¬ì–¼ í…ìŠ¤íŠ¸ (TMP)")]
     [SerializeField] private TextMeshProUGUI panel1Text;
     [SerializeField] private TextMeshProUGUI panel2Text;
     [SerializeField] private TextMeshProUGUI panel3Text;
 
-    [Header("Ãß°¡ Á¶ÀÛ(Sub) ÆĞ³Î")]
+    [Header("ì¶”ê°€ ì¡°ì‘(Sub) íŒ¨ë„")]
     [SerializeField] private GameObject subPanel;
     [SerializeField] private TextMeshProUGUI subPanelText;
 
-    [Header("ÈùÆ® ¾Ö´Ï¸ŞÀÌ¼Ç")]
+    [Header("íŒíŠ¸ ì• ë‹ˆë©”ì´ì…˜ (ì˜µì…˜)")]
     [SerializeField] private Animator mouseHintAnimator;
 
-    [Header("¶ó¿îµåº° ¼³Ä¡/»èÁ¦ ÃßÀû ´ë»ó (UIDragManager)")]
-    [Tooltip("Region_07: ½½¶óÀÌ´õ ¼³Ä¡ ÃßÀû¿ë")]
-    [SerializeField] private UIDragManager sliderManager_R1;
-    [Tooltip("Region_08: Åä±Û ¼³Ä¡ ÃßÀû¿ë")]
-    [SerializeField] private UIDragManager toggleManager_R2;
-    [Tooltip("Region_09: X ¼³Ä¡/»èÁ¦ ÃßÀû¿ë")]
-    [SerializeField] private UIDragManager xManager_R3;
+    [Header("ë¼ìš´ë“œë³„ ì„¤ì¹˜/ì‚­ì œ ì¶”ì  ëŒ€ìƒ (UIDragManager)")]
+    [SerializeField] private UIDragManager sliderManager_R1; // Region_07
+    [SerializeField] private UIDragManager toggleManager_R2; // Region_08
+    [SerializeField] private UIDragManager xManager_R3;      // Region_09
 
-    [Header("¶ó¿îµåº° ¹öÆ°(Æ®¸®°Å) ÃßÀû ´ë»ó (SimpleButton)")]
-    [Tooltip("Region_07: ¹öÆ° ´©¸£±â °¨Áö¿ë")]
-    [SerializeField] private SimpleButton[] buttons_R1;
-    [Tooltip("Region_08: ¹öÆ° ´©¸£±â °¨Áö¿ë")]
-    [SerializeField] private SimpleButton[] buttons_R2;
+    [Header("ë¼ìš´ë“œë³„ ë²„íŠ¼(íŠ¸ë¦¬ê±°) ì¶”ì  ëŒ€ìƒ (SimpleButton)")]
+    [SerializeField] private SimpleButton[] buttons_R1; // R1
+    [SerializeField] private SimpleButton[] buttons_R2; // R2
 
-    [Header("Å¸ÀÌÇÎ(ÇÑ ÁÙ¾¿ Ç¥½Ã) ¿É¼Ç")]
-    [SerializeField, Min(0f)] private float lineInterval = 0.35f;
-    [SerializeField] private bool restartTypingOnChange = true;
+    [Header("íŠœí† ë¦¬ì–¼ ìº”ë²„ìŠ¤ ë£¨íŠ¸(ì „ì²´ ë¹„/íŒŒê´´ ìš©ë„)")]
+    [SerializeField] private GameObject tutorialCanvasRoot;
 
-    [Header("Æ©Åä¸®¾ó Äµ¹ö½º ·çÆ®")]
-    [SerializeField] private GameObject tutorialCanvasRoot; // Æ©Åä¸®¾ó ÀüÃ¼ Äµ¹ö½º
+    [Header("ë””ë²„ê·¸/í…ŒìŠ¤íŠ¸")]
+    [Tooltip("ì”¬ ì‹œì‘ ì‹œ, ì €ì¥ëœ íŠœí† ë¦¬ì–¼ ì™„ë£Œ í”Œë˜ê·¸ë¥¼ ì „ë¶€ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.")]
+    [SerializeField] private bool resetProgressOnStart = false;
 
-    // ³»ºÎ »óÅÂ(¾Ö´Ï¸ŞÀÌ¼Ç/ÅÇ Åä±Û)
-    private bool isHintPlaying, isHintPlayingTwo, isHintPlayingThree;
-    private int tab1, tab2, tab3;
-
-    // ¦¡¦¡ ¸®Àüº° °øÅë: ÆíÁı¸ğµå ÁøÀÔ/ÅğÀå ¦¡¦¡
-    private bool editEnabledOnce;   // ÀÌ ¸®Àü¿¡¼­ TapÀ¸·Î ÆíÁı ¸ğµå ON
-    private bool editDisabledOnce;  // ÀÌ ¸®Àü¿¡¼­ TapÀ¸·Î ÆíÁı ¸ğµå OFF
+    // ë‚´ë¶€ ìƒíƒœ
     private Mode lastMode;
 
-    // ¦¡¦¡ ¶ó¿îµåº° ÁøÇà ÇÃ·¡±× ¦¡¦¡
-    // R1: ½½¶óÀÌ´õ ¼³Ä¡ ¡æ (OFF) ¡æ ¹öÆ° ´©¸£±â
-    private bool r1_Installed, r1_ButtonPressed;
+    // R1: ìŠ¬ë¼ì´ë” ì„¤ì¹˜ â†’ (OFF) â†’ ë²„íŠ¼
+    private bool r1_Installed, r1_ButtonPressed; private int lastCount_R1 = -1;
 
-    // R2: Åä±Û ¼³Ä¡ ¡æ (OFF) ¡æ ¹öÆ° ´©¸£±â ¡æ ¹®À¸·Î ³ª°¡±â
-    private bool r2_Installed, r2_ButtonPressed, r2_DoorExited;
+    // R2: í† ê¸€ ì„¤ì¹˜ â†’ (OFF) â†’ ë²„íŠ¼ â†’ ë¬¸ ë‚˜ê°€ê¸°
+    private bool r2_Installed, r2_ButtonPressed, r2_DoorExited; private int lastCount_R2 = -1;
 
-    // R3: X ¼³Ä¡ ¡æ (OFF) ¡æ °¡½Ã »èÁ¦
-    private bool r3_XInstalled, r3_ThornDeleted;
+    // R3: X ì„¤ì¹˜ â†’ (OFF) â†’ ê°€ì‹œ ì‚­ì œ
+    private bool r3_XInstalled, r3_ThornDeleted; private int lastCount_R3 = -1;
 
-    // ¦¡¦¡ Ä«¿îÆ® ½º³À¼¦(¼³Ä¡/»èÁ¦ °¨Áö) ¦¡¦¡
-    private int lastCount_R1 = -1;  // sliderManager_R1.PlacedInstance.Count
-    private int lastCount_R2 = -1;  // toggleManager_R2.PlacedInstance.Count
-    private int lastCount_R3 = -1;  // xManager_R3.PlacedInstance.Count
+    // í¸ì§‘ on/off (ë¦¬ì „ ë‹¨ìœ„)
+    private bool editEnabledOnce, editDisabledOnce;
 
-    // Å¸ÀÔ¶óÀÌÆÃ °ü¸®
-    private string lastPanel1Rendered = "", lastPanel2Rendered = "", lastPanel3Rendered = "";
-    private Coroutine typeCo1, typeCo2, typeCo3;
-
-    // ¸®Àü ÀüÈ¯ °¨Áö
-    private string prevRegionId = "";
-
-    // ¦¡¦¡ ÀüÃ¼ Æ©Åä¸®¾ó ¿Ï·á °ü¸® (¿µ±¸ ÀúÀå) ¦¡¦¡
+    // ì™„ë£Œ ì˜êµ¬ ì €ì¥
     private bool r1AllDone, r2AllDone, r3AllDone;
     private const string PP_R1_DONE = "Tut_R1_Done";
     private const string PP_R2_DONE = "Tut_R2_Done";
-    private const string PP_R3_Done = "Tut_R3_Done";
+    private const string PP_R3_DONE = "Tut_R3_Done";
+
+    // ë¦¬ì „ ì „í™˜ ê°ì§€
+    private string prevRegionId = "";
+
+    // ë¶€íŒ… 1íšŒ: Panel1 ê°•ì œ ë…¸ì¶œìš©
+    private bool forcePanel1Once = true;
 
     private void Awake()
     {
-        // ¹öÆ° ÀÌº¥Æ® ±¸µ¶(´©¸£±â ¿Ï·á Ã³¸®)
-        if (buttons_R1 != null)
-            foreach (var b in buttons_R1) if (b) b.onPressed.AddListener(() => r1_ButtonPressed = true);
+        if (resetProgressOnStart)
+        {
+            PlayerPrefs.DeleteKey(PP_R1_DONE);
+            PlayerPrefs.DeleteKey(PP_R2_DONE);
+            PlayerPrefs.DeleteKey(PP_R3_DONE);
+            PlayerPrefs.Save();
+        }
 
-        if (buttons_R2 != null)
-            foreach (var b in buttons_R2) if (b) b.onPressed.AddListener(() => r2_ButtonPressed = true);
+        // ë²„íŠ¼ ì™„ë£Œ êµ¬ë…
+        if (buttons_R1 != null) foreach (var b in buttons_R1) if (b) b.onPressed.AddListener(() => r1_ButtonPressed = true);
+        if (buttons_R2 != null) foreach (var b in buttons_R2) if (b) b.onPressed.AddListener(() => r2_ButtonPressed = true);
 
         lastMode = GameManager.mode;
 
         if (subPanel) subPanel.SetActive(false);
         if (subPanelText) subPanelText.richText = true;
 
-        // ¿µ±¸ ÀúÀåµÈ ¿Ï·á »óÅÂ ·Îµå
+        if (!tutorialCanvasRoot)
+        {
+            var canvas = GetComponentInParent<Canvas>();
+            if (canvas) tutorialCanvasRoot = canvas.gameObject;
+        }
+
+        // ì™„ë£Œ ìƒíƒœ ë¡œë“œ
         r1AllDone = PlayerPrefs.GetInt(PP_R1_DONE, 0) == 1;
         r2AllDone = PlayerPrefs.GetInt(PP_R2_DONE, 0) == 1;
-        r3AllDone = PlayerPrefs.GetInt(PP_R3_Done, 0) == 1;
+        r3AllDone = PlayerPrefs.GetInt(PP_R3_DONE, 0) == 1;
 
-        // ÀüºÎ ¿Ï·áµÈ °æ¿ì Áï½Ã ºñÈ°¼ºÈ­
-        if (tutorialCanvasRoot && (r1AllDone && r2AllDone && r3AllDone))
+        // ëª¨ë“  íŠœí† ë¦¬ì–¼ ì™„ë£Œ ì‹œ ì œê±°
+        if (r1AllDone && r2AllDone && r3AllDone)
         {
-            tutorialCanvasRoot.SetActive(false);
-            enabled = false;
+            DestroyTutorialObjectsImmediate();
             return;
         }
     }
 
+    private void Start()
+    {
+        // ë¶€íŒ… ì§í›„ì—” ë¦¬ì „/ì™„ë£Œ ì—¬ë¶€ ë¬´ì‹œí•˜ê³  Panel1ë§Œ ì¼ ë‹¤
+        SetPanelActive(panel1, true, "Start(): force Panel1 ON");
+        SetPanelActive(panel2, false, "Start(): Panel2 OFF");
+        SetPanelActive(panel3, false, "Start(): Panel3 OFF");
+
+        // ì²« ë¬¸êµ¬(Region_07 ê¸°ì¤€) ë°”ë¡œ í‘œê¸°
+        SetRegionText("Region_07", "> ë°°ì¹˜ ëª¨ë“œë¡œ ì§„ì…í•˜ì„¸ìš”.");
+    }
+
+    private void OnDisable() => HideSubPanel();
+
     private void Update()
     {
-        string currentId = LevelManager.Instance.CurrentRegionId;
+        string currentId = LevelManager.Instance ? LevelManager.Instance.CurrentRegionId : "";
+        Debug.Log($"[TutoPanelManager] Current Region detected: '{currentId}'");
 
-        // ¸®Àü ÀüÈ¯ ½Ã ÁøÇà ÇÃ·¡±×/Ä«¿îÅÍ ¸®¼Â ¶Ç´Â ¿Ï·á ¸®Àü ¿ìÈ¸
-        if (currentId != prevRegionId)
+        // 1) ë¶€íŒ… 1í”„ë ˆì„: Panel1 ìœ ì§€ í›„ ë°”ë¡œ ë°˜í™˜(ShowOnlyRegionìœ¼ë¡œ ë„ì§€ ì•Šë„ë¡)
+        if (forcePanel1Once)
         {
-            bool alreadyDoneRegion =
-                (currentId == "Region_07" && r1AllDone) ||
-                (currentId == "Region_08" && r2AllDone) ||
-                (currentId == "Region_09" && r3AllDone);
+            SetPanelActive(panel1, true, "forcePanel1Once: keep Panel1 regardless of region/completion");
+            SetPanelActive(panel2, false, "forcePanel1Once: Panel2 OFF");
+            SetPanelActive(panel3, false, "forcePanel1Once: Panel3 OFF");
 
-            if (!alreadyDoneRegion) ResetProgressForRegion(currentId);
-            else
+            // ì‹œì‘ ë¦¬ì „ ìŠ¤ëƒ…ìƒ· ë° ì§„í–‰ ë¦¬ì…‹(ìˆë‹¤ë©´)
+            if (!string.IsNullOrEmpty(currentId))
             {
-                // ¿Ï·áµÈ ¸®ÀüÀÌ¸é ÇØ´ç ÆĞ³ÎÀ» ¼û±è
-                if (currentId == "Region_07" && panel1) panel1.SetActive(false);
-                if (currentId == "Region_08" && panel2) panel2.SetActive(false);
-                if (currentId == "Region_09" && panel3) panel3.SetActive(false);
+                ResetProgressForRegion(currentId);
+                prevRegionId = currentId;
             }
+            forcePanel1Once = false;
+            return; // ë‹¤ìŒ í”„ë ˆì„ë¶€í„° ì¼ë°˜ ê·œì¹™
+        }
 
+        // 2) í—ˆìš© ë¦¬ì „ì´ ì•„ë‹ˆë©´ ëª¨ë“  íŠœí† ë¦¬ì–¼ UI ìˆ¨ê¹€
+        if (!IsSupportedRegion(currentId))
+        {
+            ShowOnlyRegion(null);
+            HideSubPanel();
+            prevRegionId = currentId;
+            Debug.Log("[TutoPanelManager] Unsupported region -> hide all panels");
+            return;
+        }
+
+        // 3) ë¦¬ì „ ë³€ê²½ ì²˜ë¦¬
+        if (currentId != prevRegionId && !string.IsNullOrEmpty(currentId))
+        {
+            if (IsRegionGloballyDone(currentId))
+            {
+                ShowOnlyRegion(currentId);
+                HideSubPanel();
+                prevRegionId = currentId;
+                return;
+            }
+            ResetProgressForRegion(currentId);
             prevRegionId = currentId;
         }
 
-        TrackEditModeProgress();
-        TrackPerRoundPlacementAndDeletion();
+        // 4) ì§„í–‰ ì¶”ì  & UI ê°±ì‹ 
+        TrackEditMode();
+        TrackPlacementAndDeletion();
 
-        // ÆĞ³Î Åä±Û ¹× ÈùÆ® Æ®¸®°Å(±âÁ¸ À¯Áö)
-        if (currentId == "Region_07")
-        {
-            if (!panel1.activeInHierarchy) { panel1.SetActive(true); panel2.SetActive(false); panel3.SetActive(false); }
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (!isHintPlaying && tab1 % 2 == 0) StartCoroutine(PlayHintAnimationOnce());
-                tab1++;
-            }
-        }
-        else if (currentId == "Region_08")
-        {
-            if (!panel2.activeInHierarchy) { panel1.SetActive(false); panel2.SetActive(true); panel3.SetActive(false); }
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (!isHintPlayingTwo && tab2 % 2 == 0) StartCoroutine(PlayHintAnimationTwo());
-                tab2++;
-            }
-        }
-        else if (currentId == "Region_09")
-        {
-            if (!panel3.activeInHierarchy) { panel1.SetActive(false); panel2.SetActive(false); panel3.SetActive(true); }
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                if (!isHintPlayingThree && tab3 % 2 == 0) StartCoroutine(PlayHintAnimationThird());
-                tab3++;
-            }
-        }
-        else
-        {
-            if (panel1) panel1.SetActive(false);
-            if (panel2) panel2.SetActive(false);
-            if (panel3) panel3.SetActive(false);
-        }
+        ShowOnlyRegion(currentId);
+        UpdateOneLineAndSub(currentId);
 
-        UpdatePanelTextsAndSub(currentId);
-
-        // --- ¸®Àüº° ¿Ï·á ÀúÀå ---
+        // 5) ì™„ë£Œ ì €ì¥
         if (!string.IsNullOrEmpty(currentId) && IsRegionDone(currentId))
         {
             if (currentId == "Region_07" && !r1AllDone) { r1AllDone = true; PlayerPrefs.SetInt(PP_R1_DONE, 1); PlayerPrefs.Save(); }
             if (currentId == "Region_08" && !r2AllDone) { r2AllDone = true; PlayerPrefs.SetInt(PP_R2_DONE, 1); PlayerPrefs.Save(); }
-            if (currentId == "Region_09" && !r3AllDone) { r3AllDone = true; PlayerPrefs.SetInt(PP_R3_Done, 1); PlayerPrefs.Save(); }
+            if (currentId == "Region_09" && !r3AllDone) { r3AllDone = true; PlayerPrefs.SetInt(PP_R3_DONE, 1); PlayerPrefs.Save(); }
+            HideSubPanel();
         }
 
-        // --- ÀüÃ¼ ¿Ï·á ½Ã¿¡¸¸ Æ©Åä¸®¾ó Äµ¹ö½º ºñÈ°¼ºÈ­ ---
-        if (tutorialCanvasRoot && IsAllTutorialDone())
-        {
-            tutorialCanvasRoot.SetActive(false);
-            enabled = false;
-        }
+        if (r1AllDone && r2AllDone && r3AllDone)
+            DestroyTutorialObjects();
     }
 
+    // ===== ì§„í–‰ ìƒíƒœ/ì¹´ìš´íŠ¸ =====
     private void ResetProgressForRegion(string regionId)
     {
-        // °øÅë ÆíÁı ÇÃ·¡±× ¸®¼Â
-        editEnabledOnce = false;
-        editDisabledOnce = false;
-        lastMode = GameManager.mode; // ÇöÀç ¸ğµå ±âÁØ ½º³À¼¦
+        editEnabledOnce = editDisabledOnce = false;
+        lastMode = GameManager.mode;
 
-        // Ä«¿îÅÍ ¸®¼Â
         lastCount_R1 = lastCount_R2 = lastCount_R3 = -1;
 
-        // ¶ó¿îµåº° ¸®¼Â
         r1_Installed = r1_ButtonPressed = false;
         r2_Installed = r2_ButtonPressed = r2_DoorExited = false;
         r3_XInstalled = r3_ThornDeleted = false;
+
+        Debug.Log($"[TutoPanelManager] ResetProgressForRegion('{regionId}')");
     }
 
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ÁøÇà ÃßÀû ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    private void TrackEditModeProgress()
+    private void TrackEditMode()
     {
         if (GameManager.mode != lastMode)
         {
@@ -215,9 +205,8 @@ public class TutoPanelManager : MonoBehaviour
         }
     }
 
-    private void TrackPerRoundPlacementAndDeletion()
+    private void TrackPlacementAndDeletion()
     {
-        // R1 ¼³Ä¡(Áõ°¡) °¨Áö
         if (sliderManager_R1)
         {
             int c = sliderManager_R1.PlacedInstance != null ? sliderManager_R1.PlacedInstance.Count : 0;
@@ -225,7 +214,6 @@ public class TutoPanelManager : MonoBehaviour
             else { if (c > lastCount_R1) r1_Installed = true; lastCount_R1 = c; }
         }
 
-        // R2 ¼³Ä¡(Áõ°¡) °¨Áö
         if (toggleManager_R2)
         {
             int c = toggleManager_R2.PlacedInstance != null ? toggleManager_R2.PlacedInstance.Count : 0;
@@ -233,7 +221,6 @@ public class TutoPanelManager : MonoBehaviour
             else { if (c > lastCount_R2) r2_Installed = true; lastCount_R2 = c; }
         }
 
-        // R3: X ¼³Ä¡(Áõ°¡) & (¼³Ä¡ ÀÌÈÄ + ÆíÁı OFF »óÅÂ¿¡¼­) »èÁ¦(°¨¼Ò) ¡æ °¡½Ã »èÁ¦ ¿Ï·á
         if (xManager_R3)
         {
             int c = xManager_R3.PlacedInstance != null ? xManager_R3.PlacedInstance.Count : 0;
@@ -247,218 +234,122 @@ public class TutoPanelManager : MonoBehaviour
         }
     }
 
-    // ¿ÜºÎ¿¡¼­ È£Ãâ(¹® Æ®¸®°Å, °¡½Ã »èÁ¦ µî)
-    public void NotifyDoorExited() { r2_DoorExited = true; }
-    public void NotifyThornDeleted() { r3_ThornDeleted = true; }
+    public void NotifyDoorExited() => r2_DoorExited = true;
+    public void NotifyThornDeleted() => r3_ThornDeleted = true;
 
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ÅØ½ºÆ® & ¼­ºêÆĞ³Î ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    private void UpdatePanelTextsAndSub(string currentRegionId)
+    // ===== í‘œì‹œ/ë¬¸êµ¬ =====
+    private void ShowOnlyRegion(string currentIdOrNull)
     {
-        var (currentPrompt, subPrompt) = DetermineCurrentAndSubPrompt(currentRegionId);
+        bool p1 = currentIdOrNull == "Region_07";
+        bool p2 = currentIdOrNull == "Region_08" && !r2AllDone;
+        bool p3 = currentIdOrNull == "Region_09" && !r3AllDone;
 
-        string MakeLine(string label, bool done) => done ? $"<color=#9ED36A>¡á</color> {label}" : $"¡à {label}";
+        SetPanelActive(panel1, p1, $"ShowOnlyRegion('{currentIdOrNull}'): Panel1 {(p1 ? "ON" : "OFF")}");
+        SetPanelActive(panel2, p2, $"ShowOnlyRegion('{currentIdOrNull}'): Panel2 {(p2 ? "ON" : "OFF")}");
+        SetPanelActive(panel3, p3, $"ShowOnlyRegion('{currentIdOrNull}'): Panel3 {(p3 ? "ON" : "OFF")}");
 
-        // Region_07: Tap ON ¡æ (¼³Ä¡) ½½¶óÀÌ´õ ¡æ Tap OFF ¡æ ¹öÆ° ¡æ ¿Ï·á
-        string[] p1Lines = new[]
+        if (!IsSupportedRegion(currentIdOrNull))
         {
-            $"> {currentPrompt}",
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå È°¼ºÈ­.",   editEnabledOnce),
-            MakeLine("½½¶óÀÌ´õ ¼³Ä¡ÇÏ±â.",            r1_Installed),
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå ºñÈ°¼ºÈ­.", editDisabledOnce),
-            MakeLine("¹öÆ°À» ´­·¯ ÀåÄ¡¸¦ ÀÛµ¿ÇÏ±â.",   r1_ButtonPressed),
-        };
-
-        // Region_08: Tap ON ¡æ (¼³Ä¡) Åä±Û ¡æ Tap OFF ¡æ ¹öÆ° ¡æ ¹®À¸·Î ³ª°¡±â ¡æ ¿Ï·á
-        string[] p2Lines = new[]
-        {
-            $"> {currentPrompt}",
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå È°¼ºÈ­.",   editEnabledOnce),
-            MakeLine("Åä±Û ¼³Ä¡ÇÏ±â.",                r2_Installed),
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå ºñÈ°¼ºÈ­.", editDisabledOnce),
-            MakeLine("¹öÆ°À» ´­·¯ ÀåÄ¡¸¦ ÀÛµ¿ÇÏ±â.",   r2_ButtonPressed),
-            MakeLine("¹®À¸·Î ³ª°¡±â.",                r2_DoorExited),
-        };
-
-        // Region_09: Tap ON ¡æ (¼³Ä¡) X ¡æ Tap OFF ¡æ °¡½Ã »èÁ¦ ¡æ ¿Ï·á
-        string[] p3Lines = new[]
-        {
-            $"> {currentPrompt}",
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå È°¼ºÈ­.",   editEnabledOnce),
-            MakeLine("X ¼³Ä¡ÇÏ±â.",                  r3_XInstalled),
-            MakeLine("TapÀ» ´­·¯ ÆíÁı ¸ğµå ºñÈ°¼ºÈ­.", editDisabledOnce),
-            MakeLine("°¡½Ã »èÁ¦ÇÏ±â.",                r3_ThornDeleted),
-        };
-
-        // ¶óÀÎ ´ÜÀ§ Å¸ÀÌÇÎ Àû¿ë
-        if (currentRegionId == "Region_07" && panel1Text)
-        {
-            var text = string.Join("\n", p1Lines);
-            StartTypingIfChanged(ref lastPanel1Rendered, text, ref typeCo1, panel1Text);
+            if (panel1Text) panel1Text.text = "";
+            if (panel2Text) panel2Text.text = "";
+            if (panel3Text) panel3Text.text = "";
         }
-        else if (panel1Text && string.IsNullOrEmpty(currentRegionId))
+    }
+
+    private void UpdateOneLineAndSub(string currentRegionId)
+    {
+        if (!IsSupportedRegion(currentRegionId))
         {
-            StopTyping(ref typeCo1); panel1Text.text = ""; lastPanel1Rendered = "";
+            ShowOnlyRegion(null);
+            HideSubPanel();
+            return;
         }
 
-        if (currentRegionId == "Region_08" && panel2Text)
+        if (IsRegionGloballyDone(currentRegionId) || IsRegionDone(currentRegionId))
         {
-            var text = string.Join("\n", p2Lines);
-            StartTypingIfChanged(ref lastPanel2Rendered, text, ref typeCo2, panel2Text);
-        }
-        else if (panel2Text && string.IsNullOrEmpty(currentRegionId))
-        {
-            StopTyping(ref typeCo2); panel2Text.text = ""; lastPanel2Rendered = "";
+            SetRegionText(currentRegionId, "> íŠœí† ë¦¬ì–¼ ì™„ë£Œ");
+            HideSubPanel();
+            return;
         }
 
-        if (currentRegionId == "Region_09" && panel3Text)
-        {
-            var text = string.Join("\n", p3Lines);
-            StartTypingIfChanged(ref lastPanel3Rendered, text, ref typeCo3, panel3Text);
-        }
-        else if (panel3Text && string.IsNullOrEmpty(currentRegionId))
-        {
-            StopTyping(ref typeCo3); panel3Text.text = ""; lastPanel3Rendered = "";
-        }
+        var (line, sub) = DetermineOneLineAndSub(currentRegionId);
+        SetRegionText(currentRegionId, $"> {line}");
 
-        // Sub ÆĞ³Î (»óÈ²º° Ç¥½Ã)
         if (subPanel && subPanelText)
         {
-            if (!string.IsNullOrWhiteSpace(subPrompt))
+            if (!string.IsNullOrWhiteSpace(sub))
             {
-                if (!subPanel.activeSelf) subPanel.SetActive(true);
-                subPanelText.text = subPrompt;
+                if (!subPanel.activeSelf)
+                {
+                    subPanel.SetActive(true);
+                    Debug.Log("[TutoPanelManager] SubPanel ON");
+                }
+                subPanelText.text = sub;
             }
-            else
-            {
-                if (subPanel.activeSelf) subPanel.SetActive(false);
-                subPanelText.text = "";
-            }
+            else HideSubPanel();
         }
     }
 
-    /// Regionº° ÇöÀç ´Ü°èÀÇ ¡°ÇÑ ÁÙ ¿ä¾à¡±°ú Sub ¾È³»¹® (¼ø¼­ °­Á¦)
-    private (string currentPrompt, string subPrompt) DetermineCurrentAndSubPrompt(string regionId)
+    private void SetRegionText(string regionId, string text)
     {
-        // 1) ÁøÀÔ: Tap ON
-        if (!editEnabledOnce)
-            return ("¹èÄ¡ ¸ğµå·Î ÁøÀÔÇÏ¼¼¿ä.", "<b>Tap</b> : ¸ğµå ÀüÈ¯");
+        if (regionId == "Region_07")
+        {
+            if (panel1Text) panel1Text.text = text;
+            if (panel2Text) panel2Text.text = "";
+            if (panel3Text) panel3Text.text = "";
+        }
+        else if (regionId == "Region_08")
+        {
+            if (panel1Text) panel1Text.text = "";
+            if (panel2Text) panel2Text.text = text;
+            if (panel3Text) panel3Text.text = "";
+        }
+        else if (regionId == "Region_09")
+        {
+            if (panel1Text) panel1Text.text = "";
+            if (panel2Text) panel2Text.text = "";
+            if (panel3Text) panel3Text.text = text;
+        }
+        else
+        {
+            if (panel1Text) panel1Text.text = "";
+            if (panel2Text) panel2Text.text = "";
+            if (panel3Text) panel3Text.text = "";
+        }
+    }
 
-        // 2) ¼³Ä¡ ´Ü°è (¸®Àüº° °¡Á¬)
+    private (string line, string sub) DetermineOneLineAndSub(string regionId)
+    {
+        if (!editEnabledOnce)
+            return ("ë°°ì¹˜ ëª¨ë“œë¡œ ì§„ì…í•˜ì„¸ìš”.", "<b>Tap</b> : ëª¨ë“œ ì „í™˜");
+
         if (regionId == "Region_07" && !r1_Installed)
-            return ("½½¶óÀÌ´õ °¡Á¬À» ¼³Ä¡ÇÏ¼¼¿ä.", "<b>°¡Á¬ ÀÌµ¿</b>: µå·¡±×\n<b>°¡Á¬ »èÁ¦</b>: ¿ìÅ¬¸¯");
+            return ("ìŠ¬ë¼ì´ë” ê°€ì ¯ì„ ì„¤ì¹˜í•˜ì„¸ìš”.", "<b>ê°€ì ¯ ì´ë™</b>: ë“œë˜ê·¸\n<b>ê°€ì ¯ ì‚­ì œ</b>: ìš°í´ë¦­");
 
         if (regionId == "Region_08" && !r2_Installed)
-            return ("Åä±Û °¡Á¬À» ¼³Ä¡ÇÏ¼¼¿ä.", "<b>°¡Á¬ ÀÌµ¿</b>: µå·¡±×\n<b>°¡Á¬ »èÁ¦</b>: ¿ìÅ¬¸¯");
+            return ("í† ê¸€ ê°€ì ¯ì„ ì„¤ì¹˜í•˜ì„¸ìš”.", "<b>ê°€ì ¯ ì´ë™</b>: ë“œë˜ê·¸\n<b>ê°€ì ¯ ì‚­ì œ</b>: ìš°í´ë¦­");
 
         if (regionId == "Region_09" && !r3_XInstalled)
-            return ("X °¡Á¬À» ¼³Ä¡ÇÏ¼¼¿ä.", "<b>°¡Á¬ ÀÌµ¿</b>: µå·¡±×");
+            return ("X ê°€ì ¯ì„ ì„¤ì¹˜í•˜ì„¸ìš”.", "<b>ê°€ì ¯ ì´ë™</b>: ë“œë˜ê·¸");
 
-        // 3) ÅğÀå: Tap OFF (¼³Ä¡ ÀÌÈÄ¿¡¸¸ ¿ä±¸)
         if (!editDisabledOnce)
-            return ("¹èÄ¡ ¸ğµå¿¡¼­ ÅğÀåÇÏ¼¼¿ä.", "<b>Tap</b> : ¸ğµå ÀüÈ¯");
+            return ("ë°°ì¹˜ ëª¨ë“œì—ì„œ í‡´ì¥í•˜ì„¸ìš”.", "<b>Tap</b> : ëª¨ë“œ ì „í™˜");
 
-        // 4) ÀÛµ¿ ´Ü°è (¸®Àüº°)
         if (regionId == "Region_07" && !r1_ButtonPressed)
-            return ("¹öÆ°À» ´­·¯ ÀåÄ¡¸¦ ÀÛµ¿ÇÏ¼¼¿ä.", "");
+            return ("ë²„íŠ¼ì„ ëˆŒëŸ¬ ë¬¸ì„ ì—¬ì„¸ìš”.", "");
 
-        if (regionId == "Region_08" && !r2_ButtonPressed)
-            return ("¹öÆ°À» ´­·¯ ÀåÄ¡¸¦ ÀÛµ¿ÇÏ¼¼¿ä.", "");
+        if (regionId == "Region_08")
+        {
+            if (!r2_ButtonPressed) return ("í† ê¸€ì„ ëˆŒëŸ¬ ë¬¸ì„ ì—¬ì„¸ìš”.", "");
+            if (!r2_DoorExited) return ("ë¬¸ì„ í†µí•´ ë‚˜ê°€ì„¸ìš”.", "");
+        }
 
         if (regionId == "Region_09" && !r3_ThornDeleted)
-            return ("°¡½Ã¸¦ »èÁ¦ÇÏ¼¼¿ä.", "<b>°¡Á¬ »èÁ¦</b>: ¿ìÅ¬¸¯");
+            return ("ë¬¸ì„ í†µí•´ ë‚˜ê°€ì„¸ìš”.", "");
 
-        // 5) ¹®À¸·Î ³ª°¡±â(2½ºÅ×ÀÌÁö¸¸ ¿ä±¸)
-        if (regionId == "Region_08" && !r2_DoorExited)
-            return ("¹®À» ÅëÇØ ³ª°¡¼¼¿ä.", "");
-
-        // ¿Ï·á
-        return ("Æ©Åä¸®¾ó ¿Ï·á", "");
+        return ("íŠœí† ë¦¬ì–¼ ì§„í–‰ ì¤‘â€¦", "");
     }
 
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ Å¸ÀÌÇÎ(¶óÀÎ ´ÜÀ§) ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    private void StartTypingIfChanged(ref string lastRendered, string newContent, ref Coroutine co, TextMeshProUGUI target)
-    {
-        if (!restartTypingOnChange && newContent == lastRendered) return;
-        StopTyping(ref co);
-        co = StartCoroutine(TypeLinesCo(newContent, target));
-        lastRendered = newContent;
-    }
-
-    private void StopTyping(ref Coroutine co)
-    {
-        if (co != null) { StopCoroutine(co); co = null; }
-    }
-
-    private IEnumerator TypeLinesCo(string fullText, TextMeshProUGUI target)
-    {
-        if (!target) yield break;
-
-        var lines = fullText.Split('\n');
-        target.text = "";
-        for (int i = 0; i < lines.Length; i++)
-        {
-            if (i == 0) target.text = lines[0];
-            else target.text += "\n" + lines[i];
-
-            if (lineInterval > 0f) yield return new WaitForSeconds(lineInterval);
-            else yield return null;
-        }
-    }
-
-    // ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡ ÈùÆ® ¾Ö´Ï¸ŞÀÌ¼Ç ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-    private IEnumerator PlayHintAnimationOnce()
-    {
-        isHintPlaying = true;
-        if (mouseHintAnimator)
-        {
-            mouseHintAnimator.gameObject.SetActive(true);
-            float clipLength = GetAnimationClipLength("Tuto1");
-            if (clipLength == 0f) { Debug.LogError("¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ 'Tuto1' ¾øÀ½/±æÀÌ 0"); isHintPlaying = false; yield break; }
-            mouseHintAnimator.SetTrigger("DoDrag");
-            yield return new WaitForSeconds(clipLength);
-            mouseHintAnimator.gameObject.SetActive(false);
-        }
-        isHintPlaying = false;
-    }
-
-    private IEnumerator PlayHintAnimationTwo()
-    {
-        isHintPlayingTwo = true;
-        if (mouseHintAnimator)
-        {
-            mouseHintAnimator.gameObject.SetActive(true);
-            float clipLength = GetAnimationClipLength("Tuto2");
-            if (clipLength == 0f) { Debug.LogError("¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ 'Tuto2' ¾øÀ½/±æÀÌ 0"); isHintPlayingTwo = false; yield break; }
-            mouseHintAnimator.SetTrigger("DoDrag2");
-            yield return new WaitForSeconds(clipLength);
-        }
-        isHintPlayingTwo = false;
-    }
-
-    private IEnumerator PlayHintAnimationThird()
-    {
-        isHintPlayingThree = true;
-        if (mouseHintAnimator)
-        {
-            mouseHintAnimator.gameObject.SetActive(true);
-            float clipLength = GetAnimationClipLength("Tuto3");
-            if (clipLength == 0f) { Debug.LogError("¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ 'Tuto3' ¾øÀ½/±æÀÌ 0"); isHintPlayingThree = false; yield break; }
-            mouseHintAnimator.SetTrigger("DoDrag3");
-            yield return new WaitForSeconds(clipLength);
-            mouseHintAnimator.gameObject.SetActive(false);
-        }
-        isHintPlayingThree = false;
-    }
-
-    private float GetAnimationClipLength(string clipName)
-    {
-        if (!mouseHintAnimator || !mouseHintAnimator.runtimeAnimatorController) return 0f;
-        foreach (var clip in mouseHintAnimator.runtimeAnimatorController.animationClips)
-            if (clip.name == clipName) return clip.length;
-        return 0f;
-    }
-
-    // ¦¡¦¡ ¿Ï·á ÆÇÁ¤ ¦¡¦¡
     private bool IsRegionDone(string regionId)
     {
         if (regionId == "Region_07")
@@ -473,5 +364,58 @@ public class TutoPanelManager : MonoBehaviour
         return false;
     }
 
-    private bool IsAllTutorialDone() => r1AllDone && r2AllDone && r3AllDone;
+    private bool IsRegionGloballyDone(string regionId)
+    {
+        return (regionId == "Region_07" && r1AllDone) ||
+               (regionId == "Region_08" && r2AllDone) ||
+               (regionId == "Region_09" && r3AllDone);
+    }
+
+    private bool IsSupportedRegion(string regionId)
+    {
+        return regionId == "Region_07" || regionId == "Region_08" || regionId == "Region_09";
+    }
+
+    private void HideSubPanel()
+    {
+        if (subPanelText) subPanelText.text = "";
+        if (subPanel && subPanel.activeSelf)
+        {
+            subPanel.SetActive(false);
+            Debug.Log("[TutoPanelManager] SubPanel OFF");
+        }
+    }
+
+    private void DestroyTutorialObjects()
+    {
+        HideSubPanel();
+        if (subPanel) Destroy(subPanel);
+        if (tutorialCanvasRoot) Destroy(tutorialCanvasRoot);
+        else Destroy(gameObject);
+        enabled = false;
+        Debug.Log("[TutoPanelManager] DestroyTutorialObjects()");
+    }
+
+    private void DestroyTutorialObjectsImmediate()
+    {
+        HideSubPanel();
+        if (subPanel) DestroyImmediate(subPanel);
+        if (tutorialCanvasRoot) DestroyImmediate(tutorialCanvasRoot);
+        else DestroyImmediate(gameObject);
+        enabled = false;
+        Debug.Log("[TutoPanelManager] DestroyTutorialObjectsImmediate()");
+    }
+
+    // ì™¸ë¶€ ì´ë²¤íŠ¸ ë°”ì¸ë”©ìš© public ë©”ì†Œë“œ(í•„ìš”ì‹œ)
+    public void NotifyDoorExitedExtern() => NotifyDoorExited();
+    public void NotifyThornDeletedExtern() => NotifyThornDeleted();
+
+    // ê³µí†µ: íŒ¨ë„ ON/OFF + ë¡œê·¸
+    private void SetPanelActive(GameObject go, bool active, string reason)
+    {
+        if (!go) return;
+        if (go.activeSelf == active) return;
+        go.SetActive(active);
+        Debug.Log($"[TutoPanelManager] {(active ? "ON " : "OFF")} -> {go.name} | {reason}");
+    }
 }
