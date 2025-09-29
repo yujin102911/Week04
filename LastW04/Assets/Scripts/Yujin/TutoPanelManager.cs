@@ -74,6 +74,12 @@ public class TutoPanelManager : MonoBehaviour
     // 리전 전환 감지
     private string prevRegionId = "";
 
+    // ── 전체 튜토리얼 완료 관리 (영구 저장) ──
+    private bool r1AllDone, r2AllDone, r3AllDone;
+    private const string PP_R1_DONE = "Tut_R1_Done";
+    private const string PP_R2_DONE = "Tut_R2_Done";
+    private const string PP_R3_Done = "Tut_R3_Done";
+
     private void Awake()
     {
         // 버튼 이벤트 구독(누르기 완료 처리)
@@ -87,16 +93,42 @@ public class TutoPanelManager : MonoBehaviour
 
         if (subPanel) subPanel.SetActive(false);
         if (subPanelText) subPanelText.richText = true;
+
+        // 영구 저장된 완료 상태 로드
+        r1AllDone = PlayerPrefs.GetInt(PP_R1_DONE, 0) == 1;
+        r2AllDone = PlayerPrefs.GetInt(PP_R2_DONE, 0) == 1;
+        r3AllDone = PlayerPrefs.GetInt(PP_R3_Done, 0) == 1;
+
+        // 전부 완료된 경우 즉시 비활성화
+        if (tutorialCanvasRoot && (r1AllDone && r2AllDone && r3AllDone))
+        {
+            tutorialCanvasRoot.SetActive(false);
+            enabled = false;
+            return;
+        }
     }
 
     private void Update()
     {
         string currentId = LevelManager.Instance.CurrentRegionId;
 
-        // 리전 전환 시 진행 플래그/카운터 리셋(각 리전마다 순서가 처음부터 시작되도록)
+        // 리전 전환 시 진행 플래그/카운터 리셋 또는 완료 리전 우회
         if (currentId != prevRegionId)
         {
-            ResetProgressForRegion(currentId);
+            bool alreadyDoneRegion =
+                (currentId == "Region_07" && r1AllDone) ||
+                (currentId == "Region_08" && r2AllDone) ||
+                (currentId == "Region_09" && r3AllDone);
+
+            if (!alreadyDoneRegion) ResetProgressForRegion(currentId);
+            else
+            {
+                // 완료된 리전이면 해당 패널을 숨김
+                if (currentId == "Region_07" && panel1) panel1.SetActive(false);
+                if (currentId == "Region_08" && panel2) panel2.SetActive(false);
+                if (currentId == "Region_09" && panel3) panel3.SetActive(false);
+            }
+
             prevRegionId = currentId;
         }
 
@@ -140,12 +172,20 @@ public class TutoPanelManager : MonoBehaviour
 
         UpdatePanelTextsAndSub(currentId);
 
-        // 튜토리얼 완료 시 전체 캔버스 비활성화
-        if (tutorialCanvasRoot && IsTutorialDone(currentId))
+        // --- 리전별 완료 저장 ---
+        if (!string.IsNullOrEmpty(currentId) && IsRegionDone(currentId))
         {
-            tutorialCanvasRoot.SetActive(false);
+            if (currentId == "Region_07" && !r1AllDone) { r1AllDone = true; PlayerPrefs.SetInt(PP_R1_DONE, 1); PlayerPrefs.Save(); }
+            if (currentId == "Region_08" && !r2AllDone) { r2AllDone = true; PlayerPrefs.SetInt(PP_R2_DONE, 1); PlayerPrefs.Save(); }
+            if (currentId == "Region_09" && !r3AllDone) { r3AllDone = true; PlayerPrefs.SetInt(PP_R3_Done, 1); PlayerPrefs.Save(); }
         }
 
+        // --- 전체 완료 시에만 튜토리얼 캔버스 비활성화 ---
+        if (tutorialCanvasRoot && IsAllTutorialDone())
+        {
+            tutorialCanvasRoot.SetActive(false);
+            enabled = false;
+        }
     }
 
     private void ResetProgressForRegion(string regionId)
@@ -153,7 +193,7 @@ public class TutoPanelManager : MonoBehaviour
         // 공통 편집 플래그 리셋
         editEnabledOnce = false;
         editDisabledOnce = false;
-        lastMode = GameManager.mode; // 현재 모드 기준으로 스냅샷
+        lastMode = GameManager.mode; // 현재 모드 기준 스냅샷
 
         // 카운터 리셋
         lastCount_R1 = lastCount_R2 = lastCount_R3 = -1;
@@ -193,7 +233,7 @@ public class TutoPanelManager : MonoBehaviour
             else { if (c > lastCount_R2) r2_Installed = true; lastCount_R2 = c; }
         }
 
-        // R3: X 설치(증가) & (설치 이후 + 편집 OFF 상태에서) 삭제(감소) → 가시 삭제 완료로 간주
+        // R3: X 설치(증가) & (설치 이후 + 편집 OFF 상태에서) 삭제(감소) → 가시 삭제 완료
         if (xManager_R3)
         {
             int c = xManager_R3.PlacedInstance != null ? xManager_R3.PlacedInstance.Count : 0;
@@ -207,9 +247,9 @@ public class TutoPanelManager : MonoBehaviour
         }
     }
 
-    // 외부에서 호출(문 트리거, 기타)
+    // 외부에서 호출(문 트리거, 가시 삭제 등)
     public void NotifyDoorExited() { r2_DoorExited = true; }
-    public void NotifyThornDeleted() { r3_ThornDeleted = true; } // 필요 시 외부 이벤트로도 완료 처리
+    public void NotifyThornDeleted() { r3_ThornDeleted = true; }
 
     // ───────────────── 텍스트 & 서브패널 ─────────────────
     private void UpdatePanelTextsAndSub(string currentRegionId)
@@ -319,10 +359,10 @@ public class TutoPanelManager : MonoBehaviour
 
         // 4) 작동 단계 (리전별)
         if (regionId == "Region_07" && !r1_ButtonPressed)
-            return ("슬라이더를 사용해 장치를 작동하세요.", "");
+            return ("버튼을 눌러 장치를 작동하세요.", "");
 
         if (regionId == "Region_08" && !r2_ButtonPressed)
-            return ("토글을 사용해 장치를 작동하세요.", "");
+            return ("버튼을 눌러 장치를 작동하세요.", "");
 
         if (regionId == "Region_09" && !r3_ThornDeleted)
             return ("가시를 삭제하세요.", "<b>가젯 삭제</b>: 우클릭");
@@ -332,7 +372,7 @@ public class TutoPanelManager : MonoBehaviour
             return ("문을 통해 나가세요.", "");
 
         // 완료
-        return ("문을 통해 나가세요.", "");
+        return ("튜토리얼 완료", "");
     }
 
     // ───────────────── 타이핑(라인 단위) ─────────────────
@@ -418,7 +458,8 @@ public class TutoPanelManager : MonoBehaviour
         return 0f;
     }
 
-    private bool IsTutorialDone(string regionId)
+    // ── 완료 판정 ──
+    private bool IsRegionDone(string regionId)
     {
         if (regionId == "Region_07")
             return editEnabledOnce && r1_Installed && editDisabledOnce && r1_ButtonPressed;
@@ -432,4 +473,5 @@ public class TutoPanelManager : MonoBehaviour
         return false;
     }
 
+    private bool IsAllTutorialDone() => r1AllDone && r2AllDone && r3AllDone;
 }
