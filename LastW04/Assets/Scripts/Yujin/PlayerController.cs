@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     [Header("Move")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float interactionDistance = 1f;
+
+    [SerializeField] private float interactionRadius = 0.4f; // 상호작용 탐지 원의 반지름
+
     [SerializeField] private LayerMask boxLayer;
     [SerializeField] private LayerMask waterLayer;
     [SerializeField] private LayerMask lotusLayer;
@@ -29,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     // 마지막 안전 위치 저장
     private Vector2 lastSafePosition;
+
+    private PushableBox currentInteractableBox;
+
 
     // --- Editing 모드 헬퍼 ---
     private bool IsEditing => GameManager.mode == Mode.Editing;
@@ -72,6 +78,8 @@ public class PlayerController : MonoBehaviour
             }
             return; // 물/연꽃 체크 및 나머지 로직 스킵
         }
+
+        HandleInteractionPrompt();
 
         // --- 물에 끼임 복구 ---
         bool isInWater = Physics2D.OverlapCircle(rb.position, 0.4f, waterLayer) != null;
@@ -163,52 +171,74 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (IsEditing) return; // 상호작용 무시
+        if (IsEditing) return;
 
-        // 스냅된 4방향 사용
-        Vector2 dir = (Mathf.Abs(lastDirection.x) > Mathf.Abs(lastDirection.y))
-            ? new Vector2(Mathf.Sign(lastDirection.x), 0)
-            : new Vector2(0, Mathf.Sign(lastDirection.y));
+        // ▼▼▼ [수정] Raycast를 CircleCast로 변경하여 상호작용 감지를 더 안정적으로 만듭니다. ▼▼▼
+        RaycastHit2D hit = Physics2D.CircleCast(rb.position, interactionRadius, lastCardinal, interactionDistance, boxLayer);
 
-        RaycastHit2D hit = Physics2D.Raycast(rb.position, dir, interactionDistance, boxLayer);
-        if (!hit) return;
-
-        if (hit.collider.TryGetComponent(out SlidingStone2D stone))
+        if (hit.collider != null)
         {
-            if (!stone.IsSliding) stone.Push(dir); // 막힐 때까지 미끄럼
-            return;
-        }
-
-        if (hit.collider.TryGetComponent(out PushableBox box))
-        {
-            box.Push(dir); // 한 칸 밀기(기존 동작 유지)
+            if (hit.collider.TryGetComponent(out SlidingStone2D stone))
+            {
+                if (!stone.IsSliding) stone.Push(lastCardinal);
+                return;
+            }
+            if (hit.collider.TryGetComponent(out PushableBox box))
+            {
+                box.Push(lastCardinal);
+            }
         }
     }
     private void OnDrawGizmos()
     {
-        // 게임이 실행 중이 아닐 때는 오류가 날 수 있으니 아무것도 그리지 않습니다.
         if (!Application.isPlaying) return;
 
-        // OnInteract 함수에서 사용하는 값들을 그대로 가져옵니다.
         Vector2 origin = rb.position;
-        Vector2 direction = lastCardinal; // 애니메이션/상호작용용으로 스냅된 최종 방향을 사용
+        Vector2 direction = lastCardinal;
         float distance = interactionDistance;
         LayerMask layerMask = boxLayer;
 
-        // 실제로 레이캐스트를 실행해서 결과를 얻습니다.
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, layerMask);
+        RaycastHit2D hit = Physics2D.CircleCast(origin, interactionRadius, direction, distance, layerMask);
 
-        // 레이캐스트의 탐지 성공 여부에 따라 색상을 결정합니다.
-        if (hit.collider != null)
-        {
-            Gizmos.color = Color.green; // 성공: 초록색
-        }
-        else
-        {
-            Gizmos.color = Color.red;   // 실패: 빨간색
-        }
+        Gizmos.color = (hit.collider != null) ? Color.green : Color.red;
 
-        // 시작점에서 목표점까지 선을 그립니다.
-        Gizmos.DrawLine(origin, origin + direction * distance);
+        Vector2 destination = origin + direction * distance;
+        Gizmos.DrawWireSphere(origin, interactionRadius);
+        Gizmos.DrawWireSphere(destination, interactionRadius);
+
+        Vector2 up = new Vector2(-direction.y, direction.x) * interactionRadius;
+        Gizmos.DrawLine(origin + up, destination + up);
+        Gizmos.DrawLine(origin - up, destination - up);
     }
+
+    private void HandleInteractionPrompt()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(rb.position, interactionRadius, lastCardinal, interactionDistance, boxLayer);
+
+        if (hit.collider == null)
+        {
+            if (currentInteractableBox != null)
+            {
+                currentInteractableBox.HidePrompt();
+                currentInteractableBox = null;
+            }
+            return;
+        }
+
+        if (hit.collider.TryGetComponent(out PushableBox hitBox) && hitBox != currentInteractableBox)
+        {
+            if (currentInteractableBox != null)
+            {
+                currentInteractableBox.HidePrompt();
+            }
+            currentInteractableBox = hitBox;
+            currentInteractableBox.ShowPrompt();
+        }
+        else if (hitBox == null && currentInteractableBox != null)
+        {
+            currentInteractableBox.HidePrompt();
+            currentInteractableBox = null;
+        }
+    }
+
 }

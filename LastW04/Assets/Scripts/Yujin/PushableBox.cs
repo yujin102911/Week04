@@ -8,6 +8,8 @@ public class PushableBox : MonoBehaviour
     [SerializeField] private LayerMask waterLayer;    // 물 레이어
     [SerializeField] private LayerMask boxLayer;      // ▼▼▼ 다른 상자를 감지하기 위해 이 줄을 추가했어요! ▼▼▼
 
+    [Header("UI")]
+    [SerializeField] private GameObject interactionPromptUI;
     private BoxCollider2D boxCollider;
     private Rigidbody2D rb;
     public bool IsOnLotus { get; private set; } = false;
@@ -18,6 +20,10 @@ public class PushableBox : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
+        if (interactionPromptUI != null)
+        {
+            interactionPromptUI.SetActive(false);
+        }
     }
 
     public void SetOnLotus(bool status)
@@ -83,5 +89,13 @@ public class PushableBox : MonoBehaviour
         // 4. 위 모든 조건에 해당하지 않으면(장애물도, 다른 상자도, 물도 아니면) 일반 땅이므로 이동 가능
         boxCollider.enabled = true; // 반드시 다시 활성화!
         return true;
+    }
+    public void ShowPrompt()
+    {
+        if (interactionPromptUI != null) interactionPromptUI.SetActive(true);
+    }
+    public void HidePrompt()
+    {
+        if (interactionPromptUI != null) interactionPromptUI.SetActive(false);
     }
 }

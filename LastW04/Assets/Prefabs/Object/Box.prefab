@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2384512378286329440}
   - component: {fileID: -1391978297814372363}
   - component: {fileID: 539935624357843047}
-  - component: {fileID: 7104287642584191445}
   - component: {fileID: 8631066848755994030}
   - component: {fileID: 5571903622995234642}
   - component: {fileID: 745177631707890601}
@@ -193,22 +192,7 @@ MonoBehaviour:
   boxLayer:
     serializedVersion: 2
     m_Bits: 512
---- !u!114 &7104287642584191445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382143493178518187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd19d6ac9b6fb5b42954d81010d8ae0c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  hint: {fileID: 2887059435120391440}
-  radius: 1.3
-  fadeDuration: 0.05
+  interactionPromptUI: {fileID: 7099728456360660156}
 --- !u!114 &8631066848755994030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +311,7 @@ GameObject:
   - component: {fileID: 1922425267635362337}
   - component: {fileID: 2887059435120391440}
   - component: {fileID: 9155614504735354416}
+  - component: {fileID: 5892629411462492481}
   m_Layer: 9
   m_Name: Hint
   m_TagString: Untagged
@@ -426,3 +411,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5892629411462492481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099728456360660156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 987fb2a1546245f4587a2b01f2abec0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
