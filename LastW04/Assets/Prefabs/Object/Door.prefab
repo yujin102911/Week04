@@ -162,8 +162,8 @@ BoxCollider2D:
   m_Offset: {x: -0.017946243, y: -0.0009239316}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.57, y: 2.6}
+    pivot: {x: 0.5, y: 0.47}
+    oldSize: {x: 3.381579, y: 3.7236843}
     newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   solid: {fileID: 6920351807120761030}
   sr: {fileID: 2611869977471157060}
   openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
-  closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
+  closedSprite: {fileID: 5213229242370633579, guid: 79da2112c5046104ab097827ab481c72, type: 3}
   isOn: 0
   toggleGameObject: 0
   disableSolidOnOpen: 0
