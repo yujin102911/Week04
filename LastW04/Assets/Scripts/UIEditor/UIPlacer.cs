@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class UIPlacer : MonoBehaviour
 {
+    public SelectedUI typeUI;//내 UI 타입
     public bool placed;
     public bool spawned=true;//생성 초기상태
     [SerializeField]
