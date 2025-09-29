@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WorldSpaceSlider : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class WorldSpaceSlider : MonoBehaviour
     //플레이서에서 복제 코드~
     [SerializeField] private GameObject objectPrefab;
     [SerializeField] private Color previewColor = new Color(0, 1, 0, 0.5f);
+    [SerializeField] private Color errorColor = new Color(1, 0, 0, 0.5f);
     [SerializeField] private Color finalColor = Color.gray;
-    private Color ChildrenColor;
+
+    private SpriteRenderer bodyColor;
     private Vector3 startPosition;
     //~플레이서에서 복제코드
     [Header("슬라이더 값")]
@@ -23,31 +26,53 @@ public class WorldSpaceSlider : MonoBehaviour
     //플레이서에서 복제 및 수정 코드~
     void Start()
     {
-        startPosition=transform.position;
-        ChildrenColor = GetComponentInChildren<SpriteRenderer>().color;
-        ChildrenColor = previewColor;    
+        Debug.Log(body.name);
+        startPosition=transform.position;//시작지점 설정
+        bodyColor = body.GetComponent<SpriteRenderer>();//색 설정
+        bodyColor.color = previewColor;    
     }
     void Update()
     {
-        if (!IsInstalled)
+        if (GameManager.mode==Mode.Editing)
         {
-            HandlePlacement();
+            if (!IsInstalled)//설치 상태가 아니면
+            {
+                HandlePlacement();
+            }
         }
-        
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
     private void HandlePlacement()
     {
         Vector3 mouseWorldPos = GetSnappedPosition(GetMouseWorldPosition());//마우스 위치에 그리드 계산 결과를 저장
 
         Setup(startPosition, GetConstrainedMousePosition(startPosition, mouseWorldPos));//각도에 따라 90도 회전
+        Collider2D[] colliders = Physics2D.OverlapAreaAll(startPoint.position, endPoint.position);//사이에 뭐가 있는지 확인
+        foreach(Collider2D collider in colliders)
+        {
+            Debug.DrawLine(startPoint.position, endPoint.position, Color.cyan);
+            if (collider.CompareTag("EditorbleUI") && collider != gameObject && collider != collider.transform.IsChildOf(transform))
+            {
+                bodyColor.color = errorColor;
+                break;
+            }
+            else 
+            {
+                bodyColor.color = previewColor;
+            }
+        }
 
-        if (Input.GetMouseButtonDown(0)) FinalizePlacement();//한번 더 누르면 위치 고정
+        if (Input.GetMouseButtonDown(0)&& bodyColor.color != errorColor) FinalizePlacement();//한번 더 누르면 위치 고정
         else if (Input.GetMouseButtonDown(1)) Destroy(gameObject);//취소시 나 제거
     }
 
     private void FinalizePlacement()
     {
-        ChildrenColor = finalColor;
+        bodyColor.color = finalColor;
         IsInstalled = true;   // 마지막으로 설치 상태를 초기화합니다.
         placed = true;
     }
@@ -81,19 +106,6 @@ public class WorldSpaceSlider : MonoBehaviour
     }
 
     //~플레이서에서 복제 및 수정 코드
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     void OnValidate()
     {
