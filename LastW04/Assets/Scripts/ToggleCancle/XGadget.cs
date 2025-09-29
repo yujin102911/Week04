@@ -17,7 +17,7 @@ public class XGadget : MonoBehaviour
 
     private void Start()
     {
-        TryAttachAtMouse();
+        TryAttach();
     }
 
     /*void OnMouseDown()
@@ -30,7 +30,7 @@ public class XGadget : MonoBehaviour
             }
     }*/
 
-    private void TryAttachAtMouse()
+    public void TryAttach()
     {
         // 클릭 지점과 겹치는 모든 콜라이더 검사
         //Debug.Log(transform.position);

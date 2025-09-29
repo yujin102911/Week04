@@ -107,11 +107,17 @@ public class UIEditor : MonoBehaviour
                 }
                 var xGadget = draggingInstance.GetComponent<XGadget>();
                 
-                if (xGadget != null) { xGadget.isHeld = true;
+                if (xGadget != null) 
+                {
+                    xGadget.TryAttach();
                 }
 
                 var toggleGadget = draggingInstance.GetComponent<ToggleGadget>();
-                if (toggleGadget != null) toggleGadget.isHeld = true;
+                if (toggleGadget != null)
+                {
+                    toggleGadget.isHeld= true;
+                    toggleGadget.TryAttach();
+                }
                 GameManager.selectedUI = SelectedUI.None;//내가 집은 UI타입을 none으로
                 draggingInstance = null;//현재위치에 있는 상태로 끝냄
 

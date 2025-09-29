@@ -64,7 +64,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 20a2379ab26308c46a62195067f67e76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -314,8 +314,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  highlightMaterial: {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 20a2379ab26308c46a62195067f67e76, type: 2}
   typeUI: 0100000003000000
+  myMaterial: {fileID: 0}
 --- !u!1 &7099728456360660156
 GameObject:
   m_ObjectHideFlags: 0
