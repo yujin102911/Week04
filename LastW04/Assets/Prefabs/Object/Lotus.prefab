@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e410990403782244ac7f91e72722518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  highlightMaterial: {fileID: 2100000, guid: 20a2379ab26308c46a62195067f67e76, type: 2}
   typeUI: 0100000003000000
-  typeUIBefore: 0
-  thicknessValue: 0.03
+  myMaterial: {fileID: 0}

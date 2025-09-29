@@ -103,7 +103,7 @@ public class UIEditor : MonoBehaviour
                     {
                         GoToStartPos();
                         return;//밑에 코드 실행 ㄴㄴ
-                    }
+                    }   
                 }
                 var xGadget = draggingInstance.GetComponent<XGadget>();
                 
