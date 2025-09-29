@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 7795560862873358946}
   - component: {fileID: 3445591319543108482}
   - component: {fileID: 6112056515724067866}
+  - component: {fileID: 4770376257552739060}
+  - component: {fileID: 6598930130422553267}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -90,7 +92,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 375ad7ff572eca342a5ed8d73363bcbb, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,9 +228,84 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  highlightMaterial: {fileID: 2100000, guid: 375ad7ff572eca342a5ed8d73363bcbb, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
   typeUI: 0200000003000000
-  myMaterial: {fileID: 0}
+--- !u!114 &4770376257552739060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328597588123934111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 262c199b3d49be64cba454b854a7e597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showWhen: 0
+  hintSprite: {fileID: 559653862641570742, guid: f4ba98941a9fe4b4da75dd9c975c5798, type: 3}
+  rightOffset: {x: 1, y: 0.9}
+  leftOffset: {x: -1, y: 0.9}
+  side: 0
+  sortingLayerName: 
+  sortingOrder: 100
+  viewportPadding: 0.03
+  showLabel: 1
+  labelText: "\uB204\uB974\uACE0 \uC2F6\uAC8C \uC0DD\uAE34 \uBC84\uD2BC.\n<color=#B8EFAC>\uD1A0\uAE00</color>\uACFC
+    <color=#B8EFAC>\uC5D1\uC2A4\uBC84\uD2BC</color>\uC774 \uBD99\uB294\uB2E4."
+  labelFont: {fileID: 11400000, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
+  labelFontSize: 4
+  labelColor: {r: 1, g: 1, b: 1, a: 1}
+  labelLocalOffset: {x: 0, y: 0, z: 0}
+  autoResizeBackground: 1
+  backgroundPadding: {x: 0.2, y: 0.2}
+  backgroundMinSize: {x: 0.6, y: 0.4}
+  backgroundMaxSize: {x: 0, y: 0}
+--- !u!114 &6598930130422553267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7328597588123934111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4770376257552739060}
+          m_TargetAssemblyTypeName: HoverHint, Assembly-CSharp
+          m_MethodName: OnPointerEnterFromET
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4770376257552739060}
+          m_TargetAssemblyTypeName: HoverHint, Assembly-CSharp
+          m_MethodName: OnPointerExitFromET
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8826104403233441660
 GameObject:
   m_ObjectHideFlags: 0
