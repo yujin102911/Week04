@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 6359844142929196595, guid: 0058e781f2d0fa24485c769be299ef6d, type: 3}
   grid: {fileID: 0}
+  typeUI: 0
   previewInstance: {fileID: 6359844142929196595, guid: 3e1aff54a4a78b54e93b723f0117e056, type: 3}
   textCount: {fileID: 2391604648202177147}
   limit: 0
@@ -266,8 +267,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3315006168036514202}
   - {fileID: 6560650876746918436}
+  - {fileID: 3315006168036514202}
   - {fileID: 3789766905430578845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2221,6 +2222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 2004963710388601288, guid: 8abd1a6d4b126b54d9d3f2a09e40393a, type: 3}
   grid: {fileID: 0}
+  typeUI: 0
   previewInstance: {fileID: 775521057727584985, guid: b56bcb0dba7f43d46b7d27969b720d05, type: 3}
   textCount: {fileID: 38231608116614089}
   limit: 0
@@ -2455,6 +2457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 6499162172036089193, guid: 851857b660ffc8940a1314eea6ee8005, type: 3}
   grid: {fileID: 0}
+  typeUI: 0
   previewInstance: {fileID: 6499162172036089193, guid: 78d80ec33733fdc4ba5dfefa272180e8, type: 3}
   textCount: {fileID: 4657278757036313832}
   limit: 0
