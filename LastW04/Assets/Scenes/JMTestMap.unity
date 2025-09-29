@@ -3054,73 +3054,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUIDelete.Array.data[1]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUISlider.Array.data[0]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUISlider.Array.data[1]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUISlider.Array.data[2]'
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUISlider.Array.data[3]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUISlider.Array.data[4]'
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUIToggle.Array.data[0]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 470386818069528228, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: 'levelUIToggle.Array.data[1]'
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1334260175608023733, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 516749736}
-    - target: {fileID: 1421657488280564416, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -220
-      objectReference: {fileID: 0}
-    - target: {fileID: 1544875916296798893, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    - target: {fileID: 1544875916296798893, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 1665625595594821790, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: grid
       value: 
       objectReference: {fileID: 516749736}
-    - target: {fileID: 1665625595594821790, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: typeUI
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3685464344638955603, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 3971346329566038730, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: m_Name
       value: GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3993243064300269375, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 5261137295418567967, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: grid
@@ -3130,26 +3070,10 @@ PrefabInstance:
       propertyPath: grid
       value: 
       objectReference: {fileID: 516749736}
-    - target: {fileID: 5307539846420392130, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: typeUI
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5831193123614514319, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: grid
       value: 
       objectReference: {fileID: 516749736}
-    - target: {fileID: 5831193123614514319, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: typeUI
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5831193123614514319, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: textCount
-      value: 
-      objectReference: {fileID: 1752833276}
-    - target: {fileID: 5831193123614514319, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: PlacedInstance.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8096484969329990211, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3190,18 +3114,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8195434841813641229, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8966979258709047527, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-      propertyPath: grid
-      value: 
-      objectReference: {fileID: 516749736}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1373969857449395361, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-    - {fileID: 8613766334478764455, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
@@ -52755,17 +52669,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9482bc961730af488f5067c295ac4b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1752833276 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3342920665850908943, guid: c12fc682394a3a147b28844ddeb11616, type: 3}
-  m_PrefabInstance: {fileID: 389945490}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1764128137 stripped

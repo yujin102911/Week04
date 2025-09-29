@@ -281,8 +281,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: X0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
-  m_sharedMaterial: {fileID: -2505799032768362812, guid: 05a2b40de39a2754fb9f40c44390afb6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -443,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 6359844142929196595, guid: 0058e781f2d0fa24485c769be299ef6d, type: 3}
   grid: {fileID: 0}
+  typeUI: 2
   previewInstance: {fileID: 6359844142929196595, guid: 3e1aff54a4a78b54e93b723f0117e056, type: 3}
   textCount: {fileID: 1544875916296798893}
   limit: 0
@@ -541,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 6499162172036089193, guid: 851857b660ffc8940a1314eea6ee8005, type: 3}
   grid: {fileID: 0}
+  typeUI: 3
   previewInstance: {fileID: 6499162172036089193, guid: 78d80ec33733fdc4ba5dfefa272180e8, type: 3}
   textCount: {fileID: 9005587832439849379}
   limit: 0
@@ -1407,6 +1409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defalutMode: 0
+  selectedUICheck: 0
 --- !u!114 &5261137295418567967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,6 +1716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn: {fileID: 2004963710388601288, guid: 8abd1a6d4b126b54d9d3f2a09e40393a, type: 3}
   grid: {fileID: 0}
+  typeUI: 1
   previewInstance: {fileID: 775521057727584985, guid: b56bcb0dba7f43d46b7d27969b720d05, type: 3}
   textCount: {fileID: 3342920665850908943}
   limit: 0
@@ -2723,7 +2727,7 @@ PrefabInstance:
       objectReference: {fileID: 5307539846420392130}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUIDelete.Array.data[1]'
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUIDelete.Array.data[2]'
@@ -2747,23 +2751,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[0]'
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[1]'
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[2]'
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[3]'
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[4]'
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUISlider.Array.data[5]'
@@ -2778,8 +2782,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
+      propertyPath: 'levelUIToggle.Array.data[0]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUIToggle.Array.data[1]'
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5384816659098589527, guid: 5d0e8e30574433a46a28214f75943d58, type: 3}
       propertyPath: 'levelUIToggle.Array.data[5]'
