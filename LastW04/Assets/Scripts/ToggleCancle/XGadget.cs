@@ -34,7 +34,7 @@ public class XGadget : MonoBehaviour
     {
         // 클릭 지점과 겹치는 모든 콜라이더 검사
         //Debug.Log(transform.position);
-        var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
+        var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(0.5f, 0.5f), 0);
         HighLight apFound = null;
         DeletableTarget targetFound = null;
 
