@@ -32,13 +32,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 2e02738c4a85bfb44b98a20a46cf7e59, type: 3}
+        m_Scale: {x: 4.75, y: 1.87}
+        m_Offset: {x: 3.48, y: 1.11}
     - _NormalMap:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 1.99, y: 1}
+        m_Offset: {x: 2.64, y: 1.17}
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0

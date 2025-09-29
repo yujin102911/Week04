@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 7720958272278707030}
   - component: {fileID: 7775729694036942717}
   - component: {fileID: 3362259843071936956}
+  - component: {fileID: 5889114786355132839}
   m_Layer: 13
   m_Name: Door
   m_TagString: Untagged
@@ -92,7 +93,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,6 +246,21 @@ MonoBehaviour:
   doorCollider: {fileID: 6920351807120761030}
   closedSprite: {fileID: 21300000, guid: 20f3966620dfb434ba1c358af53ae117, type: 3}
   openSprite: {fileID: 21300000, guid: 3cb1304de787bf042b7383da74607d16, type: 3}
+--- !u!114 &5889114786355132839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4619494788888716882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e410990403782244ac7f91e72722518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  highlightMaterial: {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
+  typeUI: 0200000003000000
 --- !u!1 &6460004379551096601
 GameObject:
   m_ObjectHideFlags: 0
