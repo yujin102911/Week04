@@ -3,20 +3,16 @@ using UnityEngine;
 
 public class HighLight : MonoBehaviour
 {
-    [SerializeField] Material defaultMaterial;  // 인스펙터에서 할당
-    [SerializeField] Material highlightMaterial;  // 인스펙터에서 할당Grid
     [SerializeField] SelectedUI[] typeUI;//내 UI 타입
-    Material defaultMaterialNew;  // 인스펙터에서 할당
-    Material highlightMaterialNew;  // 인스펙터에서 할당Grid
-    SelectedUI typeUIBefore;//기존 UI 타입
+    [SerializeField] SelectedUI typeUIBefore;//기존 UI 타입
+    [SerializeField] float thicknessValue=0.1f;
     private SpriteRenderer sr;
-    [SerializeField] Material myMaterial;
+    Material myMaterial;
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         myMaterial = GetComponent<SpriteRenderer>().material;
-        defaultMaterialNew = defaultMaterial;
-        highlightMaterialNew = highlightMaterial;
+        typeUIBefore=SelectedUI.None;
     }
 
     // Update is called once per frame
@@ -26,11 +22,13 @@ public class HighLight : MonoBehaviour
         {
             if (typeUI.Contains(GameManager.selectedUI))
             {
-                myMaterial.SetFloat("Thickness", 0.1f);
+                myMaterial.SetFloat("_Thickness", thicknessValue);
+                myMaterial.SetColor("_Color", new Color (1f,1f,1f));
             }
             else
             {
-                myMaterial.SetFloat("Thickness", 0f);
+                myMaterial.SetFloat("_Thickness", 0f);
+                myMaterial.SetColor("_Color", new Color(0f, 0f, 0f));
             }
             typeUIBefore = GameManager.selectedUI;//저장된 UI
         }
