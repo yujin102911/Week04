@@ -42,14 +42,25 @@ public class StayInWater : MonoBehaviour
 
     void LateUpdate()
     {
+        // waterCollider 변수가 비어있으면 아무것도 하지 않습니다.
         if (waterCollider == null) return;
 
-        Bounds waterBounds = waterCollider.bounds;
         Vector3 currentPosition = transform.position;
 
-        float clampedX = Mathf.Clamp(currentPosition.x, waterBounds.min.x, waterBounds.max.x);
-        float clampedY = Mathf.Clamp(currentPosition.y, waterBounds.min.y, waterBounds.max.y);
+        // 1. 현재 연꽃잎의 위치가 물 콜라이더의 '실제 모양' 안에 있는지 확인합니다.
+        //    (Bounds가 아닌, PolygonCollider나 CompositeCollider의 모양을 직접 확인)
+        if (waterCollider.OverlapPoint(currentPosition))
+        {
+            // 모양 안에 있다면, 위치를 바꿀 필요가 없으므로 여기서 함수를 종료합니다.
+            return;
+        }
+        else
+        {
+            // 2. 만약 모양 밖에 있다면, 콜라이더의 가장자리 중에서 현재 위치와 가장 가까운 지점을 찾습니다.
+            Vector3 closestPointOnEdge = waterCollider.ClosestPoint(currentPosition);
 
-        transform.position = new Vector3(clampedX, clampedY, currentPosition.z);
+            // 3. 연꽃잎을 그 가장 가까운 지점으로 즉시 이동시켜서 탈출을 막습니다.
+            transform.position = closestPointOnEdge;
+        }
     }
 }
