@@ -876,7 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSlider: {fileID: 899496547}
-  mapSceneName: Map
+  mapSceneName: FInalMap
   fadeImage: {fileID: 949560323}
   threshold: 0.99
   fadeDuration: 0.5
