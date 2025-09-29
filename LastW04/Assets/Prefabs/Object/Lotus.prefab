@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3471907946397665416}
   - component: {fileID: 9099490780106299061}
   - component: {fileID: 7862528516662955236}
+  - component: {fileID: -6480488773322788085}
   m_Layer: 15
   m_Name: Lotus
   m_TagString: Lotus
@@ -256,3 +257,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &-6480488773322788085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057378286707915100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e410990403782244ac7f91e72722518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  highlightMaterial: {fileID: 2100000, guid: c61fc044fb8e5ec459609877011aa8eb, type: 2}
+  typeUI: 
