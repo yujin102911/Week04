@@ -11,6 +11,11 @@ public class TeleportOnTrigger2D : MonoBehaviour
     [SerializeField] private string destinationRegionId = "Region_01";
     [SerializeField] private string requiredTag = "Player";
 
+    [Header("End Game")]
+    [Tooltip("엔딩 시 보여줄 패널(루트 오브젝트)")]
+    [SerializeField] private GameObject endPanel;
+    [SerializeField] private bool pauseTimeScaleWhileOpen = true;
+
     private void Awake()
     {
         TryBindLevelManager();
@@ -18,7 +23,6 @@ public class TeleportOnTrigger2D : MonoBehaviour
 
     private void OnEnable()
     {
-        // 씬 리로드 대응: 새 씬 로드 후 다시 바인딩
         SceneManager.sceneLoaded += OnSceneLoaded_Rebind;
         if (!levelManager) TryBindLevelManager();
     }
@@ -30,7 +34,6 @@ public class TeleportOnTrigger2D : MonoBehaviour
 
     private void OnSceneLoaded_Rebind(Scene s, LoadSceneMode mode)
     {
-        // 씬이 바뀌면 영속 싱글톤은 살아있고, 이 스크립트는 새로 로드됨 → 다시 잡기
         TryBindLevelManager();
     }
 
@@ -38,19 +41,13 @@ public class TeleportOnTrigger2D : MonoBehaviour
     {
         if (levelManager != null) return;
 
-        // 1순위: 싱글톤
         levelManager = LevelManager.Instance;
-        if (levelManager) return;
-
-        // 2순위: 씬에서 검색(혹시 싱글톤 off거나 특수 케이스)
-        // levelManager = FindObjectOfType<LevelManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag(requiredTag)) return;
 
-        // 혹시 모를 누락 방지: 진입 순간에도 한 번 더 보장
         if (!levelManager) TryBindLevelManager();
         if (!levelManager)
         {
@@ -58,13 +55,18 @@ public class TeleportOnTrigger2D : MonoBehaviour
             return;
         }
 
-        if (levelManager.IsTeleportImmune)
+        if (levelManager.IsTeleportImmune) return;
+
+        // ★ 엔딩 처리 분기
+        if (destinationRegionId == "Region_End")
         {
-            // 리스폰 직후 무적 등에 막혔을 때
-            // Debug.Log("[TeleportTrigger] Blocked by immunity.");
+            if (endPanel) endPanel.SetActive(true);
+            if (pauseTimeScaleWhileOpen) Time.timeScale = 0f;
+            Debug.Log("[TeleportTrigger] Game End reached!");
             return;
         }
 
+        // 일반 텔레포트
         levelManager.TeleportToRegion(destinationRegionId, affectCamera: true);
     }
 }
