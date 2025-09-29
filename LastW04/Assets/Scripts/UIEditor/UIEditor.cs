@@ -69,7 +69,7 @@ public class UIEditor : MonoBehaviour
                     {
                         return;//걍 끝냄
                     }
-                    if (hit.transform.parent != null)//제거 대상 찾기
+                    if (hit.transform.parent != null&& hit.transform.CompareTag("EditorbleUI"))//제거 대상 찾기
                     {
                         Destroy(hit.transform.parent.gameObject);
                     }
