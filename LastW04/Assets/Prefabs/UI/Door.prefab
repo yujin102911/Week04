@@ -242,9 +242,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showWhen: 0
   hintSprite: {fileID: 649223268058989734, guid: ffd45975044bd364e90594184436d9ea, type: 3}
-  worldOffset: {x: 0, y: 0.9}
+  rightOffset: {x: 1, y: 0.9}
+  leftOffset: {x: -1, y: 0.9}
+  side: 0
   sortingLayerName: 
   sortingOrder: 100
+  viewportPadding: 0.03
 --- !u!114 &7123096245150773904
 MonoBehaviour:
   m_ObjectHideFlags: 0
