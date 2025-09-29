@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 
 public class HoverHint : MonoBehaviour
@@ -8,16 +8,16 @@ public class HoverHint : MonoBehaviour
 
     [Header("When to Show")]
     [SerializeField] private ShowCondition showWhen = ShowCondition.OnlyEditing;
-    private bool isPointerInside; // Æ÷ÀÎÅÍ°¡ ÇöÀç ¿ÀºêÁ§Æ® À§¿¡ ÀÖ´ÂÁö
+    private bool isPointerInside; // í¬ì¸í„°ê°€ í˜„ì¬ ì˜¤ë¸Œì íŠ¸ ìœ„ì— ìˆëŠ”ì§€
 
     [Header("Hint Visual")]
-    [Tooltip("¸¶¿ì½º ¿À¹ö ½Ã Ç¥½ÃÇÒ ¼³¸í ½ºÇÁ¶óÀÌÆ®(¹è°æ). 9-Slice border ¼³Á¤ ±ÇÀå")]
+    [Tooltip("ë§ˆìš°ìŠ¤ ì˜¤ë²„ ì‹œ í‘œì‹œí•  ì„¤ëª… ìŠ¤í”„ë¼ì´íŠ¸(ë°°ê²½). 9-Slice border ì„¤ì • ê¶Œì¥")]
     [SerializeField] private Sprite hintSprite;
-    [Tooltip("¿ìÃø¿¡ ºÙÀÏ ¶§ÀÇ ±âÁØ ¿ÀÇÁ¼Â(¿ùµå ÁÂÇ¥)")]
+    [Tooltip("ìš°ì¸¡ì— ë¶™ì¼ ë•Œì˜ ê¸°ì¤€ ì˜¤í”„ì…‹(ì›”ë“œ ì¢Œí‘œ)")]
     [SerializeField] private Vector2 rightOffset = new Vector2(1.0f, 0.9f);
-    [Tooltip("ÁÂÃø¿¡ ºÙÀÏ ¶§ÀÇ ±âÁØ ¿ÀÇÁ¼Â(¿ùµå ÁÂÇ¥)")]
+    [Tooltip("ì¢Œì¸¡ì— ë¶™ì¼ ë•Œì˜ ê¸°ì¤€ ì˜¤í”„ì…‹(ì›”ë“œ ì¢Œí‘œ)")]
     [SerializeField] private Vector2 leftOffset = new Vector2(-1.0f, 0.9f);
-    [Tooltip("ÁÂ/¿ì ¹èÄ¡ ¹æ½Ä")]
+    [Tooltip("ì¢Œ/ìš° ë°°ì¹˜ ë°©ì‹")]
     [SerializeField] private HorizontalSide side = HorizontalSide.Auto;
 
     [Header("Sorting")]
@@ -25,26 +25,26 @@ public class HoverHint : MonoBehaviour
     [SerializeField] private int sortingOrder = 100;
 
     [Header("Clamp-to-Camera")]
-    [Tooltip("È­¸é °¡ÀåÀÚ¸® ¿©¹é(ºäÆ÷Æ® ºñÀ² 0~0.2 ±ÇÀå)")]
+    [Tooltip("í™”ë©´ ê°€ì¥ìë¦¬ ì—¬ë°±(ë·°í¬íŠ¸ ë¹„ìœ¨ 0~0.2 ê¶Œì¥)")]
     [SerializeField, Range(0f, 0.2f)] private float viewportPadding = 0.03f;
 
-    [Header("Label (TextMeshPro, ½ºÇÁ¶óÀÌÆ® À§ °íÁ¤)")]
+    [Header("Label (TextMeshPro, ìŠ¤í”„ë¼ì´íŠ¸ ìœ„ ê³ ì •)")]
     [SerializeField] private bool showLabel = true;
-    [SerializeField, TextArea] private string labelText = "¼³¸í ÅØ½ºÆ®";
+    [SerializeField, TextArea] private string labelText = "ì„¤ëª… í…ìŠ¤íŠ¸";
     [SerializeField] private TMP_FontAsset labelFont;
     [SerializeField, Min(0.1f)] private float labelFontSize = 4f;
     [SerializeField] private Color labelColor = Color.white;
-    [Tooltip("½ºÇÁ¶óÀÌÆ® À§¿¡¼­ÀÇ ¶óº§ ·ÎÄÃ ¿ÀÇÁ¼Â")]
+    [Tooltip("ìŠ¤í”„ë¼ì´íŠ¸ ìœ„ì—ì„œì˜ ë¼ë²¨ ë¡œì»¬ ì˜¤í”„ì…‹")]
     [SerializeField] private Vector3 labelLocalOffset = Vector3.zero;
 
-    [Header("Auto Resize (¹è°æÀ» ÅØ½ºÆ®¿¡ ¸ÂÃã)")]
-    [Tooltip("hintSprite°¡ 9-Slice(border)ÀÏ ¶§ ÀÚµ¿ ¸®»çÀÌÁî")]
+    [Header("Auto Resize (ë°°ê²½ì„ í…ìŠ¤íŠ¸ì— ë§ì¶¤)")]
+    [Tooltip("hintSpriteê°€ 9-Slice(border)ì¼ ë•Œ ìë™ ë¦¬ì‚¬ì´ì¦ˆ")]
     [SerializeField] private bool autoResizeBackground = true;
-    [Tooltip("ÅØ½ºÆ® µÑ·¹ ¿©¹é(ÁÂ¿ì/»óÇÏ, ¿ùµå ´ÜÀ§)")]
+    [Tooltip("í…ìŠ¤íŠ¸ ë‘˜ë ˆ ì—¬ë°±(ì¢Œìš°/ìƒí•˜, ì›”ë“œ ë‹¨ìœ„)")]
     [SerializeField] private Vector2 backgroundPadding = new Vector2(0.2f, 0.2f);
-    [Tooltip("¹è°æ ÃÖ¼Ò Å©±â(¿ùµå ´ÜÀ§)")]
+    [Tooltip("ë°°ê²½ ìµœì†Œ í¬ê¸°(ì›”ë“œ ë‹¨ìœ„)")]
     [SerializeField] private Vector2 backgroundMinSize = new Vector2(0.6f, 0.4f);
-    [Tooltip("¹è°æ ÃÖ´ë Å©±â(0ÀÌ¸é Á¦ÇÑ ¾øÀ½)")]
+    [Tooltip("ë°°ê²½ ìµœëŒ€ í¬ê¸°(0ì´ë©´ ì œí•œ ì—†ìŒ)")]
     [SerializeField] private Vector2 backgroundMaxSize = Vector2.zero;
 
     private GameObject hintGO;
@@ -58,14 +58,14 @@ public class HoverHint : MonoBehaviour
     private void Awake()
     {
         cam = Camera.main;
-        if (!cam) Debug.LogWarning("[HoverHint] Main Camera°¡ ¾ø½À´Ï´Ù.");
+        if (!cam) Debug.LogWarning("[HoverHint] Main Cameraê°€ ì—†ìŠµë‹ˆë‹¤.");
 
-        // ÈùÆ® ·çÆ®
+        // íŒíŠ¸ ë£¨íŠ¸
         hintGO = new GameObject("HoverHint");
         hintGO.transform.SetParent(transform, worldPositionStays: true);
         hintGO.transform.position = transform.position + (Vector3)rightOffset;
 
-        // ¹è°æ ½ºÇÁ¶óÀÌÆ®
+        // ë°°ê²½ ìŠ¤í”„ë¼ì´íŠ¸
         if (hintSprite)
         {
             hintSR = hintGO.AddComponent<SpriteRenderer>();
@@ -75,12 +75,12 @@ public class HoverHint : MonoBehaviour
             if (!string.IsNullOrEmpty(sortingLayerName))
                 hintSR.sortingLayerName = sortingLayerName;
 
-            // 9-Slice¸é Sliced ¸ğµå·Î
+            // 9-Sliceë©´ Sliced ëª¨ë“œë¡œ
             if (HasSpriteBorder(hintSprite))
                 hintSR.drawMode = SpriteDrawMode.Sliced;
         }
 
-        // ¶óº§
+        // ë¼ë²¨
         if (showLabel)
         {
             var labelGO = new GameObject("Label");
@@ -89,7 +89,7 @@ public class HoverHint : MonoBehaviour
 
             labelTMP = labelGO.AddComponent<TextMeshPro>();
             labelTMP.text = labelText;
-            labelTMP.font = labelFont;     // nullÀÌ¸é ±âº» ÆùÆ®
+            labelTMP.font = labelFont;     // nullì´ë©´ ê¸°ë³¸ í°íŠ¸
             labelTMP.fontSize = labelFontSize;
             labelTMP.color = labelColor;
             labelTMP.alignment = TextAlignmentOptions.Center;
@@ -103,13 +103,13 @@ public class HoverHint : MonoBehaviour
             labelRenderer.enabled = false;
         }
 
-        // ÃÊ±â ¹è°æ Å©±â ¸ÂÃã
+        // ì´ˆê¸° ë°°ê²½ í¬ê¸° ë§ì¶¤
         if (autoResizeBackground) RefreshBackgroundSize();
     }
 
     private void OnValidate()
     {
-        // ¿¡µğÅÍ¿¡¼­ °ª ¹Ù²Ü ¶§µµ Áï½Ã ¹İ¿µ
+        // ì—ë””í„°ì—ì„œ ê°’ ë°”ê¿€ ë•Œë„ ì¦‰ì‹œ ë°˜ì˜
         if (hintSR && autoResizeBackground) RefreshBackgroundSize();
         if (labelTMP) ApplyLabelStyle();
     }
@@ -120,7 +120,7 @@ public class HoverHint : MonoBehaviour
         labelTMP.fontSize = labelFontSize;
         labelTMP.color = labelColor;
         labelTMP.alignment = TextAlignmentOptions.Center;
-        labelTMP.enableWordWrapping = false;
+        //labelTMP.enableWordWrapping = false;<<ì—¬ê¸° ì•ˆì“°ì¸ë‹¤ê³  ê³„ì† ì—ëŸ¬ë– ì„œ ì£¼ì„ì²˜ë¦¬
         labelTMP.overflowMode = TextOverflowModes.Overflow;
         labelTMP.transform.localPosition = labelLocalOffset;
     }
@@ -135,17 +135,17 @@ public class HoverHint : MonoBehaviour
         }
     }
 
-    // Event Trigger ¡æ Pointer Enter
+    // Event Trigger â†’ Pointer Enter
     public void OnPointerEnterFromET()
     {
         isPointerInside = true;
         if (!cam) return;
 
-        // ¸ğµå Ã¼Å©
+        // ëª¨ë“œ ì²´í¬
         if (!ModeAllows()) return;
 
-        // ÅØ½ºÆ®°¡ ¹Ù²î¾úÀ» ¼öµµ ÀÖÀ¸´Ï ÁøÀÔ ½Ã ÇÑ¹ø ¸ÂÃã
-        // (autoResizeBackground ¿É¼ÇÀ» ¾²´Â °æ¿ì¿¡¸¸)
+        // í…ìŠ¤íŠ¸ê°€ ë°”ë€Œì—ˆì„ ìˆ˜ë„ ìˆìœ¼ë‹ˆ ì§„ì… ì‹œ í•œë²ˆ ë§ì¶¤
+        // (autoResizeBackground ì˜µì…˜ì„ ì“°ëŠ” ê²½ìš°ì—ë§Œ)
         if (autoResizeBackground) RefreshBackgroundSize();
 
         Vector2 chosenOffset = PickOffsetBySide();
@@ -158,7 +158,7 @@ public class HoverHint : MonoBehaviour
         visible = true;
     }
 
-    // Event Trigger ¡æ Pointer Exit
+    // Event Trigger â†’ Pointer Exit
     public void OnPointerExitFromET()
     {
         isPointerInside = false;
@@ -170,13 +170,13 @@ public class HoverHint : MonoBehaviour
     {
         if (!cam) return;
 
-        // ¸ğµå ÀüÈ¯ Áï½Ã ¹İ¿µ
+        // ëª¨ë“œ ì „í™˜ ì¦‰ì‹œ ë°˜ì˜
         bool shouldBeVisible = isPointerInside && ModeAllows();
         if (shouldBeVisible != visible)
         {
             if (shouldBeVisible)
             {
-                // ÇÊ¿ä ½Ã ¹è°æ ¸®»çÀÌÁî
+                // í•„ìš” ì‹œ ë°°ê²½ ë¦¬ì‚¬ì´ì¦ˆ
                 // if (autoResizeBackground) RefreshBackgroundSize();
 
                 Vector2 chosenOffset = PickOffsetBySide();
@@ -189,7 +189,7 @@ public class HoverHint : MonoBehaviour
             visible = shouldBeVisible;
         }
 
-        // ÀÌµ¿/Å¬·¥ÇÁ °»½Å (º¸ÀÏ ¶§¸¸)
+        // ì´ë™/í´ë¨í”„ ê°±ì‹  (ë³´ì¼ ë•Œë§Œ)
         if (visible)
         {
             Vector2 chosenOffset = PickOffsetBySide();
@@ -235,7 +235,7 @@ public class HoverHint : MonoBehaviour
     {
         if (hintSR == null || hintSR.sprite == null) return Vector2.zero;
 
-        // SpriteRenderer.size°¡ À¯È¿ÇÏ¸é ±×°É »ç¿ë(= ½ÇÁ¦ ·»´õ »çÀÌÁî)
+        // SpriteRenderer.sizeê°€ ìœ íš¨í•˜ë©´ ê·¸ê±¸ ì‚¬ìš©(= ì‹¤ì œ ë Œë” ì‚¬ì´ì¦ˆ)
         Vector2 worldSize;
         if (hintSR.drawMode != SpriteDrawMode.Simple)
         {
@@ -255,18 +255,18 @@ public class HoverHint : MonoBehaviour
         return new Vector2(halfVx, halfVy);
     }
 
-    // --- ÇÙ½É: ¶óº§ ÅØ½ºÆ® Å©±â¿¡ ¸ÂÃç 9-Slice ¹è°æ ÀÚµ¿ ¸®»çÀÌÁî ---
+    // --- í•µì‹¬: ë¼ë²¨ í…ìŠ¤íŠ¸ í¬ê¸°ì— ë§ì¶° 9-Slice ë°°ê²½ ìë™ ë¦¬ì‚¬ì´ì¦ˆ ---
     private void RefreshBackgroundSize()
     {
         if (!hintSR || hintSR.sprite == null || !HasSpriteBorder(hintSR.sprite)) return;
         if (!labelTMP) { hintSR.drawMode = SpriteDrawMode.Sliced; hintSR.size = Vector2.Max(backgroundMinSize, Vector2.zero); return; }
 
-        // ÇöÀç ¶óº§ÀÇ ½ÇÁ¦ ·»´õ Å©±â °è»ê
+        // í˜„ì¬ ë¼ë²¨ì˜ ì‹¤ì œ ë Œë” í¬ê¸° ê³„ì‚°
         labelTMP.ForceMeshUpdate();
-        var bounds = labelTMP.textBounds;                // ¿ùµå ÁÂÇ¥ ±âÁØ Bounds
+        var bounds = labelTMP.textBounds;                // ì›”ë“œ ì¢Œí‘œ ê¸°ì¤€ Bounds
         Vector2 labelWorldSize = bounds.size;
 
-        // ¿©¹é Àû¿ë + ÃÖ¼Ò/ÃÖ´ë º¸Á¤
+        // ì—¬ë°± ì ìš© + ìµœì†Œ/ìµœëŒ€ ë³´ì •
         Vector2 targetWorldSize = labelWorldSize + backgroundPadding * 2f;
         targetWorldSize = new Vector2(
             Mathf.Max(targetWorldSize.x, backgroundMinSize.x),
@@ -280,7 +280,7 @@ public class HoverHint : MonoBehaviour
             );
         }
 
-        // Sliced ¸ğµå·Î »çÀÌÁî ÁöÁ¤(·ÎÄÃ ±âÁØÀÌ¹Ç·Î ºÎ¸ğ ½ºÄÉÀÏ °í·Á)
+        // Sliced ëª¨ë“œë¡œ ì‚¬ì´ì¦ˆ ì§€ì •(ë¡œì»¬ ê¸°ì¤€ì´ë¯€ë¡œ ë¶€ëª¨ ìŠ¤ì¼€ì¼ ê³ ë ¤)
         hintSR.drawMode = SpriteDrawMode.Sliced;
         Vector3 lossy = hintSR.transform.lossyScale;
         Vector2 localSize = new Vector2(
@@ -289,7 +289,7 @@ public class HoverHint : MonoBehaviour
         );
         hintSR.size = localSize;
 
-        // ¶óº§À» ¹è°æ Áß¾Ó¿¡ À§Ä¡(Áß¾Ó Á¤·Ä)
+        // ë¼ë²¨ì„ ë°°ê²½ ì¤‘ì•™ì— ìœ„ì¹˜(ì¤‘ì•™ ì •ë ¬)
         if (labelTMP)
         {
             labelTMP.alignment = TextAlignmentOptions.Center;
@@ -299,12 +299,12 @@ public class HoverHint : MonoBehaviour
 
     private static bool HasSpriteBorder(Sprite s)
     {
-        // 9-Slice »ç¿ë °¡´É ¿©ºÎ(Å×µÎ¸® ÇÑ ÇÈ¼¿ÀÌ¶óµµ ÀÖÀ¸¸é true)
+        // 9-Slice ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€(í…Œë‘ë¦¬ í•œ í”½ì…€ì´ë¼ë„ ìˆìœ¼ë©´ true)
         var b = s.border;
         return b.x > 0 || b.y > 0 || b.z > 0 || b.w > 0;
     }
 
-    // ¶óº§ ÅØ½ºÆ®¸¦ ·±Å¸ÀÓÀ¸·Î ¹Ù²Ü ¶§µµ »çÀÌÁî ÀÚµ¿ °»½Å
+    // ë¼ë²¨ í…ìŠ¤íŠ¸ë¥¼ ëŸ°íƒ€ì„ìœ¼ë¡œ ë°”ê¿€ ë•Œë„ ì‚¬ì´ì¦ˆ ìë™ ê°±ì‹ 
     public void SetLabel(string text)
     {
         if (labelTMP == null) return;
