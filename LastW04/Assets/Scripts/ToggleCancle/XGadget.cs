@@ -20,16 +20,7 @@ public class XGadget : MonoBehaviour
         TryAttachAtMouse();
     }
 
-    void Update()
-    {
-        if (isHeld)
-        {
-            attachedAP.occupied = false;
-            TryAttachAtMouse();
-        }
-    }
-
-    void OnMouseDown()
+    /*void OnMouseDown()
     {
         if (GameManager.mode != Mode.Editing)//일반 상태라면
                                           // 3) 이미 부착되어 있다 → 이 가젯을 클릭하면 대상 토글 작동
@@ -37,33 +28,30 @@ public class XGadget : MonoBehaviour
             {
                 Activate();
             }
-    }
+    }*/
 
     private void TryAttachAtMouse()
     {
         // 클릭 지점과 겹치는 모든 콜라이더 검사
         //Debug.Log(transform.position);
         var hits = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0);
-        AttachPoint apFound = null;
+        HighLight apFound = null;
         DeletableTarget targetFound = null;
 
         foreach (var h in hits)
         {
-            apFound = h.GetComponentInParent<AttachPoint>();
-            targetFound = h.GetComponentInParent<DeletableTarget>();
+            apFound = h.GetComponentInParent<HighLight>();
         }
 
         if (apFound == null)
         {
-            //if(targetFound != null)
-            {
                 Destroy(gameObject);
                 return;
-            }
         }
         else
         {
-            attachedAP = apFound;
+            Destroy(apFound.gameObject);
+            //attachedAP = apFound;
         }
 
         target = targetFound;
@@ -71,12 +59,11 @@ public class XGadget : MonoBehaviour
         /*transform.SetParent(attachedAP.snap.transform, false);
         transform.localPosition = Vector3.zero + Vector3.back;
         transform.localRotation = Quaternion.identity;*/
-        Destroy(attachedAP.transform.parent.gameObject);
-        UIPlacer.placed = true;//나 더 못옮겨욧
         //attachedAP.occupied = true;
         isHeld = false; // 손에서 내려놓음
+        UIPlacer.placed = true;//나 더 못옮겨욧
     }
-
+    /*
     private void Activate()
     {
         if (target == null) return;
@@ -96,5 +83,5 @@ public class XGadget : MonoBehaviour
         // attachedAP.occupied = false;
         // attachedAP = null;
         // target = null;
-    }
+    }*/
 }
