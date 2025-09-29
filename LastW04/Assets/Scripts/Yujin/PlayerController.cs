@@ -184,4 +184,31 @@ public class PlayerController : MonoBehaviour
             box.Push(dir); // 한 칸 밀기(기존 동작 유지)
         }
     }
+    private void OnDrawGizmos()
+    {
+        // 게임이 실행 중이 아닐 때는 오류가 날 수 있으니 아무것도 그리지 않습니다.
+        if (!Application.isPlaying) return;
+
+        // OnInteract 함수에서 사용하는 값들을 그대로 가져옵니다.
+        Vector2 origin = rb.position;
+        Vector2 direction = lastCardinal; // 애니메이션/상호작용용으로 스냅된 최종 방향을 사용
+        float distance = interactionDistance;
+        LayerMask layerMask = boxLayer;
+
+        // 실제로 레이캐스트를 실행해서 결과를 얻습니다.
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, layerMask);
+
+        // 레이캐스트의 탐지 성공 여부에 따라 색상을 결정합니다.
+        if (hit.collider != null)
+        {
+            Gizmos.color = Color.green; // 성공: 초록색
+        }
+        else
+        {
+            Gizmos.color = Color.red;   // 실패: 빨간색
+        }
+
+        // 시작점에서 목표점까지 선을 그립니다.
+        Gizmos.DrawLine(origin, origin + direction * distance);
+    }
 }
